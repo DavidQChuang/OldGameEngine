@@ -1,0 +1,440 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{2ccbc663-4237-4342-9674-f2bc0c83f1f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shaders\HLSL">
+      <UniqueIdentifier>{b69ff4bd-3a33-4140-a869-2935368c603f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System">
+      <UniqueIdentifier>{cb9af63b-66bd-4df7-9f8f-29d455020d97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System">
+      <UniqueIdentifier>{3dd69048-5bc0-4913-b472-3bab1b3f1abc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Shaders">
+      <UniqueIdentifier>{fe49578b-d31f-45c9-a6d5-e07eb13fdf12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System\Audio">
+      <UniqueIdentifier>{0bbf9278-ca88-428d-a4ab-e0e63fccb728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System\Audio">
+      <UniqueIdentifier>{7632eca8-6479-4abb-96c0-ee5e6a919132}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World">
+      <UniqueIdentifier>{c1848755-5cab-4cc4-a424-f8535148870c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World">
+      <UniqueIdentifier>{42be306d-c369-46f9-969a-249e48bdfb93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World\Entities">
+      <UniqueIdentifier>{e17ec081-d189-49f8-858d-0f94b67b12d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World\Entities\2D">
+      <UniqueIdentifier>{0155fb9a-f6f0-4c6c-8329-5ebfbd83631e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World\Graphics">
+      <UniqueIdentifier>{9220ec69-5cb1-4aed-a775-17771fb06746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World\Graphics\3D">
+      <UniqueIdentifier>{cbb8e86d-66e9-488a-be5a-bb2b6a313290}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World\Graphics\Scene">
+      <UniqueIdentifier>{f4958134-6dcf-4490-ab9b-4888e57bab18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World\Graphics\2D">
+      <UniqueIdentifier>{c060e4f6-ace2-424e-a904-e407fa443a77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World\Graphics\2D\GUI">
+      <UniqueIdentifier>{29575da6-26ed-4531-8ed8-f0f691da9336}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World\Graphics\3D\Scene">
+      <UniqueIdentifier>{39ebe78d-b416-4794-a636-0cc79688c7be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World\Entities">
+      <UniqueIdentifier>{829dbb69-60f5-4564-aceb-1bb181653145}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World\Entities\2D">
+      <UniqueIdentifier>{8fdd8cef-9fa7-4fff-bcb1-ac00841d994c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World\Graphics">
+      <UniqueIdentifier>{8142335d-93ec-4438-9877-04df1843407d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World\Graphics\Scene">
+      <UniqueIdentifier>{ac7b3709-1680-406b-9117-2675db46e5e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World\Graphics\3D">
+      <UniqueIdentifier>{0d539415-5268-46fe-9c36-7f0e6c698fec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World\Graphics\3D\Scene">
+      <UniqueIdentifier>{7ee6c755-e84e-468b-bb99-d2b3f9f46178}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World\Graphics\2D">
+      <UniqueIdentifier>{19bd3301-2d19-485c-ba1c-bcda8b9d7d00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World\Graphics\2D\GUI">
+      <UniqueIdentifier>{56329902-91ae-4e99-b6f1-a2761e5c88eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World\Graphics\World">
+      <UniqueIdentifier>{bd58cf9c-c172-4900-94c0-665b71b5cdd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World\Entities\2D\BulletSystem">
+      <UniqueIdentifier>{731be81e-5fe9-42e2-b227-ba25fcab42e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World\Entities\2D\BulletSystem">
+      <UniqueIdentifier>{b623fbf3-3bf7-4449-9603-0501779d324c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\World\Graphics\2D\ParticleSystems">
+      <UniqueIdentifier>{7b5be6fc-acf0-4705-ba82-a4f81a117299}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Options.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraClass.cpp">
+      <Filter>Source Files\World\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsClass.cpp">
+      <Filter>Source Files\World\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DClass.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderClass.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureClass.cpp">
+      <Filter>Source Files\World\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneClass.cpp">
+      <Filter>Source Files\World\Graphics\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMainMenu.cpp">
+      <Filter>Source Files\World\Graphics\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGame.cpp">
+      <Filter>Source Files\World\Graphics\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageClass.cpp">
+      <Filter>Source Files\World\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="LightClass.cpp">
+      <Filter>Source Files\World\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelClass.cpp">
+      <Filter>Source Files\World\Graphics\3D\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="WaterShaderClass.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="TransparencyShaderClass.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureShaderClass.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="RefractionShaderClass.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="LightShaderClass.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneSplash.cpp">
+      <Filter>Source Files\World\Graphics\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTexture.cpp">
+      <Filter>Source Files\World\Graphics\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderedTexture.cpp">
+      <Filter>Source Files\World\Graphics\2D\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\World\Entities\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="TexturedButton.cpp">
+      <Filter>Source Files\World\Graphics\2D\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="TexturedRect.cpp">
+      <Filter>Source Files\World\Graphics\2D\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="TexturedSpritesheet.cpp">
+      <Filter>Source Files\World\Graphics\2D\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ITextureShaderClass.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Source Files\World\Entities\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerBS.cpp">
+      <Filter>Header Files\World\Entities\2D\BulletSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Source Files\World\Graphics\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletSystem.cpp">
+      <Filter>Header Files\World\Entities\2D\BulletSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBS.cpp">
+      <Filter>Header Files\World\Entities\2D\BulletSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="TitlePS.cpp">
+      <Filter>Header Files\World\Graphics\2D\ParticleSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Header Files\World\Entities\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="TexturedText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorTextureShader.cpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorShader.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="InstancedTexturedRect.cpp">
+      <Filter>Source Files\World\Graphics\2D\GUI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Options.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraClass.h">
+      <Filter>Header Files\World\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsClass.h">
+      <Filter>Header Files\World\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DClass.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderClass.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureClass.h">
+      <Filter>Header Files\World\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneClass.h">
+      <Filter>Header Files\World\Graphics\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMainMenu.h">
+      <Filter>Header Files\World\Graphics\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneTemplate.h">
+      <Filter>Header Files\World\Graphics\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGame.h">
+      <Filter>Header Files\World\Graphics\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageClass.h">
+      <Filter>Header Files\World\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="LightClass.h">
+      <Filter>Header Files\World\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelClass.h">
+      <Filter>Header Files\World\Graphics\3D\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="LightShaderClass.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="RefractionShaderClass.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureShaderClass.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="TransparencyShaderClass.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterShaderClass.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneSplash.h">
+      <Filter>Header Files\World\Graphics\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderedTexture.h">
+      <Filter>Header Files\World\Graphics\2D\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\World\Entities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderTexture.h">
+      <Filter>Header Files\World\Graphics\2D\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="TexturedButton.h">
+      <Filter>Header Files\World\Graphics\2D\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="TexturedRect.h">
+      <Filter>Header Files\World\Graphics\2D\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="TexturedSpritesheet.h">
+      <Filter>Header Files\World\Graphics\2D\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletSystem.h">
+      <Filter>Header Files\World\Entities\2D\BulletSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ITextureShaderClass.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBS.h">
+      <Filter>Header Files\World\Entities\2D\BulletSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBS.h">
+      <Filter>Header Files\World\Entities\2D\BulletSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Header Files\World\Entities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Header Files\World\Graphics\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="TitlePS.h">
+      <Filter>Header Files\World\Graphics\2D\ParticleSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\World\Entities\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="TexturedText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorTextureShader.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorShader.h">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="InstancedTexturedRect.h">
+      <Filter>Header Files\World\Graphics\2D\GUI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Bullet Hell.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="Project2.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\Assets\Images\GUI\Cursor\Default.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Data\Assets\Images\GUI\Cursor\GrenadeLauncher.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Data\Assets\Images\GUI\Cursor\Sniper.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Data\Images\GUI\Cursor\Default.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Data\Shaders\ColorPixelShader.hlsl">
+      <Filter>Source Files\Shaders\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shaders\ColorVertexShader.hlsl">
+      <Filter>Source Files\Shaders\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shaders\LightPixelShader.hlsl">
+      <Filter>Source Files\Shaders\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shaders\LightVertexShader.hlsl">
+      <Filter>Source Files\Shaders\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shaders\RefractionPixelShader.hlsl">
+      <Filter>Source Files\Shaders\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shaders\RefractionVertexShader.hlsl">
+      <Filter>Source Files\Shaders\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shaders\TexturePixelShader.hlsl">
+      <Filter>Source Files\Shaders\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shaders\TextureVertexShader.hlsl">
+      <Filter>Source Files\Shaders\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shaders\TransparencyPixelShader.hlsl">
+      <Filter>Source Files\Shaders\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shaders\TransparencyVertexShader.hlsl">
+      <Filter>Source Files\Shaders\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shaders\WaterPixelShader.hlsl">
+      <Filter>Source Files\Shaders\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shaders\WaterVertexShader.hlsl">
+      <Filter>Source Files\Shaders\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shaders\ITexturePixelShader.hlsl">
+      <Filter>Source Files\Shaders\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shaders\ITextureVertexShader.hlsl">
+      <Filter>Source Files\Shaders\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shaders\ColorTexturePixelShader.hlsl">
+      <Filter>Source Files\Shaders\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shaders\ColorTextureVertexShader.hlsl">
+      <Filter>Source Files\Shaders\HLSL</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\assets\images\gui\icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Data\Images\GUI\icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image.tga">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
