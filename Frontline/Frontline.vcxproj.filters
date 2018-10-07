@@ -363,16 +363,10 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data\Assets\Images\GUI\Cursor\Default.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Data\Assets\Images\GUI\Cursor\GrenadeLauncher.cur">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="Data\Assets\Images\GUI\Cursor\Sniper.cur">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="Data\Images\GUI\Cursor\Default.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Data\Images\GUI\Sniper.cur">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

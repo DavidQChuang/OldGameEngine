@@ -33,7 +33,7 @@ bool Player::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext
 	m_Bullets = new PlayerBulletSystem(150);
 	m_Bullets->Initialize(device, deviceContext,
 		bulletFilename,
-		screenWidth, screenHeight, 12*2, 12*2, 3);
+		screenWidth, screenHeight, 8*3, 8*3, 3);
 	return true;
 }
 bool Player::Frame(bool enableInput, double time) {

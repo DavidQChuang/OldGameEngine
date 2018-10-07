@@ -221,10 +221,8 @@
     <ResourceCompile Include="Project2.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data\Assets\Images\GUI\Cursor\Default.cur" />
-    <None Include="Data\Assets\Images\GUI\Cursor\GrenadeLauncher.cur" />
-    <None Include="Data\Assets\Images\GUI\Cursor\Sniper.cur" />
     <None Include="Data\Images\GUI\Cursor\Default.cur" />
+    <None Include="Data\Images\GUI\Sniper.cur" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shaders\ColorPixelShader.hlsl">

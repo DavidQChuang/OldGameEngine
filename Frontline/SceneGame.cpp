@@ -119,7 +119,6 @@ bool SceneGame::Initialize() {
 		".\\Data\\Models\\Face.texture");
 	if (!result) {
 		MessageBoxW(sm_hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
-		return false;
 	}
 
 	return true;
