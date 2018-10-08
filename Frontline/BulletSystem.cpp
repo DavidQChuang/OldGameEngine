@@ -19,14 +19,14 @@ bool BulletSystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 		return false;
 	}
 	result = m_Texture->Initialize(device, deviceContext,
-		textureFilename,
+		textureFilename, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f),
 		screenWidth, screenHeight, imageWidth, imageHeight, images);
 	if (!result) {
 		return false;
 	}
 	return true;
 }
-bool BulletSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, TextureShaderClass* shader, double elapsed) {
+bool BulletSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader, double elapsed) {
 	bool result;
 	if (m_Active != 0) {
 		for (int i = 0; i < m_Active; i++) {
@@ -45,7 +45,7 @@ bool BulletSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, Dir
 			bullet.y += bullet.velY * elapsed / 10;
 
 			m_Texture->SetSprite(bullet.type);
-			m_Texture->Render(direct3d->GetDeviceContext(), bullet.x, bullet.y);
+			m_Texture->Render(direct3d->GetDeviceContext(), bullet.x, bullet.y, bullet.color);
 			result = shader->Render(direct3d->GetDeviceContext(), GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, GetTextureResource());
 			if (!result) {
 				return false;

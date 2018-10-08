@@ -6,6 +6,7 @@
 #include "LightShaderClass.h"
 #include "RefractionShaderClass.h"
 #include "TextureShaderClass.h"
+#include "ColorTextureShader.h"
 #include "TransparencyShaderClass.h"
 #include "WaterShaderClass.h"
 #include "LightClass.h"
@@ -22,6 +23,7 @@ public:
 	ColorShaderClass* m_ColorShader;
 	LightShaderClass* m_LightShader;
 	RefractionShaderClass* m_RefractionShader;
+	ColorTextureShader* m_ColorTextureShader;
 	TextureShaderClass* m_TextureShader;
 	TransparencyShaderClass* m_TransparencyShader;
 	WaterShaderClass* m_WaterShader;

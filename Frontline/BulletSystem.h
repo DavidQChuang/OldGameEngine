@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include "TexturedSpritesheet.h"
 #include "Timer.h"
-#include "TextureShaderClass.h"
+#include "ColorTextureShader.h"
 #include "D3DClass.h"
 class BulletSystem {
 public:
@@ -19,7 +19,7 @@ public:
 	BulletSystem();
 	BulletSystem(int);
 	~BulletSystem();
-	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, DirectX::XMMATRIX, TextureShaderClass*, double);
+	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*, double);
 	void Create(float, float, DirectX::XMFLOAT4, int);
 	void Create(float, float, float, float, DirectX::XMFLOAT4, int);
 

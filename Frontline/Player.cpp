@@ -33,7 +33,7 @@ bool Player::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext
 	m_Bullets = new PlayerBulletSystem(150);
 	m_Bullets->Initialize(device, deviceContext,
 		bulletFilename,
-		screenWidth, screenHeight, 8*3, 8*3, 3);
+		screenWidth, screenHeight, 6*3, 6*3, 3);
 	return true;
 }
 bool Player::Frame(bool enableInput, double time) {
@@ -102,19 +102,19 @@ bool Player::Frame(bool enableInput, double time) {
 				//for every 2 frames (~33ms with error margin) passed move the bullet the amount it would have moved
 				m_Bullets->Create(m_x + m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
 					m_y + bulletOffset,
-					DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 0.2f), m_BulletType);
+					DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 0.8f), m_BulletType);
 				m_Bullets->Create(m_x + m_Texture->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
 					m_y + bulletOffset,
-					DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 0.2f), m_BulletType);
+					DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 0.8f), m_BulletType);
 				m_Bullets->MoveBullet(m_Bullets->GetActive()-2, (time - bulletTime) - intergar*33);
 				m_Bullets->MoveBullet(m_Bullets->GetActive()-1, (time - bulletTime) - intergar*33);
 				if (m_BulletType == 2) {
 					m_Bullets->Create(m_x + m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
 						m_y + bulletOffset,
-						DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 0.2f), m_BulletType);
+						DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 0.8f), m_BulletType);
 					m_Bullets->Create(m_x + m_Texture->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
 						m_y + bulletOffset,
-						DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 0.2f), m_BulletType);
+						DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 0.8f), m_BulletType);
 					m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, (time - bulletTime) - intergar * 33);
 					m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, (time - bulletTime) - intergar * 33);
 				}
@@ -152,7 +152,7 @@ bool Player::Render(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, DirectX::
 	}
 	return true;
 }
-bool Player::RenderBullets(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, TextureShaderClass* shader) {
+bool Player::RenderBullets(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader) {
 	bool result;
 	result = m_Bullets->Render(direct3d, worldMatrix, viewMatrix, orthoMatrix, shader, elapsedTime);
 	if (!result) {

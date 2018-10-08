@@ -16,9 +16,6 @@
     <Filter Include="Source Files\Shaders">
       <UniqueIdentifier>{2ccbc663-4237-4342-9674-f2bc0c83f1f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Shaders\HLSL">
-      <UniqueIdentifier>{b69ff4bd-3a33-4140-a869-2935368c603f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\System">
       <UniqueIdentifier>{cb9af63b-66bd-4df7-9f8f-29d455020d97}</UniqueIdentifier>
     </Filter>
@@ -100,13 +97,13 @@
     <Filter Include="Header Files\World\Graphics\2D\ParticleSystems">
       <UniqueIdentifier>{7b5be6fc-acf0-4705-ba82-a4f81a117299}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Shaders\HLSL">
+      <UniqueIdentifier>{b69ff4bd-3a33-4140-a869-2935368c603f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="System.cpp">
-      <Filter>Source Files\System</Filter>
     </ClCompile>
     <ClCompile Include="Options.cpp">
       <Filter>Source Files\System</Filter>
@@ -126,20 +123,8 @@
     <ClCompile Include="D3DClass.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="ShaderClass.cpp">
-      <Filter>Source Files\Shaders</Filter>
-    </ClCompile>
     <ClCompile Include="TextureClass.cpp">
       <Filter>Source Files\World\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneClass.cpp">
-      <Filter>Source Files\World\Graphics\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneMainMenu.cpp">
-      <Filter>Source Files\World\Graphics\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneGame.cpp">
-      <Filter>Source Files\World\Graphics\Scene</Filter>
     </ClCompile>
     <ClCompile Include="ImageClass.cpp">
       <Filter>Source Files\World\Graphics</Filter>
@@ -150,53 +135,8 @@
     <ClCompile Include="ModelClass.cpp">
       <Filter>Source Files\World\Graphics\3D\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="WaterShaderClass.cpp">
-      <Filter>Source Files\Shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="TransparencyShaderClass.cpp">
-      <Filter>Source Files\Shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureShaderClass.cpp">
-      <Filter>Source Files\Shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="RefractionShaderClass.cpp">
-      <Filter>Source Files\Shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="LightShaderClass.cpp">
-      <Filter>Source Files\Shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneSplash.cpp">
-      <Filter>Source Files\World\Graphics\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderTexture.cpp">
-      <Filter>Source Files\World\Graphics\2D</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderedTexture.cpp">
-      <Filter>Source Files\World\Graphics\2D\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files\World\Entities\2D</Filter>
-    </ClCompile>
-    <ClCompile Include="TexturedButton.cpp">
-      <Filter>Source Files\World\Graphics\2D\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="TexturedRect.cpp">
-      <Filter>Source Files\World\Graphics\2D\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="TexturedSpritesheet.cpp">
-      <Filter>Source Files\World\Graphics\2D\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="ITextureShaderClass.cpp">
-      <Filter>Source Files\Shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="Boss.cpp">
-      <Filter>Source Files\World\Entities\2D</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerBS.cpp">
       <Filter>Header Files\World\Entities\2D\BulletSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="ParticleSystem.cpp">
-      <Filter>Source Files\World\Graphics\2D</Filter>
     </ClCompile>
     <ClCompile Include="BulletSystem.cpp">
       <Filter>Header Files\World\Entities\2D\BulletSystem</Filter>
@@ -216,11 +156,71 @@
     <ClCompile Include="ColorTextureShader.cpp">
       <Filter>Header Files\Shaders</Filter>
     </ClCompile>
+    <ClCompile Include="WaterShaderClass.cpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClCompile>
     <ClCompile Include="ColorShader.cpp">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Header Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="ITextureShaderClass.cpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="LightShaderClass.cpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="RefractionShaderClass.cpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderClass.cpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureShaderClass.cpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="TransparencyShaderClass.cpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Header Files\World\Entities\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Header Files\World\Entities\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneSplash.cpp">
+      <Filter>Header Files\World\Graphics\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneClass.cpp">
+      <Filter>Header Files\World\Graphics\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGame.cpp">
+      <Filter>Header Files\World\Graphics\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMainMenu.cpp">
+      <Filter>Header Files\World\Graphics\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="System.cpp">
+      <Filter>Header Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Header Files\World\Graphics\2D\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderTexture.cpp">
+      <Filter>Header Files\World\Graphics\2D\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="TexturedSpritesheet.cpp">
+      <Filter>Header Files\World\Graphics\2D\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderedTexture.cpp">
+      <Filter>Header Files\World\Graphics\2D\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="TexturedButton.cpp">
+      <Filter>Header Files\World\Graphics\2D\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="TexturedRect.cpp">
+      <Filter>Header Files\World\Graphics\2D\GUI</Filter>
     </ClCompile>
     <ClCompile Include="InstancedTexturedRect.cpp">
-      <Filter>Source Files\World\Graphics\2D\GUI</Filter>
+      <Filter>Header Files\World\Graphics\2D\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -372,52 +372,52 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shaders\ColorPixelShader.hlsl">
-      <Filter>Source Files\Shaders\HLSL</Filter>
+      <Filter>Header Files\Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Data\Shaders\ColorVertexShader.hlsl">
-      <Filter>Source Files\Shaders\HLSL</Filter>
+      <Filter>Header Files\Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Data\Shaders\LightPixelShader.hlsl">
-      <Filter>Source Files\Shaders\HLSL</Filter>
+      <Filter>Header Files\Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Data\Shaders\LightVertexShader.hlsl">
-      <Filter>Source Files\Shaders\HLSL</Filter>
+      <Filter>Header Files\Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Data\Shaders\RefractionPixelShader.hlsl">
-      <Filter>Source Files\Shaders\HLSL</Filter>
+      <Filter>Header Files\Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Data\Shaders\RefractionVertexShader.hlsl">
-      <Filter>Source Files\Shaders\HLSL</Filter>
+      <Filter>Header Files\Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Data\Shaders\TexturePixelShader.hlsl">
-      <Filter>Source Files\Shaders\HLSL</Filter>
+      <Filter>Header Files\Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Data\Shaders\TextureVertexShader.hlsl">
-      <Filter>Source Files\Shaders\HLSL</Filter>
+      <Filter>Header Files\Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Data\Shaders\TransparencyPixelShader.hlsl">
-      <Filter>Source Files\Shaders\HLSL</Filter>
+      <Filter>Header Files\Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Data\Shaders\TransparencyVertexShader.hlsl">
-      <Filter>Source Files\Shaders\HLSL</Filter>
+      <Filter>Header Files\Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Data\Shaders\WaterPixelShader.hlsl">
-      <Filter>Source Files\Shaders\HLSL</Filter>
+      <Filter>Header Files\Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Data\Shaders\WaterVertexShader.hlsl">
-      <Filter>Source Files\Shaders\HLSL</Filter>
+      <Filter>Header Files\Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Data\Shaders\ITexturePixelShader.hlsl">
-      <Filter>Source Files\Shaders\HLSL</Filter>
+      <Filter>Header Files\Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Data\Shaders\ITextureVertexShader.hlsl">
-      <Filter>Source Files\Shaders\HLSL</Filter>
+      <Filter>Header Files\Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Data\Shaders\ColorTexturePixelShader.hlsl">
-      <Filter>Source Files\Shaders\HLSL</Filter>
+      <Filter>Header Files\Shaders\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Data\Shaders\ColorTextureVertexShader.hlsl">
-      <Filter>Source Files\Shaders\HLSL</Filter>
+      <Filter>Header Files\Shaders\HLSL</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

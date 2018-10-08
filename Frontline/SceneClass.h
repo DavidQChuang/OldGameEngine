@@ -13,7 +13,7 @@
 #pragma warning(disable : 4244)
 class SceneClass {
 public:
-	SceneClass(HWND hwnd, D3DClass*, CameraClass*, TextureShaderClass*, TransparencyShaderClass*);
+	SceneClass(HWND hwnd, D3DClass*, CameraClass*, ShaderClass*);
 	SceneClass(const SceneClass&);
 	~SceneClass();
 	virtual bool Initialize()=0;
@@ -25,7 +25,6 @@ protected:
 	HWND sm_hwnd;
 	D3DClass* sm_Direct3D;
 	CameraClass* sm_Camera;
-	TextureShaderClass* sm_TextureShader;
-	TransparencyShaderClass* sm_TransparencyShader;
+	ShaderClass* sm_ShaderClass;
 	Timer* sm_Timer;
 };

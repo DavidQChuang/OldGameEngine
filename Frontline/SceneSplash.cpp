@@ -3,8 +3,8 @@
 //SceneSplash(HWND, D3DClass*, CameraClass*, ColorShaderClass*, TextureShaderClass*, TransparencyShaderClass*);
 //SceneSplash(const SceneClass&);
 //~SceneSplash();
-SceneSplash::SceneSplash(HWND hwnd, D3DClass* d3dclass, CameraClass* cameraclass, TextureShaderClass* textureshaderclass, TransparencyShaderClass* transparencyshaderclass)
-	: SceneClass(hwnd, d3dclass, cameraclass, textureshaderclass, transparencyshaderclass) {
+SceneSplash::SceneSplash(HWND hwnd, D3DClass* d3dclass, CameraClass* cameraclass, ShaderClass* shaderclass)
+	: SceneClass(hwnd, d3dclass, cameraclass, shaderclass) {
 	m_active = false;
 
 }
@@ -54,7 +54,7 @@ bool SceneSplash::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX pro
 
 	// Render the model using the texture shader.
 	m_Splash->Render(sm_Direct3D->GetDeviceContext(), ((Options::WIDTH / 2) - m_Splash->m_imageWidth / 2), 0, DirectX::XMFLOAT4(1.f,0.f,0.f,1.f));
-	result = sm_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), m_Splash->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Splash->GetTexture(), blendAmount);
+	result = sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), m_Splash->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Splash->GetTexture(), blendAmount);
 	if (!result) {
 		return false;
 	}

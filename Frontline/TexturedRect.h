@@ -5,18 +5,17 @@
 
 class TexturedRect {
 protected:
+	struct ColorVertexType {
+		DirectX::XMFLOAT3 position;
+		DirectX::XMFLOAT4 color;
+	};
 	struct VertexType {
 		DirectX::XMFLOAT3 position;
 		DirectX::XMFLOAT2 texture;
-		DirectX::XMFLOAT4 color;
 	};
 	struct ColoredVertexType {
 		DirectX::XMFLOAT3 position;
 		DirectX::XMFLOAT2 texture;
-		DirectX::XMFLOAT4 color;
-	};
-	struct ColorVertexType {
-		DirectX::XMFLOAT3 position;
 		DirectX::XMFLOAT4 color;
 	};
 public:
@@ -26,11 +25,12 @@ public:
 		COLOR_TEXTURE_TYPE = 4
 	};
 	TexturedRect();
-	TexturedRect(int);
 	TexturedRect(const TexturedRect&);
 	~TexturedRect();
 
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, DirectX::XMFLOAT4, int, int, int, int);
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int, int);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, DirectX::XMFLOAT4, int, int, int, int);
 	void Shutdown();
 	bool Render(ID3D11DeviceContext*, int, int);
 	bool Render(ID3D11DeviceContext*, int, int, DirectX::XMFLOAT4);
@@ -46,6 +46,7 @@ public:
 
 	virtual void Resize();
 	virtual void Resize(int, int);
+	//void ChangeColor(DirectX::XMFLOAT4);
 protected:
 	bool InitializeBuffers(ID3D11Device*);
 	void ShutdownBuffers();
@@ -58,7 +59,7 @@ protected:
 	ID3D11Buffer *m_vertexBuffer, *m_indexBuffer;
 	int m_vertexCount, m_indexCount;
 	TextureClass* m_Texture;
-	DirectX::XMFLOAT4 m_Color;
+	DirectX::XMFLOAT4 m_Color, m_previousColor;
 
 	int m_posX, m_posY;
 	int m_previousPosX, m_previousPosY;

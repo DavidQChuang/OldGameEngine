@@ -10,6 +10,7 @@ public:
 	~TexturedSpritesheet();
 
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int, int, int);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, DirectX::XMFLOAT4, int, int, int, int, int);
 	bool Render(ID3D11DeviceContext*, int, int);
 	bool Render(ID3D11DeviceContext*, int, int, DirectX::XMFLOAT4);
 	

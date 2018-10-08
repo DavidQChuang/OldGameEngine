@@ -3,14 +3,13 @@
 //SceneMainMenu(HWND, D3DClass*, CameraClass*, ColorShaderClass*, TextureShaderClass*, TransparencyShaderClass*);
 //SceneMainMenu(const SceneClass&);
 //~SceneMainMenu();
-SceneMainMenu::SceneMainMenu(HWND hwnd, D3DClass* d3dclass, CameraClass* cameraclass, TextureShaderClass* textureshaderclass, ColorShaderClass* colorshaderclass, TransparencyShaderClass* transparencyshaderclass)
-	: SceneClass(hwnd, d3dclass, cameraclass, textureshaderclass, transparencyshaderclass) {
+SceneMainMenu::SceneMainMenu(HWND hwnd, D3DClass* d3dclass, CameraClass* cameraclass, ShaderClass* shaderclass)
+	: SceneClass(hwnd, d3dclass, cameraclass, shaderclass) {
 	m_active = false;
 	m_Background = 0;
 	m_Title = 0;
 	m_Play = 0;
 	m_Flame = 0;
-	m_ColorShader = colorshaderclass;
 }
 
 bool SceneMainMenu::Initialize() {
@@ -119,13 +118,13 @@ bool SceneMainMenu::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX p
 	sm_Direct3D->TurnZBufferOff();
 	// Render the model using the texture shader.
 	m_Background->Render(sm_Direct3D->GetDeviceContext(), ((Options::WIDTH / 2) - m_Background->m_imageWidth / 2), 0);
-	result = sm_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), m_Background->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Background->GetTexture(), blendAmount);
+	result = sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), m_Background->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Background->GetTexture(), blendAmount);
 	if (!result) {
 		return false;
 	}
 
 	m_Title->Render(sm_Direct3D->GetDeviceContext(), ((Options::WIDTH / 2) - m_Title->m_imageWidth / 2), 100-m_Title->m_imageHeight / 2);
-	result = sm_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_Title->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Title->GetTexture());
+	result = sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_Title->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Title->GetTexture());
 	if (!result) {
 		return false;
 	}
@@ -133,7 +132,7 @@ bool SceneMainMenu::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX p
 	GetCursorPos(&m_cursorPos);
 	ScreenToClient(sm_hwnd, &m_cursorPos);
 
-	m_Flame->Render(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix, sm_TextureShader);
+	m_Flame->Render(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
 	for (int bigoof = 0; bigoof < 10; bigoof++) {
 		m_Flame->Create(0, 0, -5, -3);
 		if (bigoof % 6 == 0) {
@@ -148,7 +147,7 @@ bool SceneMainMenu::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX p
 	else {
 		m_Play->Resize();
 	}
-	result = sm_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_Play->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Play->GetTexture(sm_hwnd, m_cursorPos.x, m_cursorPos.y));
+	result = sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_Play->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Play->GetTexture(sm_hwnd, m_cursorPos.x, m_cursorPos.y));
 	if (!result) {
 		return false;
 	}

@@ -5,6 +5,7 @@ ShaderClass::ShaderClass(D3DClass* directX) {
 	m_LightShader = 0;
 	m_RefractionShader = 0;
 	m_TextureShader = 0;
+	m_ColorTextureShader = 0;
 	m_TransparencyShader = 0;
 	m_WaterShader = 0;
 	// 0 = fullscreen, 1 = windowed with titlebar(default), 2 = windowed without titlebar
@@ -21,6 +22,18 @@ ShaderClass::~ShaderClass() {
 
 bool ShaderClass::Initialize(HWND hwnd) {
 	bool result;
+	// Create the texture shader object.
+	m_ColorTextureShader = new ColorTextureShader;
+	if (!m_ColorTextureShader) {
+		return false;
+	}
+
+	// Initialize the color shader object.
+	result = m_ColorTextureShader->Initialize(m_DirectX->GetDevice(), hwnd);
+	if (!result) {
+		MessageBoxW(hwnd, L"Could not initialize the color texture shader.", L"Error", MB_OK);
+		return false;
+	}
 	// Create the texture shader object.
 	m_ColorShader = new ColorShaderClass;
 	if (!m_ColorShader) {

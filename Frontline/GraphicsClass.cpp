@@ -60,13 +60,13 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd) {
 	// Set the initial position of the camera.
 	m_Camera->SetPosition(0.0f, 0.0f, -5.0f);
 
-	m_splash = new SceneSplash(hwnd, m_Direct3D, m_Camera, m_shaders->m_TextureShader, m_shaders->m_TransparencyShader);
+	m_splash = new SceneSplash(hwnd, m_Direct3D, m_Camera, m_shaders);
 	m_splash->Initialize();
 
-	m_menu = new SceneMainMenu(hwnd, m_Direct3D, m_Camera, m_shaders->m_TextureShader, m_shaders->m_ColorShader, m_shaders->m_TransparencyShader);
+	m_menu = new SceneMainMenu(hwnd, m_Direct3D, m_Camera, m_shaders);
 	m_menu->Initialize();
 
-	m_game = new SceneGame(hwnd, m_Direct3D, m_Camera, m_shaders->m_ColorShader, m_shaders->m_TextureShader, m_shaders->m_TransparencyShader, m_shaders->m_LightShader, m_shaders->m_Light, m_Input);
+	m_game = new SceneGame(hwnd, m_Direct3D, m_Camera, m_shaders, m_Input);
 	m_game->Initialize();
 
 	// Create the render to texture object.

@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include "TexturedRect.h"
 #include "Timer.h"
-#include "TextureShaderClass.h"
+#include "ColorTextureShader.h"
 #include <random>
 #include "D3DClass.h"
 #include <sstream>
@@ -19,13 +19,14 @@ protected:
 		double lifestart;
 		int lifetime;
 		DirectX::XMFLOAT4 color;
+		int data;
 	};
 public:
 	ParticleSystem(int, int, int, int, int, int, int);
 	ParticleSystem(int, int, int, int, int, int, int, int, int);
 	ParticleSystem(const ParticleSystem&);
 	~ParticleSystem();
-	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, DirectX::XMMATRIX, TextureShaderClass*);
+	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*);
 	void Create();
 	void Create(int, int);
 	void Create(int, int, int);

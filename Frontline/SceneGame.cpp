@@ -3,12 +3,9 @@
 //SceneGame(HWND, D3DClass*, CameraClass*, ColorShaderClass*, TextureShaderClass*, TransparencyShaderClass*);
 //SceneGame(const SceneClass&);
 //~SceneGame();
-SceneGame::SceneGame(HWND hwnd, D3DClass* d3dclass, CameraClass* cameraclass, ColorShaderClass* colorshaderclass, TextureShaderClass* textureshaderclass, TransparencyShaderClass* transparencyshaderclass, LightShaderClass* lightshaderclass, LightClass* lightclass, Input* input)
-	: SceneClass(hwnd, d3dclass, cameraclass, textureshaderclass, transparencyshaderclass) {
+SceneGame::SceneGame(HWND hwnd, D3DClass* d3dclass, CameraClass* cameraclass, ShaderClass* shaderclass, Input* input)
+	: SceneClass(hwnd, d3dclass, cameraclass, shaderclass) {
 	m_active = false;
-	m_ColorShader = colorshaderclass;
-	m_LightShader = lightshaderclass;
-	m_Light = lightclass;
 	m_Input = input;
 	m_GameState = 0;
 	m_Background = 0;
@@ -195,8 +192,8 @@ bool SceneGame::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX proje
 	if (!m_active) {
 		m_active = true;
 		sm_Timer->Start();
-		m_Light->SetAmbientColor(0.2f, 0.2f, 0.2f, 1.0f);
-		m_Light->SetDiffuseColor(0.f, 0.f, 0.f, 1.0f);
+		sm_ShaderClass->m_Light->SetAmbientColor(0.2f, 0.2f, 0.2f, 1.0f);
+		sm_ShaderClass->m_Light->SetDiffuseColor(0.f, 0.f, 0.f, 1.0f);
 	}
 	switch (m_GameState) {
 	case 0:
@@ -236,35 +233,35 @@ bool SceneGame::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX proje
 		return false;
 	}*/
 	m_HUD->Render(sm_Direct3D->GetDeviceContext(), 740, 36);
-	result = sm_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_HUD->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_HUD->GetTexture());
+	result = sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_HUD->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_HUD->GetTexture());
 	if (!result) {
 		return false;
 	}
 	m_BulletKeys->Render(sm_Direct3D->GetDeviceContext(), 740, 36+97*3);
-	result = sm_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_BulletKeys->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_BulletKeys->GetTexture());
+	result = sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_BulletKeys->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_BulletKeys->GetTexture());
 	if (!result) {
 		return false;
 	}
 	m_AbilityContainers->Render(sm_Direct3D->GetDeviceContext(), 740, 36+106*3);
-	result = sm_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_AbilityContainers->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_AbilityContainers->GetTexture());
+	result = sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_AbilityContainers->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_AbilityContainers->GetTexture());
 	if (!result) {
 		return false;
 	}
 	m_BulletSelect->SetSprite(m_Player->m_BulletType);
 	m_BulletSelect->Render(sm_Direct3D->GetDeviceContext(), 740+3, 36+107*3);
-	result = sm_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_BulletSelect->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_BulletSelect->GetTexture());
+	result = sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_BulletSelect->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_BulletSelect->GetTexture());
 	if (!result) {
 		return false;
 	}
 	
 	m_Player->Render(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix);
-	result = sm_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_Player->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Player->GetTextureResource());
+	result = sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_Player->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Player->GetTextureResource());
 	if (!result) {
 		return false;
 	}
-	m_Player->RenderBullets(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix, sm_TextureShader);
+	m_Player->RenderBullets(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
 	m_BadBois->Create(400, 200, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f), 0);
-	m_BadBois->Render(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix,sm_TextureShader, sm_Timer->getTime());
+	m_BadBois->Render(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix, sm_ShaderClass->m_TextureShader, sm_Timer->getTime());
 	m_Input->Update();
 	return true;
 }

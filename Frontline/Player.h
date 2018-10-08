@@ -13,7 +13,7 @@ public:
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, char*, int, int, int, int, int);
 
 	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, DirectX::XMMATRIX);
-	bool RenderBullets(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, DirectX::XMMATRIX, TextureShaderClass*);
+	bool RenderBullets(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*);
 
 	void Shutdown();
 

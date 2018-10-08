@@ -7,7 +7,7 @@
 class SceneGame : public SceneClass {
 protected:
 public:
-	SceneGame(HWND, D3DClass*, CameraClass*, ColorShaderClass*, TextureShaderClass*, TransparencyShaderClass*, LightShaderClass*, LightClass*, Input*);
+	SceneGame(HWND, D3DClass*, CameraClass*, ShaderClass*, Input*);
 	bool Initialize();
 	void Shutdown();
 	bool Render(XMMATRIX, XMMATRIX, XMMATRIX, XMMATRIX);
@@ -26,10 +26,6 @@ private:
 	EnemyBulletSystem* m_DODGE;
 
 	ModelClass* m_Model;
-
-	LightClass* m_Light;
-	LightShaderClass* m_LightShader;
-	ColorShaderClass* m_ColorShader;
 
 	Input* m_Input;
 

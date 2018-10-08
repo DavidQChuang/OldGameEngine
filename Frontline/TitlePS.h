@@ -6,4 +6,5 @@ public:
 	TitlePS(int, int, int, int, int, int, int);
 	TitlePS(int, int, int, int, int, int, int, int, int);
 	bool ParticleMovement(Particle&);
+	void AdditionalCreate(float, Particle&);
 };

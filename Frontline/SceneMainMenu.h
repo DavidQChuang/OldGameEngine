@@ -3,7 +3,7 @@
 #include "TitlePS.h"
 class SceneMainMenu : public SceneClass {
 public:
-	SceneMainMenu(HWND, D3DClass*, CameraClass*, TextureShaderClass*, ColorShaderClass*, TransparencyShaderClass*);
+	SceneMainMenu(HWND, D3DClass*, CameraClass*, ShaderClass*);
 	bool Initialize();
 	void Shutdown();
 	bool Render(XMMATRIX, XMMATRIX, XMMATRIX, XMMATRIX);
@@ -14,5 +14,4 @@ private:
 	TexturedRect* m_Title;
 	TexturedButton* m_Play;
 	TitlePS* m_Flame;
-	ColorShaderClass* m_ColorShader;
 };

@@ -47,7 +47,7 @@ bool ParticleSystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* devic
 		return false;
 	}
 	result = m_Particle->Initialize(device, deviceContext,
-		textureFilename,
+		textureFilename, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f),
 		screenWidth, screenHeight, imageWidth, imageHeight);
 	if (!result) {
 		return false;
@@ -63,7 +63,7 @@ void ParticleSystem::SetY(int y) {
 	m_y = y;
 }
 
-bool ParticleSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, TextureShaderClass* shader) {
+bool ParticleSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader) {
 	bool result;
 	if (!start) {
 		start = true;
