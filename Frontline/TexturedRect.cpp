@@ -195,10 +195,10 @@ bool TexturedRect::InitializeBuffers(ID3D11Device* device) {
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
 	HRESULT result;
 	// Set the number of vertices in the vertex array.
-	m_vertexCount = 6;
+	m_vertexCount = 4;
 
 	// Set the number of indices in the index array.
-	m_indexCount = m_vertexCount;
+	m_indexCount = 6;
 
 	switch (m_shaderType) {
 	case COLOR_TYPE:
@@ -286,9 +286,12 @@ bool TexturedRect::InitializeBuffers(ID3D11Device* device) {
 
 
 	// Load the index array with data.
-	for (int i = 0; i<m_indexCount; i++) {
-		indices[i] = i;
-	}
+	indices[0] = 0;
+	indices[1] = 1;
+	indices[2] = 2;
+	indices[3] = 0;
+	indices[4] = 3;
+	indices[5] = 1;
 
 	// Set up the description of the static index buffer.
 	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -384,7 +387,6 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positio
 			return false;
 		}
 		// Load the vertex array with data.
-		// First triangle.
 		colortype[0].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
 		colortype[0].color = color;
 
@@ -394,15 +396,8 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positio
 		colortype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f);  // Bottom left.
 		colortype[2].color = color;
 
-		// Second triangle.
-		colortype[3].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
+		colortype[3].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
 		colortype[3].color = color;
-
-		colortype[4].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
-		colortype[4].color = color;
-
-		colortype[5].position = DirectX::XMFLOAT3(right, bottom, 0.0f);  // Bottom right.
-		colortype[5].color = color;
 
 		// Lock the vertex buffer so it can be written to.
 		result = deviceContext->Map(m_vertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
@@ -429,7 +424,6 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positio
 			return false;
 		}
 		// Load the vertex array with data.
-		// First triangle.
 		coloredtype[0].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
 		coloredtype[0].color = color;
 		coloredtype[0].texture = DirectX::XMFLOAT2(0.0f, 0.0f);
@@ -442,18 +436,10 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positio
 		coloredtype[2].color = color;
 		coloredtype[2].texture = DirectX::XMFLOAT2(0.0f, 1.0f);
 
-		// Second triangle.
-		coloredtype[3].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
+		coloredtype[3].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
 		coloredtype[3].color = color;
-		coloredtype[3].texture = DirectX::XMFLOAT2(0.0f, 0.0f);
+		coloredtype[3].texture = DirectX::XMFLOAT2(1.0f, 0.0f);
 
-		coloredtype[4].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
-		coloredtype[4].color = color;
-		coloredtype[4].texture = DirectX::XMFLOAT2(1.0f, 0.0f);
-
-		coloredtype[5].position = DirectX::XMFLOAT3(right, bottom, 0.0f);  // Bottom right.
-		coloredtype[5].color = color;
-		coloredtype[5].texture = DirectX::XMFLOAT2(1.0f, 1.0f);
 
 		// Lock the vertex buffer so it can be written to.
 		result = deviceContext->Map(m_vertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
@@ -523,7 +509,6 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positio
 	}
 
 	// Load the vertex array with data.
-	// First triangle.
 	vertices[0].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
 	vertices[0].texture = DirectX::XMFLOAT2(0.0f, 0.0f);
 
@@ -533,15 +518,8 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positio
 	vertices[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f);  // Bottom left.
 	vertices[2].texture = DirectX::XMFLOAT2(0.0f, 1.0f);
 
-	// Second triangle.
-	vertices[3].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
-	vertices[3].texture = DirectX::XMFLOAT2(0.0f, 0.0f);
-
-	vertices[4].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
-	vertices[4].texture = DirectX::XMFLOAT2(1.0f, 0.0f);
-
-	vertices[5].position = DirectX::XMFLOAT3(right, bottom, 0.0f);  // Bottom right.
-	vertices[5].texture = DirectX::XMFLOAT2(1.0f, 1.0f);
+	vertices[3].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
+	vertices[3].texture = DirectX::XMFLOAT2(1.0f, 0.0f);
 
 	// Lock the vertex buffer so it can be written to.
 	result = deviceContext->Map(m_vertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);

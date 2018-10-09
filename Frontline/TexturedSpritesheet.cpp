@@ -181,7 +181,6 @@ bool TexturedSpritesheet::UpdateBuffers(ID3D11DeviceContext* deviceContext, int 
 		return false;
 	}
 	// Load the vertex array with data.
-	// First triangle.
 	vertices[0].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
 	vertices[0].texture = DirectX::XMFLOAT2(m_spriteSize * m_currentSprite, 0.0f);
 
@@ -191,15 +190,8 @@ bool TexturedSpritesheet::UpdateBuffers(ID3D11DeviceContext* deviceContext, int 
 	vertices[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f);  // Bottom left
 	vertices[2].texture = DirectX::XMFLOAT2(m_spriteSize * m_currentSprite, 1.0f);
 
-	// Second triangle.
-	vertices[3].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
-	vertices[3].texture = DirectX::XMFLOAT2(m_spriteSize * m_currentSprite, 0.0f);
-
-	vertices[4].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
-	vertices[4].texture = DirectX::XMFLOAT2(m_spriteSize * (m_currentSprite + 1), 0.0f);
-
-	vertices[5].position = DirectX::XMFLOAT3(right, bottom, 0.0f);  // Bottom right.
-	vertices[5].texture = DirectX::XMFLOAT2(m_spriteSize * (m_currentSprite + 1), 1.0f);
+	vertices[3].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
+	vertices[3].texture = DirectX::XMFLOAT2(m_spriteSize * (m_currentSprite + 1), 0.0f);
 	// Lock the vertex buffer so it can be written to.
 	result = deviceContext->Map(m_vertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 	if (FAILED(result)) {
@@ -255,7 +247,6 @@ bool TexturedSpritesheet::UpdateBuffers(ID3D11DeviceContext* deviceContext, int 
 			return false;
 		}
 		// Load the vertex array with data.
-		// First triangle.
 		coloredtype[0].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
 		coloredtype[0].color = color;
 		coloredtype[0].texture = DirectX::XMFLOAT2(m_spriteSize * m_currentSprite, 0.0f);
@@ -268,18 +259,9 @@ bool TexturedSpritesheet::UpdateBuffers(ID3D11DeviceContext* deviceContext, int 
 		coloredtype[2].color = color;
 		coloredtype[2].texture = DirectX::XMFLOAT2(m_spriteSize * m_currentSprite, 1.0f);
 
-		// Second triangle.
-		coloredtype[3].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
+		coloredtype[3].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
 		coloredtype[3].color = color;
-		coloredtype[3].texture = DirectX::XMFLOAT2(m_spriteSize * m_currentSprite, 0.0f);
-
-		coloredtype[4].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
-		coloredtype[4].color = color;
-		coloredtype[4].texture = DirectX::XMFLOAT2(m_spriteSize * (m_currentSprite + 1), 0.0f);
-
-		coloredtype[5].position = DirectX::XMFLOAT3(right, bottom, 0.0f);  // Bottom right.
-		coloredtype[5].color = color;
-		coloredtype[5].texture = DirectX::XMFLOAT2(m_spriteSize * (m_currentSprite + 1), 1.0f);
+		coloredtype[3].texture = DirectX::XMFLOAT2(m_spriteSize * (m_currentSprite + 1), 0.0f);
 
 		// Lock the vertex buffer so it can be written to.
 		result = deviceContext->Map(m_vertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);

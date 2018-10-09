@@ -46,7 +46,8 @@ bool SceneGame::Initialize() {
 	}
 
 	result = m_BulletKeys->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
-		".\\Data\\Images\\GUI\\SelectKey.sprite",
+		//".\\Data\\Images\\GUI\\SelectKey.sprite", DirectX::XMFLOAT4(1.f,1.f,1.f,1.f),
+		DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f),
 		800, 600, 14 * 3, 36 * 3);
 	if (!result) {
 		MessageBoxW(sm_hwnd, L"Could not initialize the game HUD. 1", L"Error", MB_OK);
@@ -99,7 +100,7 @@ bool SceneGame::Initialize() {
 	result = m_Player->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\Sprites\\Character\\Player.sprites",
 		".\\Data\\Images\\Sprites\\Bullets\\Bullets.sprites",
-		800, 600, 18*3, 18*3, 8);
+		800, 600, 16*3, 18*3, 8);
 	if (!result) {
 		MessageBoxW(sm_hwnd, L"Could not initialize the player sprite. 1", L"Error", MB_OK);
 		return false;
@@ -238,10 +239,15 @@ bool SceneGame::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX proje
 		return false;
 	}
 	m_BulletKeys->Render(sm_Direct3D->GetDeviceContext(), 740, 36+97*3);
-	result = sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_BulletKeys->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_BulletKeys->GetTexture());
+	/*result = sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_BulletKeys->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_BulletKeys->GetTexture());
+	if (!result) {
+		return false;
+	}*/
+	result = sm_ShaderClass->m_ColorShader->Render(sm_Direct3D->GetDeviceContext(), m_BulletKeys->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix);
 	if (!result) {
 		return false;
 	}
+
 	m_AbilityContainers->Render(sm_Direct3D->GetDeviceContext(), 740, 36+106*3);
 	result = sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_AbilityContainers->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_AbilityContainers->GetTexture());
 	if (!result) {

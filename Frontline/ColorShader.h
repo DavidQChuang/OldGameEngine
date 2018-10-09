@@ -8,7 +8,6 @@
 
 class ColorShaderClass {
 private:
-
 	struct MatrixBufferType {
 		DirectX::XMMATRIX world;
 		DirectX::XMMATRIX view;
