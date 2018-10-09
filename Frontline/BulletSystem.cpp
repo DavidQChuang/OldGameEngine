@@ -45,7 +45,7 @@ bool BulletSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, Dir
 			bullet.y += bullet.velY * elapsed / 10;
 
 			m_Texture->SetSprite(bullet.type);
-			m_Texture->Render(direct3d->GetDeviceContext(), bullet.x, bullet.y, bullet.color);
+			m_Texture->Render(direct3d->GetDeviceContext(), bullet.x, bullet.y);
 			result = shader->Render(direct3d->GetDeviceContext(), GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, GetTextureResource());
 			if (!result) {
 				return false;
