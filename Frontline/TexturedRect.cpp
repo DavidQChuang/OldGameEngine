@@ -415,7 +415,7 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positio
 		deviceContext->Unmap(m_vertexBuffer, 0);
 		break;
 	case TEXTURE_TYPE:
-		UpdateBuffers(deviceContext, positionX, positionY);
+		return UpdateBuffers(deviceContext, positionX, positionY);
 		break;
 	case COLOR_TEXTURE_TYPE:
 		// Create the vertex array.
@@ -486,6 +486,7 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positio
 		return true;
 	}
 
+	if (m_shaderType == COLOR_TEXTURE_TYPE) return UpdateBuffers(deviceContext, positionX, positionY, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f));
 	// If it has changed then update the position it is being rendered to.
 	m_previousPosX = positionX;
 	m_previousPosY = positionY;
