@@ -87,7 +87,7 @@ bool Player::Frame(bool enableInput, double time) {
 			bulletOffset = 55;
 			break;
 		case 1:
-			gap = 0.75;
+			gap = 0.9;
 			bulletOffset = 115;
 			break;
 		case 2:

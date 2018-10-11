@@ -21,6 +21,13 @@ public:
 	virtual bool Render(XMMATRIX, XMMATRIX, XMMATRIX, XMMATRIX)=0;
 	bool m_active;
 
+	bool RenderRect(TexturedRect*, int, int, XMMATRIX, XMMATRIX, XMMATRIX, int);
+	bool RenderSpritesheet(TexturedSpritesheet*, int, int, XMMATRIX, XMMATRIX, XMMATRIX, int);
+	bool RenderSpritesheet(TexturedSpritesheet*, int, int, int, XMMATRIX, XMMATRIX, XMMATRIX, int);
+	//void RenderObject(ModelClass*, XMMATRIX, XMMATRIX, XMMATRIX, int);
+
+
+
 protected:
 	HWND sm_hwnd;
 	D3DClass* sm_Direct3D;

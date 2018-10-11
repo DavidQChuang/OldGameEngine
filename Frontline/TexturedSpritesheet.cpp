@@ -157,7 +157,10 @@ bool TexturedSpritesheet::UpdateBuffers(ID3D11DeviceContext* deviceContext, int 
 	if ((positionX == m_previousPosX) && (positionY == m_previousPosY) && (m_previousSprite == m_currentSprite)) {
 		return true;
 	}
-	if (m_shaderType == COLOR_TEXTURE_TYPE) return UpdateBuffers(deviceContext, positionX, positionY, DirectX::XMFLOAT4(1.f,1.f,1.f,1.f));
+	if (m_shaderType == COLOR_TEXTURE_TYPE) {
+		UpdateBuffers(deviceContext, positionX, positionY, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f)); 
+		return true;
+	}
 	// If it has changed then update the position it is being rendered to.
 	m_previousPosX = positionX;
 	m_previousPosY = positionY;
@@ -280,7 +283,8 @@ bool TexturedSpritesheet::UpdateBuffers(ID3D11DeviceContext* deviceContext, int 
 		deviceContext->Unmap(m_vertexBuffer, 0);
 	}
 	else {
-		return UpdateBuffers(deviceContext, positionX, positionY);
+		result = UpdateBuffers(deviceContext, positionX, positionY);
+		return result;
 	}
 	// If it has changed then update the position it is being rendered to.
 	m_previousPosX = positionX;

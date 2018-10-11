@@ -247,18 +247,8 @@ bool SceneGame::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX proje
 	if (!result) {
 		return false;
 	}
-
-	m_AbilityContainers->Render(sm_Direct3D->GetDeviceContext(), 740, 36+106*3);
-	result = sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_AbilityContainers->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_AbilityContainers->GetTexture());
-	if (!result) {
-		return false;
-	}
-	m_BulletSelect->SetSprite(m_Player->m_BulletType);
-	m_BulletSelect->Render(sm_Direct3D->GetDeviceContext(), 740+3, 36+107*3);
-	result = sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), m_BulletSelect->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_BulletSelect->GetTexture());
-	if (!result) {
-		return false;
-	}
+	RenderRect(m_AbilityContainers, 740, 36 + 106 * 3, worldMatrix, viewMatrix, orthoMatrix, TexturedRect::TEXTURE_TYPE);
+	RenderSpritesheet(m_BulletSelect, 740 + 3, 36 + 107 * 3, m_Player->m_BulletType, worldMatrix, viewMatrix, orthoMatrix, TexturedRect::COLOR_TEXTURE_TYPE);
 	
 	m_Player->Render(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix);
 	result = sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_Player->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Player->GetTextureResource());

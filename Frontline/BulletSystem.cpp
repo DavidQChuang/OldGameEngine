@@ -19,7 +19,7 @@ bool BulletSystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 		return false;
 	}
 	result = m_Texture->Initialize(device, deviceContext,
-		textureFilename, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f),
+		textureFilename, DirectX::XMFLOAT4(1.f,1.f,1.f,1.f),
 		screenWidth, screenHeight, imageWidth, imageHeight, images);
 	if (!result) {
 		return false;
