@@ -24,7 +24,7 @@ public:
 	bool RenderRect(TexturedRect*, int, int, XMMATRIX, XMMATRIX, XMMATRIX, int);
 	bool RenderSpritesheet(TexturedSpritesheet*, int, int, XMMATRIX, XMMATRIX, XMMATRIX, int);
 	bool RenderSpritesheet(TexturedSpritesheet*, int, int, int, XMMATRIX, XMMATRIX, XMMATRIX, int);
-	//void RenderObject(ModelClass*, XMMATRIX, XMMATRIX, XMMATRIX, int);
+	bool RenderModel(ModelClass*, XMMATRIX, XMMATRIX, XMMATRIX, int);
 
 
 

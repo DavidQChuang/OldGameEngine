@@ -486,7 +486,7 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positio
 		return true;
 	}
 
-	if (m_shaderType == COLOR_TEXTURE_TYPE) return UpdateBuffers(deviceContext, positionX, positionY, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f));
+	if (m_shaderType == COLOR_TEXTURE_TYPE || m_shaderType == COLOR_TYPE) return UpdateBuffers(deviceContext, positionX, positionY, m_Color);
 	// If it has changed then update the position it is being rendered to.
 	m_previousPosX = positionX;
 	m_previousPosY = positionY;

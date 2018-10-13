@@ -173,6 +173,7 @@
     <ClInclude Include="ColorTextureShader.h" />
     <ClInclude Include="D3DClass.h" />
     <ClInclude Include="EnemyBS.h" />
+    <ClInclude Include="Engine.h" />
     <ClInclude Include="GraphicsClass.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="InstancedTexturedRect.h">
@@ -197,7 +198,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="RefractionShaderClass.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="resource1.h" />
     <ClInclude Include="SceneClass.h" />
     <ClInclude Include="SceneGame.h" />
     <ClInclude Include="SceneMainMenu.h" />

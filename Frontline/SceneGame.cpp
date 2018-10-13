@@ -46,8 +46,7 @@ bool SceneGame::Initialize() {
 	}
 
 	result = m_BulletKeys->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
-		//".\\Data\\Images\\GUI\\SelectKey.sprite", DirectX::XMFLOAT4(1.f,1.f,1.f,1.f),
-		DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f),
+		".\\Data\\Images\\GUI\\SelectKey.sprite",
 		800, 600, 14 * 3, 36 * 3);
 	if (!result) {
 		MessageBoxW(sm_hwnd, L"Could not initialize the game HUD. 1", L"Error", MB_OK);
@@ -188,6 +187,7 @@ void SceneGame::Shutdown() {
 float rotation = 90;
 XMMATRIX cubeMatrix;
 XMMATRIX rotMatrix;
+double lastTime;
 bool SceneGame::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX orthoMatrix) {
 	bool result;
 	if (!m_active) {
@@ -195,69 +195,52 @@ bool SceneGame::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX proje
 		sm_Timer->Start();
 		sm_ShaderClass->m_Light->SetAmbientColor(0.2f, 0.2f, 0.2f, 1.0f);
 		sm_ShaderClass->m_Light->SetDiffuseColor(0.f, 0.f, 0.f, 1.0f);
+		lastTime = sm_Timer->getTime();
 	}
 	switch (m_GameState) {
 	case 0:
-		rotation++;
-		if (rotation > 360) { rotation = 0; }
+		rotation += (sm_Timer->getTime() - lastTime) / 4;
+		if (rotation > 360) rotation = 0;
 
 		m_Player->Frame(true, sm_Timer->getTime());
 		m_Player->m_Texture->SetSprite(static_cast<int>(round(sm_Timer->getTime() / 90)) % 6);
 
-		if (m_Input->OnKeyDown(VK_ESCAPE)) {
-			m_GameState = 1;
-		}
+		if (m_Input->OnKeyDown(VK_ESCAPE)) m_GameState = 1;
 		break;
 	case 1:
 		m_Player->Frame(false, sm_Timer->getTime());
 
-		if (m_Input->OnKeyDown(VK_ESCAPE)) {
-			m_GameState = 0;
-		}
+		if (m_Input->OnKeyDown(VK_ESCAPE)) m_GameState = 0;
 		break;
 	}
-	/*m_Model->Render(sm_Direct3D->GetDeviceContext());
-	cubeMatrix = XMMatrixRotationRollPitchYaw(rotation * 0.0174532925f, 0, rotation * 0.0174532925f);
+	m_Model->Render(sm_Direct3D->GetDeviceContext());
 
+	rotMatrix = DirectX::XMMatrixRotationRollPitchYaw(0, XMConvertToRadians(rotation), XMConvertToRadians(rotation));
+	cubeMatrix = rotMatrix * DirectX::XMMatrixTranslation(0.f,1.f,0.f);
 	// Render the model using the light shader.
-	result = m_LightShader->Render(sm_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), cubeMatrix, viewMatrix, projectionMatrix,
-		m_Model->GetTexture(), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor());
+	result = sm_ShaderClass->m_LightShader->Render(sm_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), cubeMatrix, viewMatrix, projectionMatrix,
+		m_Model->GetTexture(), sm_ShaderClass->m_Light->GetDirection(), sm_ShaderClass->m_Light->GetAmbientColor(), sm_ShaderClass->m_Light->GetDiffuseColor());
 	if (!result) {
 		return false;
-	}*/
+	}
 
 	sm_Direct3D->TurnZBufferOff();
 
-	/*m_Background->Render(sm_Direct3D->GetDeviceContext(), 0, 0);
-	result = sm_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_Background->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Background->GetTexture());
-	if (!result) {wwwwwwww
-		return false;
-	}*/
-	m_HUD->Render(sm_Direct3D->GetDeviceContext(), 740, 36);
-	result = sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_HUD->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_HUD->GetTexture());
-	if (!result) {
-		return false;
-	}
-	m_BulletKeys->Render(sm_Direct3D->GetDeviceContext(), 740, 36+97*3);
-	/*result = sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_BulletKeys->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_BulletKeys->GetTexture());
-	if (!result) {
-		return false;
-	}*/
-	result = sm_ShaderClass->m_ColorShader->Render(sm_Direct3D->GetDeviceContext(), m_BulletKeys->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix);
-	if (!result) {
-		return false;
-	}
-	RenderRect(m_AbilityContainers, 740, 36 + 106 * 3, worldMatrix, viewMatrix, orthoMatrix, TexturedRect::TEXTURE_TYPE);
-	RenderSpritesheet(m_BulletSelect, 740 + 3, 36 + 107 * 3, m_Player->m_BulletType, worldMatrix, viewMatrix, orthoMatrix, TexturedRect::COLOR_TEXTURE_TYPE);
+	RenderRect(m_HUD, 740, 36, worldMatrix, viewMatrix, orthoMatrix, TEXTURE_TYPE);
+	RenderRect(m_BulletKeys, 740, 36 + 97 * 3, worldMatrix, viewMatrix, orthoMatrix, TEXTURE_TYPE);
+	RenderRect(m_AbilityContainers, 740, 36 + 106 * 3, worldMatrix, viewMatrix, orthoMatrix, TEXTURE_TYPE);
+	RenderSpritesheet(m_BulletSelect, 740 + 3, 36 + 107 * 3, m_Player->m_BulletType, rotMatrix, viewMatrix, orthoMatrix, COLOR_TEXTURE_TYPE);
 	
 	m_Player->Render(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix);
-	result = sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), m_Player->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Player->GetTextureResource());
-	if (!result) {
-		return false;
-	}
+	result = sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), m_Player->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Player->GetTextureResource());
+	if (!result) return false;
 	m_Player->RenderBullets(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
+
 	m_BadBois->Create(400, 200, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f), 0);
+
 	m_BadBois->Render(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix, sm_ShaderClass->m_TextureShader, sm_Timer->getTime());
+
 	m_Input->Update();
+	lastTime = sm_Timer->getTime();
 	return true;
 }

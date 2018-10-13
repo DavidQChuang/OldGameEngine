@@ -1,6 +1,4 @@
 #pragma once
-#ifndef _REFRACTIONSHADERCLASS_H_
-#define _REFRACTIONSHADERCLASS_H_
 
 #include "stdafx.h"
 #include <fstream>
@@ -53,5 +51,3 @@ private:
 	ID3D11Buffer* m_lightBuffer;
 	ID3D11Buffer* m_clipPlaneBuffer;
 };
-
-#endif

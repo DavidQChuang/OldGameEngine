@@ -1,8 +1,7 @@
 #pragma once
 
-#include "stdafx.h"
 #include "TextureClass.h"
-
+#include "Engine.h"
 class TexturedRect {
 protected:
 	struct ColorVertexType {
@@ -19,14 +18,6 @@ protected:
 		DirectX::XMFLOAT4 color;
 	};
 public:
-	enum ShaderType {
-		COLOR_TYPE = 1,
-		TEXTURE_TYPE = 2,
-		COLOR_TEXTURE_TYPE = 4,
-		TRANSPARENCY_TEXTURE_TYPE = 8,
-		LIGHT_SHADER_TYPE = 16,
-
-	};
 	TexturedRect();
 	TexturedRect(const TexturedRect&);
 	~TexturedRect();
