@@ -83,15 +83,15 @@ bool Player::Frame(bool enableInput, double time) {
 		
 		switch (m_BulletType) {
 		case 0:
-			gap = 1;
+			gap = 1.f;
 			bulletOffset = 55;
 			break;
 		case 1:
-			gap = 0.9;
+			gap = 0.7f;
 			bulletOffset = 115;
 			break;
 		case 2:
-			gap = 1.25;
+			gap = 1.25f;
 			bulletOffset = 85;
 			break;
 		}

@@ -1,3 +1,4 @@
+
 #include "TexturedRect.h"
 #include <sstream>
 TexturedRect::TexturedRect() {
@@ -502,7 +503,6 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positio
 
 	// Calculate the screen coordinates of the bottom of the bitmap.
 	bottom = top - (float)m_imageHeight;
-
 	// Create the vertex array.
 	vertices = new VertexType[m_vertexCount];
 	if (!vertices) {

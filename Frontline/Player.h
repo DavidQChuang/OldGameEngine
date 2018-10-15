@@ -48,7 +48,7 @@ protected:
 	PlayerBulletSystem* m_Bullets;
 
 	int state;
-	int gap;
+	float gap;
 	int bulletOffset;
 };
 

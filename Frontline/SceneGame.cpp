@@ -229,7 +229,7 @@ bool SceneGame::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX proje
 	RenderRect(m_HUD, 740, 36, worldMatrix, viewMatrix, orthoMatrix, TEXTURE_TYPE);
 	RenderRect(m_BulletKeys, 740, 36 + 97 * 3, worldMatrix, viewMatrix, orthoMatrix, TEXTURE_TYPE);
 	RenderRect(m_AbilityContainers, 740, 36 + 106 * 3, worldMatrix, viewMatrix, orthoMatrix, TEXTURE_TYPE);
-	RenderSpritesheet(m_BulletSelect, 740 + 3, 36 + 107 * 3, m_Player->m_BulletType, rotMatrix, viewMatrix, orthoMatrix, COLOR_TEXTURE_TYPE);
+	RenderSpritesheet(m_BulletSelect, 740 + 3, 36 + 107 * 3, m_Player->m_BulletType, worldMatrix, viewMatrix, orthoMatrix, TEXTURE_TYPE);
 	
 	m_Player->Render(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix);
 	result = sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), m_Player->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Player->GetTextureResource());
