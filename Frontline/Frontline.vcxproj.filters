@@ -201,9 +201,6 @@
     <ClCompile Include="System.cpp">
       <Filter>Header Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleSystem.cpp">
-      <Filter>Header Files\World\Graphics\2D\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="RenderTexture.cpp">
       <Filter>Header Files\World\Graphics\2D\GUI</Filter>
     </ClCompile>
@@ -221,6 +218,9 @@
     </ClCompile>
     <ClCompile Include="InstancedTexturedRect.cpp">
       <Filter>Header Files\World\Graphics\2D\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Header Files\World\Graphics\2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -274,9 +274,6 @@
     </ClInclude>
     <ClInclude Include="LightClass.h">
       <Filter>Header Files\World\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="resource1.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ModelClass.h">
       <Filter>Header Files\World\Graphics\3D\Scene</Filter>
@@ -352,6 +349,9 @@
     </ClInclude>
     <ClInclude Include="InstancedTexturedRect.h">
       <Filter>Header Files\World\Graphics\2D\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

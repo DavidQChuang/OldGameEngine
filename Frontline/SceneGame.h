@@ -11,7 +11,7 @@ public:
 	SceneGame(HWND, D3DClass*, CameraClass*, ShaderClass*, Input*);
 	bool Initialize();
 	void Shutdown();
-	bool Render(XMMATRIX, XMMATRIX, XMMATRIX, XMMATRIX);
+	bool Render(XMMATRIX, XMMATRIX, XMMATRIX);
 
 private:
 	POINT m_CursorPos;

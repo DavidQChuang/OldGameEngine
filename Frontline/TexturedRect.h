@@ -41,6 +41,8 @@ public:
 	virtual void Resize();
 	virtual void Resize(int, int);
 	//void ChangeColor(DirectX::XMFLOAT4);
+	int m_posX, m_posY;
+	DirectX::XMFLOAT4 m_Color;
 protected:
 	bool InitializeBuffers(ID3D11Device*);
 	void ShutdownBuffers();
@@ -53,8 +55,7 @@ protected:
 	ID3D11Buffer *m_vertexBuffer, *m_indexBuffer;
 	int m_vertexCount, m_indexCount;
 	TextureClass* m_Texture;
-	DirectX::XMFLOAT4 m_Color, m_previousColor;
+	DirectX::XMFLOAT4 m_previousColor;
 
-	int m_posX, m_posY;
 	int m_previousPosX, m_previousPosY;
 };

@@ -26,7 +26,7 @@ bool BulletSystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	}
 	return true;
 }
-bool BulletSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader, double elapsed) {
+bool BulletSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader, double elapsed) {
 	DirectX::XMMATRIX matrix;
 	if (m_Active != 0) {
 		for (int i = 0; i < m_Active; i++) {
@@ -44,11 +44,10 @@ bool BulletSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, Dir
 			bullet.x += bullet.velX * elapsed / 10;
 			bullet.y += bullet.velY * elapsed / 10;
 			
-			matrix = XMMatrixRotationZ(atan(bullet.velY/bullet.velX)) * XMMatrixTranslation(bullet.x - 400 + m_Texture->m_spriteWidth / 2, -bullet.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
-			//matrix = XMMatrixTranslation(bullet.x - 400 + m_Texture->m_spriteWidth / 2, -bullet.y + 300 - m_Texture->m_imageHeight / 2, 0.f) * worldMatrix;
+			matrix = XMMatrixRotationZ(atan(bullet.velY/bullet.velX)+3.1415926535/2) * XMMatrixTranslation(bullet.x - 400 + m_Texture->m_spriteWidth / 2, -bullet.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
 			m_Texture->SetSprite(bullet.type);
 			m_Texture->Render(direct3d->GetDeviceContext(), bullet.x, bullet.y);
-			return shader->Render(direct3d->GetDeviceContext(), GetIndexCount(), matrix, viewMatrix, orthoMatrix, GetTextureResource());
+			shader->Render(direct3d->GetDeviceContext(), GetIndexCount(), matrix, viewMatrix, orthoMatrix, GetTextureResource());
 		}
 	}
 	return true;

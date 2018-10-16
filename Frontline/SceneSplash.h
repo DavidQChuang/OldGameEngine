@@ -6,7 +6,7 @@ public:
 	SceneSplash(HWND, D3DClass*, CameraClass*, ShaderClass*);
 	bool Initialize();
 	void Shutdown();
-	bool Render(XMMATRIX, XMMATRIX, XMMATRIX, XMMATRIX);
+	bool Render(XMMATRIX, XMMATRIX, XMMATRIX);
 
 private:
 	TexturedRect* m_Splash;

@@ -39,7 +39,7 @@ void SceneSplash::Shutdown() {
 	return;
 }
 
-bool SceneSplash::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX orthoMatrix) {
+bool SceneSplash::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX orthoMatrix) {
 	bool result;
 	float blendAmount = 1.0f;
 	if (m_active == false) {
@@ -54,10 +54,8 @@ bool SceneSplash::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX pro
 
 	// Render the model using the texture shader.
 	m_Splash->Render(sm_Direct3D->GetDeviceContext(), ((Options::WIDTH / 2) - m_Splash->m_imageWidth / 2), 0, DirectX::XMFLOAT4(1.f,0.f,0.f,1.f));
-	result = sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), m_Splash->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Splash->GetTexture(), blendAmount);
-	if (!result) {
-		return false;
-	}
+	//result = sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), m_Splash->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Splash->GetTexture(), blendAmount);
+	
 	//if (time > 6000) {
 	if (time > 000) {
 		ShowCursor(true);

@@ -26,7 +26,7 @@ public:
 	ParticleSystem(int, int, int, int, int, int, int, int, int);
 	ParticleSystem(const ParticleSystem&);
 	~ParticleSystem();
-	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*);
+	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*);
 	void Create();
 	void Create(int, int);
 	void Create(int, int, int);
@@ -49,6 +49,6 @@ protected:
 	double m_Time;
 	bool start;
 
-	TexturedRect* m_Particle;
+	TexturedRect* m_Texture;
 	Timer* m_Timer;
 };

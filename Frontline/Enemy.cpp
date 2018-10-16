@@ -24,8 +24,9 @@ bool EnemySystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCo
 	}
 	return true;
 }
-bool EnemySystem::Render(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, TextureShaderClass* shader, double elapsed) {
+bool EnemySystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader, double elapsed) {
 	bool result;
+	DirectX::XMMATRIX matrix;
 	if (m_Active != 0) {
 		for (int i = 0; i < m_Active; i++) {
 			Enemy& enemy = m_Enemies[i];
@@ -42,12 +43,13 @@ bool EnemySystem::Render(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, Dire
 			enemy.x += movement.x * elapsed / 10;
 			enemy.y += movement.y * elapsed / 10;
 
+			matrix = XMMatrixTranslation(enemy.x, enemy.y, 0.f);
 			m_Texture->SetSprite(enemy.type);
-			m_Texture->Render(direct3d->GetDeviceContext(), enemy.x, enemy.y);
-			/*result = shader->Render(direct3d->GetDeviceContext(), GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, GetTextureResource(), enemy.color);
+			m_Texture->Render(direct3d->GetDeviceContext(), enemy.x - 400 + m_Texture->m_spriteWidth / 2, -enemy.y + 300 - m_Texture->m_imageHeight / 2);
+			result = shader->Render(direct3d->GetDeviceContext(), GetIndexCount(), matrix, viewMatrix, orthoMatrix, GetTextureResource());
 			if (!result) {
 				return false;
-			}*/
+			}
 		}
 	}
 	return true;

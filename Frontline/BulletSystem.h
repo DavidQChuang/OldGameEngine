@@ -19,7 +19,7 @@ public:
 	BulletSystem();
 	BulletSystem(int);
 	~BulletSystem();
-	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*, double);
+	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*, double);
 	void Create(float, float, DirectX::XMFLOAT4, int);
 	void Create(float, float, float, float, DirectX::XMFLOAT4, int);
 

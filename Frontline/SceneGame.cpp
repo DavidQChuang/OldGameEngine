@@ -28,7 +28,7 @@ bool SceneGame::Initialize() {
 	m_BadBois = new EnemySystem();
 	m_BadBois->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\Sprites\\Enemies\\Enemy1.sprites",
-		800, 600, 9 * 3, 9 * 3, 3);
+		800, 600, 9 * 3, 9 * 3, 4);
 
 	m_DODGE = new EnemyBulletSystem(600);
 	m_DODGE->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
@@ -196,7 +196,7 @@ float rotation = 90;
 XMMATRIX cubeMatrix;
 XMMATRIX rotMatrix;
 double lastTime;
-bool SceneGame::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX orthoMatrix) {
+bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX orthoMatrix) {
 	bool result;
 	if (!m_active) {
 		m_active = true;
@@ -234,10 +234,10 @@ bool SceneGame::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX proje
 
 	sm_Direct3D->TurnZBufferOff();
 
-	RenderRect(m_HUD, 740, 36, worldMatrix, viewMatrix, orthoMatrix, TEXTURE_TYPE);
-	RenderRect(m_BulletKeys, 740, 36 + 97 * 3, worldMatrix, viewMatrix, orthoMatrix, TEXTURE_TYPE);
-	RenderRect(m_AbilityContainers, 740, 36 + 106 * 3, worldMatrix, viewMatrix, orthoMatrix, TEXTURE_TYPE);
-	RenderSpritesheet(m_BulletSelect, 740 + 3, 36 + 107 * 3, m_Player->m_BulletType, worldMatrix, viewMatrix, orthoMatrix, TEXTURE_TYPE);
+	RenderRect(m_HUD, 740, 36, viewMatrix, orthoMatrix, TEXTURE_TYPE);
+	RenderRect(m_BulletKeys, 740, 36 + 97 * 3, viewMatrix, orthoMatrix, TEXTURE_TYPE);
+	RenderRect(m_AbilityContainers, 740, 36 + 106 * 3, viewMatrix, orthoMatrix, TEXTURE_TYPE);
+	RenderSpritesheet(m_BulletSelect, 740 + 3, 36 + 107 * 3, m_Player->m_BulletType, viewMatrix, orthoMatrix, TEXTURE_TYPE);
 
 	for (int bigoof = 0; bigoof < 10; bigoof++) {
 		m_ParticleSystem->Create(0, 0, -5, -3);
@@ -245,14 +245,14 @@ bool SceneGame::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX proje
 			m_ParticleSystem->Create(0, 0, -8, -5);
 		}
 	}
-	//m_ParticleSystem->Render(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
+	//m_ParticleSystem->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
 
-	RenderSpritesheet(m_Player->m_Texture, m_Player->m_x, m_Player->m_y, worldMatrix, viewMatrix, orthoMatrix, TEXTURE_TYPE);
-	m_Player->RenderBullets(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
+	RenderSpritesheet(m_Player->m_Texture, m_Player->m_x, m_Player->m_y, viewMatrix, orthoMatrix, TEXTURE_TYPE);
+	m_Player->RenderBullets(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
 
-	m_BadBois->Create(400, 200, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f), 0);
+	m_BadBois->Create(300, 200, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f), 0);
 
-	m_BadBois->Render(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix, sm_ShaderClass->m_TextureShader, sm_Timer->getTime());
+	m_BadBois->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader, sm_Timer->getTime());
 
 	m_Input->Update();
 	lastTime = sm_Timer->getTime();

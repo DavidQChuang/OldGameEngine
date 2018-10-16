@@ -18,20 +18,22 @@ public:
 	~SceneClass();
 	virtual bool Initialize()=0;
 	virtual void Shutdown()=0;
-	virtual bool Render(XMMATRIX, XMMATRIX, XMMATRIX, XMMATRIX)=0;
+	virtual bool Render(XMMATRIX, XMMATRIX, XMMATRIX)=0;
 	bool m_active;
 
-	bool RenderRect(TexturedRect*, int, int, XMMATRIX, XMMATRIX, XMMATRIX, int);
-	bool RenderRect(TexturedRect*, int, int, float, XMMATRIX, XMMATRIX, XMMATRIX, int);
+	bool RenderRect(TexturedRect*, XMMATRIX, XMMATRIX, int);
+	bool RenderRect(TexturedRect*, float, XMMATRIX, XMMATRIX, int);
+	bool RenderRect(TexturedRect*, int, int, XMMATRIX, XMMATRIX, int);
+	bool RenderRect(TexturedRect*, int, int, float, XMMATRIX, XMMATRIX, int);
 	//int x, int y, [float rot], [int spritenumber]
 	//after matrices, shader info
-	bool RenderSpritesheet(TexturedSpritesheet*, int, int, XMMATRIX, XMMATRIX, XMMATRIX, int);
-	bool RenderSpritesheet(TexturedSpritesheet*, int, int, int, XMMATRIX, XMMATRIX, XMMATRIX, int);
-	bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, XMMATRIX, XMMATRIX, XMMATRIX, int);
-	bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, int, XMMATRIX, XMMATRIX, XMMATRIX, int);
-	//bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, int, XMMATRIX, XMMATRIX, XMMATRIX, int);
+	bool RenderSpritesheet(TexturedSpritesheet*, int, int, XMMATRIX, XMMATRIX, int);
+	bool RenderSpritesheet(TexturedSpritesheet*, int, int, int, XMMATRIX, XMMATRIX, int);
+	bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, XMMATRIX, XMMATRIX, int);
+	bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, int, XMMATRIX, XMMATRIX, int);
+	//bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, int, XMMATRIX, XMMATRIX, int);
 
-	bool RenderModel(ModelClass*, XMMATRIX, XMMATRIX, XMMATRIX, int);
+	bool RenderModel(ModelClass*, XMMATRIX, XMMATRIX, int);
 private:
 protected:
 	HWND sm_hwnd;

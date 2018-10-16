@@ -18,27 +18,27 @@ SceneClass::SceneClass(const SceneClass& other) {
 SceneClass::~SceneClass() {
 }
 
-bool SceneClass::RenderRect(TexturedRect* object, int x, int y, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
-	DirectX::XMMATRIX matrix = XMMatrixTranslation(x - 400 + object->m_imageWidth / 2, -y + 300 - object->m_imageHeight / 2, 0.f);
-	object->Render(sm_Direct3D->GetDeviceContext(), x, y);
+bool SceneClass::RenderRect(TexturedRect* object, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
+	DirectX::XMMATRIX matrix = XMMatrixTranslation(object->m_posX - 400 + object->m_imageWidth / 2, -object->m_posY + 300 - object->m_imageHeight / 2, 0.f);
+	object->Render(sm_Direct3D->GetDeviceContext(), object->m_posX, object->m_posY);
 	switch (shaderType) {
 	case COLOR_TYPE:
-		return sm_ShaderClass->m_ColorShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix);
+		return sm_ShaderClass->m_ColorShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix);
 		break;
 	case TEXTURE_TYPE:
 		return sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
 	case COLOR_TEXTURE_TYPE:
-		return sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, object->GetTexture());
+		return sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
 	case COLOR_TYPE | TRANSPARENCY:
-		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
+		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
 	case TEXTURE_TYPE | TRANSPARENCY:
-		return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
+		return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
 	case COLOR_TEXTURE_TYPE | TRANSPARENCY:
-		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
+		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
 	case COLOR_TYPE | INSTANCE:
 		break;
@@ -49,7 +49,71 @@ bool SceneClass::RenderRect(TexturedRect* object, int x, int y, XMMATRIX worldMa
 	}
 	return false;
 }
-bool SceneClass::RenderRect(TexturedRect* object, int x, int y, float rot, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
+
+bool SceneClass::RenderRect(TexturedRect* object, float rot, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
+	DirectX::XMMATRIX matrix = XMMatrixRotationZ(XMConvertToRadians(rot)) * XMMatrixTranslation(object->m_posX - 400 + object->m_imageWidth / 2, -object->m_posY + 300 - object->m_imageHeight / 2, 0.f);
+	object->Render(sm_Direct3D->GetDeviceContext(), object->m_posX, object->m_posY);
+	switch (shaderType) {
+	case COLOR_TYPE:
+		return sm_ShaderClass->m_ColorShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix);
+		break;
+	case TEXTURE_TYPE:
+		return sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
+		break;
+	case COLOR_TEXTURE_TYPE:
+		return sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
+		break;
+	case COLOR_TYPE | TRANSPARENCY:
+		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
+		break;
+	case TEXTURE_TYPE | TRANSPARENCY:
+		return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
+		break;
+	case COLOR_TEXTURE_TYPE | TRANSPARENCY:
+		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
+		break;
+	case COLOR_TYPE | INSTANCE:
+		break;
+	case TEXTURE_TYPE | INSTANCE:
+		break;
+	case COLOR_TEXTURE_TYPE | INSTANCE:
+		break;
+	}
+	return false;
+}
+
+bool SceneClass::RenderRect(TexturedRect* object, int x, int y, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
+	DirectX::XMMATRIX matrix = XMMatrixTranslation(x - 400 + object->m_imageWidth / 2, -y + 300 - object->m_imageHeight / 2, 0.f);
+	object->Render(sm_Direct3D->GetDeviceContext(), x, y);
+	switch (shaderType) {
+	case COLOR_TYPE:
+		return sm_ShaderClass->m_ColorShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix);
+		break;
+	case TEXTURE_TYPE:
+		return sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
+		break;
+	case COLOR_TEXTURE_TYPE:
+		return sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
+		break;
+	case COLOR_TYPE | TRANSPARENCY:
+		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
+		break;
+	case TEXTURE_TYPE | TRANSPARENCY:
+		return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
+		break;
+	case COLOR_TEXTURE_TYPE | TRANSPARENCY:
+		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
+		break;
+	case COLOR_TYPE | INSTANCE:
+		break;
+	case TEXTURE_TYPE | INSTANCE:
+		break;
+	case COLOR_TEXTURE_TYPE | INSTANCE:
+		break;
+	}
+	return false;
+}
+bool SceneClass::RenderRect(TexturedRect* object, int x, int y, float rot, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
 	DirectX::XMMATRIX matrix = XMMatrixRotationZ(XMConvertToRadians(rot))* XMMatrixTranslation(x - 400 + object->m_imageWidth / 2, -y + 300 - object->m_imageHeight / 2, 0.f);
 	object->Render(sm_Direct3D->GetDeviceContext(), x, y);
 	switch (shaderType) {
@@ -63,13 +127,13 @@ bool SceneClass::RenderRect(TexturedRect* object, int x, int y, float rot, XMMAT
 		return sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
 	case COLOR_TYPE | TRANSPARENCY:
-		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
+		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
 	case TEXTURE_TYPE | TRANSPARENCY:
-		return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
+		return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
 	case COLOR_TEXTURE_TYPE | TRANSPARENCY:
-		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
+		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
 	case COLOR_TYPE | INSTANCE:
 		break;
@@ -82,7 +146,7 @@ bool SceneClass::RenderRect(TexturedRect* object, int x, int y, float rot, XMMAT
 }
 
 
-bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
+bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
 	DirectX::XMMATRIX matrix = XMMatrixTranslation(x - 400 + object->m_spriteWidth / 2, -y + 300 - object->m_imageHeight / 2, 0.f);
 	object->Render(sm_Direct3D->GetDeviceContext(), x, y);
 	switch (shaderType) {
@@ -96,13 +160,13 @@ bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, XM
 		return sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
 	case COLOR_TYPE | TRANSPARENCY:
-		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
+		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
 	case TEXTURE_TYPE | TRANSPARENCY:
 		return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
 	case COLOR_TEXTURE_TYPE | TRANSPARENCY:
-		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
+		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
 	case COLOR_TYPE | INSTANCE:
 		break;
@@ -114,7 +178,7 @@ bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, XM
 	return false;
 }
 
-bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, int sprite, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
+bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, int sprite, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
 	DirectX::XMMATRIX matrix = XMMatrixTranslation(x - 400 + object->m_spriteWidth / 2, -y + 300 - object->m_imageHeight / 2, 0.f);
 	object->SetSprite(sprite);
 	object->Render(sm_Direct3D->GetDeviceContext(), x, y);
@@ -146,7 +210,7 @@ bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, in
 	}
 	return false;
 }
-bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, float rot, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
+bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, float rot, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
 	DirectX::XMMATRIX matrix = XMMatrixRotationZ(rot) * XMMatrixTranslation(x - 400 + object->m_spriteWidth / 2, -y + 300 - object->m_imageHeight / 2, 0.f);
 	object->Render(sm_Direct3D->GetDeviceContext(), x, y);
 	switch (shaderType) {
@@ -176,7 +240,7 @@ bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, fl
 		break;
 	}
 }
-bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, float rot, int spritenumber, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
+bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, float rot, int spritenumber, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
 	DirectX::XMMATRIX matrix = XMMatrixRotationZ(rot) * XMMatrixTranslation(x - 400 + object->m_spriteWidth / 2, -y + 300 - object->m_imageHeight / 2, 0.f);
 	object->SetSprite(spritenumber);
 	object->Render(sm_Direct3D->GetDeviceContext(), x, y);
@@ -208,7 +272,8 @@ bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, fl
 	}
 	return false;
 }
-bool SceneClass::RenderModel(ModelClass* object, XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
+bool SceneClass::RenderModel(ModelClass* object, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
+	DirectX::XMMATRIX matrix = XMMatrixTranslation(1.f, 1.f, 1.f);
 	object->Render(sm_Direct3D->GetDeviceContext());
-	return sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, object->GetTexture());
+	return sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 }

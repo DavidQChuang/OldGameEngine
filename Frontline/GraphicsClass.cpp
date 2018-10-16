@@ -235,19 +235,19 @@ bool GraphicsClass::RenderScene() {
 
 	switch (Options::Scene) {
 	case 0:
-		result = m_splash->Render(worldMatrix, viewMatrix, projectionMatrix, orthoMatrix);
+		result = m_splash->Render(viewMatrix, projectionMatrix, orthoMatrix);
 		if (!result) {
 			return false;
 		}
 		break;
 	case 1:
-		result = m_menu->Render(worldMatrix, viewMatrix, projectionMatrix, orthoMatrix);
+		result = m_menu->Render(viewMatrix, projectionMatrix, orthoMatrix);
 		if (!result) {
 			return false;
 		}
 		break;
 	case 2:
-		result = m_game->Render(worldMatrix, viewMatrix, projectionMatrix, orthoMatrix);
+		result = m_game->Render(viewMatrix, projectionMatrix, orthoMatrix);
 		if (!result) {
 			return false;
 		}

@@ -98,7 +98,7 @@ void SceneMainMenu::Shutdown() {
 float pressCount = 0.f;
 float increase = 1.f;
 bool start = false; 
-bool SceneMainMenu::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX orthoMatrix) {
+bool SceneMainMenu::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX orthoMatrix) {
 	bool result;
 	float blendAmount = 0.f;
 	if (m_active == false) {
@@ -114,6 +114,7 @@ bool SceneMainMenu::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX p
 		pressCount += increase;
 		blendAmount = -((pressCount) / 200) + 1;
 	}
+	/*
 	// Turn off the Z buffer to begin all 2D rendering.
 	sm_Direct3D->TurnZBufferOff();
 	// Render the model using the texture shader.
@@ -154,7 +155,7 @@ bool SceneMainMenu::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX p
 
 	if (m_Play->Clicked(sm_hwnd, m_cursorPos.x, m_cursorPos.y)) {
 		start = true;
-	}
+	}*/
 	Options::Scene = 2;
 	Shutdown();
 	// Turn the Z buffer back on now that all 2D rendering has completed.

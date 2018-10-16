@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include "TexturedSpritesheet.h"
 #include "Timer.h"
-#include "textureshaderclass.h"
+#include "colortextureshader.h"
 #include "D3DClass.h"
 class EnemySystem {
 public:
@@ -16,7 +16,7 @@ public:
 	};
 	EnemySystem();
 	~EnemySystem();
-	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, DirectX::XMMATRIX, TextureShaderClass*, double);
+	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*, double);
 	void Create(float, float, DirectX::XMFLOAT4, int);
 
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int, int, int);

@@ -12,7 +12,7 @@ ParticleSystem::ParticleSystem(int x, int y, int max, int lifetime, int lifeRand
 	m_Generate = gen;
 	m_GenRandom = genRand;
 	m_Timer = new Timer();
-	m_Particle = 0;
+	m_Texture = 0;
 	start = false;
 }
 ParticleSystem::ParticleSystem(int x, int y, int width, int height, int max, int lifetime, int lifeRandom, int gen, int genRand) {
@@ -28,7 +28,7 @@ ParticleSystem::ParticleSystem(int x, int y, int width, int height, int max, int
 	m_Generate = gen;
 	m_GenRandom = genRand;
 	m_Timer = new Timer();
-	m_Particle = 0;
+	m_Texture = 0;
 	start = false;
 }
 
@@ -42,11 +42,11 @@ bool ParticleSystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* devic
 	char* textureFilename,
 	int screenWidth, int screenHeight, int imageWidth, int imageHeight) {
 	bool result;
-	m_Particle = new TexturedRect();
-	if (!m_Particle) {
+	m_Texture = new TexturedRect();
+	if (!m_Texture) {
 		return false;
 	}
-	result = m_Particle->Initialize(device, deviceContext,
+	result = m_Texture->Initialize(device, deviceContext,
 		textureFilename, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f),
 		screenWidth, screenHeight, imageWidth, imageHeight);
 	if (!result) {
@@ -63,7 +63,8 @@ void ParticleSystem::SetY(int y) {
 	m_y = y;
 }
 
-bool ParticleSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader) {
+bool ParticleSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader) {
+	DirectX::XMMATRIX matrix;
 	bool result;
 	if (!start) {
 		start = true;
@@ -82,10 +83,10 @@ bool ParticleSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, D
 		}
 		particle.x += particle.velX;
 		particle.y += particle.velY;
-
-		m_Particle->Resize(m_Particle->m_originalImageWidth * particle.width, m_Particle->m_originalImageHeight * particle.height);
-		m_Particle->Render(direct3d->GetDeviceContext(), (int)particle.x, (int)particle.y, particle.color);
-		result = shader->Render(direct3d->GetDeviceContext(), m_Particle->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Particle->GetTexture());
+		matrix = XMMatrixTranslation(particle.x - 400 + m_Texture->m_imageWidth / 2, -particle.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
+		m_Texture->Resize(m_Texture->m_originalImageWidth * particle.width, m_Texture->m_originalImageHeight * particle.height);
+		m_Texture->Render(direct3d->GetDeviceContext(), (int)particle.x, (int)particle.y, particle.color);
+		result = shader->Render(direct3d->GetDeviceContext(), m_Texture->GetIndexCount(), matrix, viewMatrix, orthoMatrix, m_Texture->GetTexture());
 		if (!result) {
 			return false;
 		}
@@ -98,10 +99,10 @@ void ParticleSystem::Shutdown() {
 	if (particles) {
 		
 	}
-	if (m_Particle) {
-		m_Particle->Shutdown();
-		delete m_Particle;
-		m_Particle = 0;
+	if (m_Texture) {
+		m_Texture->Shutdown();
+		delete m_Texture;
+		m_Texture = 0;
 	}
 }
 void ParticleSystem::Create() {
@@ -175,7 +176,7 @@ void ParticleSystem::Create(int velX, int velY, int bottom, int top) {
 	
 	if (m_Active < m_pMax) {
 		if (m_width > 0 && m_height > 0) {
-			particles[m_Active].x = (rand() % (m_width + m_Particle->m_imageWidth)) + m_x - m_Particle->m_imageWidth;
+			particles[m_Active].x = (rand() % (m_width + m_Texture->m_imageWidth)) + m_x - m_Texture->m_imageWidth;
 			particles[m_Active].y = (rand() % (m_height)) + m_y;
 		}
 		else {
