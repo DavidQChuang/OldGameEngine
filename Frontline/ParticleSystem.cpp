@@ -97,7 +97,7 @@ bool ParticleSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Di
 
 void ParticleSystem::Shutdown() {
 	if (particles) {
-		
+		delete particles;
 	}
 	if (m_Texture) {
 		m_Texture->Shutdown();

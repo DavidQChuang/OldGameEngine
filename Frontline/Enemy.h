@@ -17,7 +17,7 @@ public:
 	EnemySystem();
 	~EnemySystem();
 	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*, double);
-	void Create(float, float, DirectX::XMFLOAT4, int);
+	void Create(float, float, DirectX::XMFLOAT4, int, double);
 
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int, int, int);
 	void Shutdown();
@@ -28,6 +28,7 @@ public:
 
 	int GetIndexCount();
 
+	void SetRatePerFrame(float);
 
 	Enemy GetEnemy(int);
 	Enemy* GetEnemies();
@@ -43,4 +44,6 @@ protected:
 
 	DirectX::XMFLOAT2 EnemyMovement(Enemy&);
 	bool CheckCollision(DirectX::XMFLOAT2);
+	int bulletTime;
+	int bulletDelta;
 };

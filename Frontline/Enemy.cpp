@@ -43,9 +43,9 @@ bool EnemySystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Direc
 			enemy.x += movement.x * elapsed / 10;
 			enemy.y += movement.y * elapsed / 10;
 
-			matrix = XMMatrixTranslation(enemy.x, enemy.y, 0.f);
+			matrix = XMMatrixTranslation(enemy.x - 400 + m_Texture->m_spriteWidth / 2, -enemy.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
 			m_Texture->SetSprite(enemy.type);
-			m_Texture->Render(direct3d->GetDeviceContext(), enemy.x - 400 + m_Texture->m_spriteWidth / 2, -enemy.y + 300 - m_Texture->m_imageHeight / 2);
+			m_Texture->Render(direct3d->GetDeviceContext(), enemy.x, -enemy.y);
 			result = shader->Render(direct3d->GetDeviceContext(), GetIndexCount(), matrix, viewMatrix, orthoMatrix, GetTextureResource());
 			if (!result) {
 				return false;
@@ -53,6 +53,9 @@ bool EnemySystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Direc
 		}
 	}
 	return true;
+}
+void EnemySystem::SetRatePerFrame(float rate) {
+	bulletDelta = (1 /rate)*16;
 }
 bool EnemySystem::CheckCollision(DirectX::XMFLOAT2 bulletLocations) {
 	return true;
@@ -62,7 +65,7 @@ DirectX::XMFLOAT2 EnemySystem::EnemyMovement(EnemySystem::Enemy& enemy) {
 	float y = 0;
 	switch (enemy.type) {
 	case 0:
-		y--;
+		y++;
 		break;
 	}
 	return DirectX::XMFLOAT2(x, y);
@@ -85,19 +88,26 @@ void EnemySystem::Shutdown() {
 		m_Texture = 0;
 	}
 }
-void EnemySystem::Create(float x, float y, DirectX::XMFLOAT4 color, int type) {
-	if (m_Active < m_bMax) {
-		m_Enemies[m_Active].x = x;
-		m_Enemies[m_Active].y = y;
-		m_Enemies[m_Active].color = color;
-		m_Enemies[m_Active].type = type;
-		switch (type) {
-		case 0:
-			m_Enemies[m_Active].health = 10;
-			break;
-		}
+void EnemySystem::Create(float x, float y, DirectX::XMFLOAT4 color, int type, double time) {
+	if (time - bulletTime > bulletDelta) {
+		int enemies = floor((time - bulletTime) / bulletDelta);
+		double remainder = time - bulletTime - enemies * bulletDelta;
+		for (int intergar = 0; intergar < enemies; intergar++) {
+			if (m_Active < m_bMax) {
+				m_Enemies[m_Active].x = x;
+				m_Enemies[m_Active].y = y;
+				m_Enemies[m_Active].color = color;
+				m_Enemies[m_Active].type = type;
+				switch (type) {
+				case 0:
+					m_Enemies[m_Active].health = 10;
+					break;
+				}
 
-		m_Active++;
+				m_Active++;
+			}
+		}
+		bulletTime = time - remainder;
 	}
 }
 
