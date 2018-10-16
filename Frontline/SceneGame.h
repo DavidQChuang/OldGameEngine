@@ -22,6 +22,8 @@ private:
 	TexturedRect* m_AbilityContainers;
 	TexturedRect* m_HealthBar;
 	TexturedRect* m_MagicBar;
+	TexturedRect* m_HealthBarBackground;
+	TexturedRect* m_MagicBarBackground;
 	TexturedSpritesheet* m_BulletSelect;
 	TexturedSpritesheet* m_AbilitySelect;
 

@@ -144,7 +144,6 @@ bool GraphicsClass::Frame() {
 
 
 bool GraphicsClass::Render() {
-	XMMATRIX worldMatrix, viewMatrix, projectionMatrix, orthoMatrix;
 	bool result;	
 	// Render the entire scene to the texture first.
 	/*result = RenderToTexture();

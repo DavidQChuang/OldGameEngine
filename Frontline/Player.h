@@ -18,8 +18,11 @@ public:
 	void Shutdown();
 
 	int m_speed;
+
 	int m_BulletType;
 	int m_Ability;
+
+	int m_hp, m_mp;
 
 	Input* m_Input;
 

@@ -13,6 +13,8 @@ Player::Player(Input* input, int xp, int yp) {
 	bulletTime = 0;
 	lastEstTime = 0;
 	state = 0;
+	m_hp = 2;
+	m_mp = 4;
 	m_keys = new bool[4];
 }
 
@@ -132,8 +134,8 @@ bool Player::Frame(bool enableInput, double time) {
 		if (m_x < -(m_Texture->m_spriteWidth / 2)) {
 			m_x = -(m_Texture->m_spriteWidth / 2);
 		}
-		else if (m_x > Options::WIDTH - (m_Texture->m_spriteWidth / 2)) {
-			m_x = Options::WIDTH - (m_Texture->m_spriteWidth / 2);
+		else if (m_x > Options::WIDTH - (m_Texture->m_spriteWidth / 2)-75) {
+			m_x = Options::WIDTH - (m_Texture->m_spriteWidth / 2) - 75;
 		}
 	}
 	lastTime = time;

@@ -44,7 +44,7 @@ bool BulletSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Dire
 			bullet.x += bullet.velX * elapsed / 10;
 			bullet.y += bullet.velY * elapsed / 10;
 			
-			matrix = XMMatrixRotationZ(atan(bullet.velY/bullet.velX)+3.1415926535/2) * XMMatrixTranslation(bullet.x - 400 + m_Texture->m_spriteWidth / 2, -bullet.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
+			matrix = XMMatrixScaling(1.1f,1.1f,1.f) * XMMatrixRotationZ(atan(bullet.velY/bullet.velX)+3.1415926535/2) * XMMatrixTranslation(bullet.x - 400 + m_Texture->m_spriteWidth / 2, -bullet.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
 			m_Texture->SetSprite(bullet.type);
 			m_Texture->Render(direct3d->GetDeviceContext(), bullet.x, bullet.y);
 			shader->Render(direct3d->GetDeviceContext(), GetIndexCount(), matrix, viewMatrix, orthoMatrix, GetTextureResource());

@@ -52,6 +52,7 @@ bool ParticleSystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* devic
 	if (!result) {
 		return false;
 	}
+	m_Timer->Start();
 	return true;
 }
 
@@ -68,7 +69,6 @@ bool ParticleSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Di
 	bool result;
 	if (!start) {
 		start = true;
-		m_Timer->Start();
 	}
 	for (int i = 0; i < m_Active; i++) {
 		Particle& particle = particles[i];
@@ -83,14 +83,13 @@ bool ParticleSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Di
 		}
 		particle.x += particle.velX;
 		particle.y += particle.velY;
-		matrix = XMMatrixTranslation(particle.x - 400 + m_Texture->m_imageWidth / 2, -particle.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
-		m_Texture->Resize(m_Texture->m_originalImageWidth * particle.width, m_Texture->m_originalImageHeight * particle.height);
+		matrix = XMMatrixScaling(particle.width,particle.height, 1.f) * XMMatrixTranslation(particle.x - 400 + m_Texture->m_imageWidth / 2, -particle.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
+		//m_Texture->Resize(m_Texture->m_originalImageWidth * particle.width, m_Texture->m_originalImageHeight * particle.height);
 		m_Texture->Render(direct3d->GetDeviceContext(), (int)particle.x, (int)particle.y, particle.color);
 		result = shader->Render(direct3d->GetDeviceContext(), m_Texture->GetIndexCount(), matrix, viewMatrix, orthoMatrix, m_Texture->GetTexture());
 		if (!result) {
 			return false;
 		}
-
 	}
 	return true;
 }

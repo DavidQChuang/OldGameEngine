@@ -19,6 +19,7 @@ bool TitlePS::ParticleMovement(Particle& particle) {
 	if (((-2)*((m_Timer->getTime() - particle.lifestart) / 1000) + 2) <= 0) {
 		return false;
 	}
+
 	particle.width = particle.height = (-2)*((m_Timer->getTime() - particle.lifestart) / 1100) + 2;
 	return true;
 }

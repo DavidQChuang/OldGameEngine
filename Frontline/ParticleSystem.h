@@ -7,6 +7,7 @@
 #include <random>
 #include "D3DClass.h"
 #include <sstream>
+
 class ParticleSystem {
 protected:
 	struct Particle {
@@ -14,8 +15,8 @@ protected:
 		float y;
 		float velX;
 		float velY;
-		float width;
 		float height;
+		float width;
 		double lifestart;
 		int lifetime;
 		DirectX::XMFLOAT4 color;
