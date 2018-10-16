@@ -251,8 +251,7 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 	m_Player->RenderBullets(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
 
 	m_BadBois->Create(300, 200, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f), 0);
-
-	m_BadBois->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader, sm_Timer->getTime());
+	m_BadBois->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader, sm_Timer->getTime() - lastTime);
 
 	m_Input->Update();
 	lastTime = sm_Timer->getTime();

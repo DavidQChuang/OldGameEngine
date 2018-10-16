@@ -62,7 +62,7 @@ DirectX::XMFLOAT2 EnemySystem::EnemyMovement(EnemySystem::Enemy& enemy) {
 	float y = 0;
 	switch (enemy.type) {
 	case 0:
-		y++;
+		y--;
 		break;
 	}
 	return DirectX::XMFLOAT2(x, y);
