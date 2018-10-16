@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "EnemyBS.h"
 #include "Timer.h"
+#include "TitlePS.h"
 class SceneGame : public SceneClass {
 protected:
 public:
@@ -23,6 +24,8 @@ private:
 	TexturedRect* m_MagicBar;
 	TexturedSpritesheet* m_BulletSelect;
 	TexturedSpritesheet* m_AbilitySelect;
+
+	TitlePS* m_ParticleSystem;
 
 	EnemySystem* m_BadBois;
 	EnemyBulletSystem* m_DODGE;

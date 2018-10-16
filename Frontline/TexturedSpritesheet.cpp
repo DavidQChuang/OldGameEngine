@@ -168,15 +168,13 @@ bool TexturedSpritesheet::UpdateBuffers(ID3D11DeviceContext* deviceContext, int 
 
 	m_spriteWidth = m_imageWidth / m_spriteAmount;
 	// Calculate the screen coordinates of the left side of the bitmap.
-	left = (float)(m_screenWidth / 2 * -1) + (float)positionX;
-	if (positionX == 400) {
-		right = left + (float)m_spriteWidth;
-	}
+	left = -m_spriteWidth / 2;
+
 	// Calculate the screen coordinates of the right side of the bitmap.
 	right = left + (float)m_spriteWidth;
 
 	// Calculate the screen coordinates of the top of the bitmap.
-	top = (float)(m_screenHeight / 2) - (float)positionY;
+	top = m_imageHeight / 2;
 
 	// Calculate the screen coordinates of the bottom of the bitmap.
 	bottom = top - (float)m_imageHeight;
@@ -233,15 +231,14 @@ bool TexturedSpritesheet::UpdateBuffers(ID3D11DeviceContext* deviceContext, int 
 	if ((positionX == m_previousPosX) && (positionY == m_previousPosY) && (color.x == m_previousColor.x) && (color.y == m_previousColor.y) && (color.z == m_previousColor.z) && (color.w == m_previousColor.w) && (m_previousSprite == m_currentSprite)) {
 		return true;
 	}
-
 	// Calculate the screen coordinates of the left side of the bitmap.
-	left = (float)(m_screenWidth / 2 * -1) + (float)positionX;
+	left = -m_spriteWidth / 2;
 
 	// Calculate the screen coordinates of the right side of the bitmap.
 	right = left + (float)m_spriteWidth;
 
 	// Calculate the screen coordinates of the top of the bitmap.
-	top = (float)(m_screenHeight / 2) - (float)positionY;
+	top = m_imageHeight / 2;
 
 	// Calculate the screen coordinates of the bottom of the bitmap.
 	bottom = top - (float)m_imageHeight;

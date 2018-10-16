@@ -22,12 +22,17 @@ public:
 	bool m_active;
 
 	bool RenderRect(TexturedRect*, int, int, XMMATRIX, XMMATRIX, XMMATRIX, int);
+	bool RenderRect(TexturedRect*, int, int, float, XMMATRIX, XMMATRIX, XMMATRIX, int);
+	//int x, int y, [float rot], [int spritenumber]
+	//after matrices, shader info
 	bool RenderSpritesheet(TexturedSpritesheet*, int, int, XMMATRIX, XMMATRIX, XMMATRIX, int);
 	bool RenderSpritesheet(TexturedSpritesheet*, int, int, int, XMMATRIX, XMMATRIX, XMMATRIX, int);
+	bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, XMMATRIX, XMMATRIX, XMMATRIX, int);
+	bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, int, XMMATRIX, XMMATRIX, XMMATRIX, int);
+	//bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, int, XMMATRIX, XMMATRIX, XMMATRIX, int);
+
 	bool RenderModel(ModelClass*, XMMATRIX, XMMATRIX, XMMATRIX, int);
-
-
-
+private:
 protected:
 	HWND sm_hwnd;
 	D3DClass* sm_Direct3D;

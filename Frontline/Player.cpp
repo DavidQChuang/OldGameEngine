@@ -145,20 +145,10 @@ int Player::GetSpriteNumber() {
 }
 
 bool Player::Render(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix) {
-	bool result;
-	result = m_Texture->Render(direct3d->GetDeviceContext(), m_x, m_y);
-	if (!result) {
-		return false;
-	}
-	return true;
+	return m_Texture->Render(direct3d->GetDeviceContext(), m_x, m_y);
 }
 bool Player::RenderBullets(D3DClass* direct3d, DirectX::XMMATRIX worldMatrix, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader) {
-	bool result;
-	result = m_Bullets->Render(direct3d, worldMatrix, viewMatrix, orthoMatrix, shader, elapsedTime);
-	if (!result) {
-		return false;
-	}
-	return true;
+	return m_Bullets->Render(direct3d, worldMatrix, viewMatrix, orthoMatrix, shader, elapsedTime);
 }
 
 int Player::GetIndexCount() {

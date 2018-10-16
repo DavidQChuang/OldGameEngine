@@ -17,6 +17,14 @@ SceneGame::SceneGame(HWND hwnd, D3DClass* d3dclass, CameraClass* cameraclass, Sh
 
 bool SceneGame::Initialize() {
 	bool result;
+	m_ParticleSystem = new TitlePS(0, 600, 800, 1, 2000, 3000, 100, 1, 0);
+	if (!m_ParticleSystem) {
+		return false;
+	}
+
+	result = m_ParticleSystem->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
+		".\\Data\\Images\\Sprites\\Particles\\Fire.sprite",
+		800, 600, 16 * 4, 16 * 4);
 	m_BadBois = new EnemySystem();
 	m_BadBois->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\Sprites\\Enemies\\Enemy1.sprites",
@@ -230,10 +238,16 @@ bool SceneGame::Render(XMMATRIX worldMatrix, XMMATRIX viewMatrix, XMMATRIX proje
 	RenderRect(m_BulletKeys, 740, 36 + 97 * 3, worldMatrix, viewMatrix, orthoMatrix, TEXTURE_TYPE);
 	RenderRect(m_AbilityContainers, 740, 36 + 106 * 3, worldMatrix, viewMatrix, orthoMatrix, TEXTURE_TYPE);
 	RenderSpritesheet(m_BulletSelect, 740 + 3, 36 + 107 * 3, m_Player->m_BulletType, worldMatrix, viewMatrix, orthoMatrix, TEXTURE_TYPE);
-	
-	m_Player->Render(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix);
-	result = sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), m_Player->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Player->GetTextureResource());
-	if (!result) return false;
+
+	for (int bigoof = 0; bigoof < 10; bigoof++) {
+		m_ParticleSystem->Create(0, 0, -5, -3);
+		if (bigoof % 6 == 0) {
+			m_ParticleSystem->Create(0, 0, -8, -5);
+		}
+	}
+	//m_ParticleSystem->Render(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
+
+	RenderSpritesheet(m_Player->m_Texture, m_Player->m_x, m_Player->m_y, worldMatrix, viewMatrix, orthoMatrix, TEXTURE_TYPE);
 	m_Player->RenderBullets(sm_Direct3D, worldMatrix, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
 
 	m_BadBois->Create(400, 200, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f), 0);

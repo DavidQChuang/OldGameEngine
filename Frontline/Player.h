@@ -38,14 +38,16 @@ public:
 
 	DirectX::XMFLOAT2* GetBullets();
 
-	bool* m_keys;
-	bool* m_lastKeys;
+	PlayerBulletSystem* m_Bullets;
+
 protected:
 	double lastTime;
 	double elapsedTime;
 	double bulletTime;
 	double lastEstTime;
-	PlayerBulletSystem* m_Bullets;
+
+	bool* m_keys;
+	bool* m_lastKeys;
 
 	int state;
 	float gap;
