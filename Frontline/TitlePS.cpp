@@ -7,9 +7,9 @@ TitlePS::TitlePS(int x, int y, int width, int height, int max, int lifetime, int
 }
 bool TitlePS::ParticleMovement(Particle& particle) {
 	particle.velX = sin((particle.lifestart - m_Timer->getTime()) / 100) * 3 + 2;
-	if (particle.y > 300) {
+	if (particle.y > 400) {
 		//((particle.y - 600) / 120) + 1.f - particle.data
-		particle.color = DirectX::XMFLOAT4(((particle.y - 600) / 240) + 1.f, ((particle.y - 600) / 120) + 1.f - particle.data, 0.2f - particle.data, 1.0f);
+		particle.color = DirectX::XMFLOAT4(((particle.y - 600) / 260) + 1.f, ((particle.y - 600) / 130) + 1.f - particle.data, 0.2f - particle.data, 1.0f);
 	}
 	else {
 		float n = -((particle.y - 470) / 600);

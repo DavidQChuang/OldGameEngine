@@ -4,6 +4,7 @@ EnemySystem::EnemySystem() {
 	m_bMax = 50;
 	m_Active = 0;
 	m_Texture = 0;
+	m_on = true;
 }
 EnemySystem::~EnemySystem() {
 }
@@ -17,7 +18,7 @@ bool EnemySystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCo
 		return false;
 	}
 	result = m_Texture->Initialize(device, deviceContext,
-		textureFilename,
+		textureFilename, DirectX::XMFLOAT4(1.f,1.f,1.f,1.f),
 		screenWidth, screenHeight, imageWidth, imageHeight, images);
 	if (!result) {
 		return false;
@@ -35,17 +36,19 @@ bool EnemySystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Direc
 				Delete(i);
 				continue;
 			}
-			DirectX::XMFLOAT2 movement = EnemyMovement(enemy);
-			//velX = pixels per 16.7ms(1 60fps frame) 
-			//velX * 60 (distance traveled in 1 sec)
-			//m_Timer->getTime() / 1000 (seconds passed)
-			//simplified down
-			enemy.x += movement.x * elapsed / 10;
-			enemy.y += movement.y * elapsed / 10;
+			if (m_on) {
+				DirectX::XMFLOAT2 movement = EnemyMovement(enemy);
+				//velX = pixels per 16.7ms(1 60fps frame) 
+				//velX * 60 (distance traveled in 1 sec)
+				//m_Timer->getTime() / 1000 (seconds passed)
+				//simplified down
+				enemy.x += movement.x * elapsed / 10;
+				enemy.y += movement.y * elapsed / 10;
+			}
 
 			matrix = XMMatrixTranslation(enemy.x - 400 + m_Texture->m_spriteWidth / 2, -enemy.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
 			m_Texture->SetSprite(enemy.type);
-			m_Texture->Render(direct3d->GetDeviceContext(), enemy.x, -enemy.y);
+			m_Texture->Render(direct3d->GetDeviceContext(), enemy.x, enemy.y, enemy.color);
 			result = shader->Render(direct3d->GetDeviceContext(), GetIndexCount(), matrix, viewMatrix, orthoMatrix, GetTextureResource());
 			if (!result) {
 				return false;
@@ -60,6 +63,11 @@ void EnemySystem::SetRatePerFrame(float rate) {
 bool EnemySystem::CheckCollision(DirectX::XMFLOAT2 bulletLocations) {
 	return true;
 }
+
+void EnemySystem::SetState(bool on) {
+	m_on = on;
+}
+
 DirectX::XMFLOAT2 EnemySystem::EnemyMovement(EnemySystem::Enemy& enemy) {
 	float x = 0;
 	float y = 0;

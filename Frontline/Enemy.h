@@ -28,6 +28,7 @@ public:
 
 	int GetIndexCount();
 
+	void SetState(bool);
 	void SetRatePerFrame(float);
 
 	Enemy GetEnemy(int);
@@ -36,6 +37,8 @@ public:
 
 	ID3D11ShaderResourceView* GetTextureResource();
 	TexturedSpritesheet* GetTexture();
+
+	bool m_on;
 protected:
 	int m_bMax, m_Active;
 

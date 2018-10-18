@@ -23,7 +23,7 @@ bool ColorTextureShader::Initialize(ID3D11Device* device, HWND hwnd) {
 	bool result;
 
 	// Initialize the vertex and pixel shaders.
-	result = InitializeShader(device, hwnd, L".\\Data\\Shaders\\TextureVertexShader.hlsl", L".\\Data\\Shaders\\TexturePixelShader.hlsl");
+	result = InitializeShader(device, hwnd, L".\\Data\\Shaders\\ColorTextureVertexShader.hlsl", L".\\Data\\Shaders\\ColorTexturePixelShader.hlsl");
 	if (!result) {
 		return false;
 	}

@@ -36,6 +36,7 @@ public:
 	int m_imageWidth, m_imageHeight;
 	int m_originalImageWidth, m_originalImageHeight;
 
+	void SetShaderType(int);
 	int m_shaderType;
 
 	virtual void Resize();

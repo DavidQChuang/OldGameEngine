@@ -603,3 +603,7 @@ void TexturedRect::ReleaseTexture() {
 	}
 	return;
 }
+
+void TexturedRect::SetShaderType(int type) {
+	m_shaderType = type;
+}

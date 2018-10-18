@@ -6,6 +6,7 @@ BulletSystem::BulletSystem(int x) {
 	m_bMax = x;
 	m_Active = 0;
 	m_Texture = 0;
+	m_on = true;
 }
 BulletSystem::~BulletSystem() {
 }
@@ -36,13 +37,15 @@ bool BulletSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Dire
 				Delete(i);
 				continue;
 			}
-			BulletMovement(bullet);
-			//velX = pixels per 16.7ms(1 60fps frame) 
-			//velX * 60 (distance traveled in 1 sec)
-			//m_Timer->getTime() / 1000 (seconds passed)
-			//simplified down
-			bullet.x += bullet.velX * elapsed / 10;
-			bullet.y += bullet.velY * elapsed / 10;
+			if (m_on) {
+				BulletMovement(bullet);
+				//velX = pixels per 16.7ms(1 60fps frame) 
+				//velX * 60 (distance traveled in 1 sec)
+				//m_Timer->getTime() / 1000 (seconds passed)
+				//simplified down
+				bullet.x += bullet.velX * elapsed / 16;
+				bullet.y += bullet.velY * elapsed / 16;
+			}
 			
 			matrix = XMMatrixScaling(1.1f,1.1f,1.f) * XMMatrixRotationZ(atan(bullet.velY/bullet.velX)+3.1415926535/2) * XMMatrixTranslation(bullet.x - 400 + m_Texture->m_spriteWidth / 2, -bullet.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
 			m_Texture->SetSprite(bullet.type);
@@ -51,6 +54,9 @@ bool BulletSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Dire
 		}
 	}
 	return true;
+}
+void BulletSystem::SetState(bool on) {
+	m_on = on;
 }
 int BulletSystem::GetIndexCount() {
 	return m_Texture->GetIndexCount();

@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include "TexturedRect.h"
 #include "Timer.h"
-#include "ColorTextureShader.h"
+#include "ShaderClass.h"
 #include <random>
 #include "D3DClass.h"
 #include <sstream>
@@ -27,7 +27,7 @@ public:
 	ParticleSystem(int, int, int, int, int, int, int, int, int);
 	ParticleSystem(const ParticleSystem&);
 	~ParticleSystem();
-	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*);
+	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ShaderClass*, double);
 	void Create();
 	void Create(int, int);
 	void Create(int, int, int);

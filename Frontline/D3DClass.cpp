@@ -448,7 +448,7 @@ void D3DClass::EndScene() {
 	// Present the back buffer to the screen since rendering is complete.
 	if (m_vsync_enabled) {
 		// Lock to screen refresh rate.
-		m_swapChain->Present(0.5, 0);
+		m_swapChain->Present(1, 0);
 	} else {
 		// Present as fast as possible.
 		m_swapChain->Present(0, 0);

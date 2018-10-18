@@ -253,9 +253,17 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 		m_Player->Frame(true, sm_Timer->getTime());
 		m_Player->m_Texture->SetSprite(static_cast<int>(round(sm_Timer->getTime() / 90)) % 6);
 
+		m_Player->m_Bullets->SetState(true);
+
+		m_BadBois->SetState(true);
+		m_BadBois->SetRatePerFrame(0.05);
+		m_BadBois->Create(300, -100, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f), 0, sm_Timer->getTime());
+
 		if (m_Input->OnKeyDown(VK_ESCAPE)) m_GameState = 1;
 		break;
 	case 1:
+		m_Player->m_Bullets->SetState(false);
+		m_BadBois->SetState(false);
 		m_Player->Frame(false, sm_Timer->getTime());
 
 		if (m_Input->OnKeyDown(VK_ESCAPE)) m_GameState = 0;
@@ -274,19 +282,17 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 
 	sm_Direct3D->TurnZBufferOff();
 
-	m_ParticleSystem->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
 	for (int bigoof = 0; bigoof < 10; bigoof++) {
 		m_ParticleSystem->Create(0, 0, -5, -3);
 		if (bigoof % 6 == 0) {
 			m_ParticleSystem->Create(0, 0, -8, -5);
 		}
 	}
+	m_ParticleSystem->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass, sm_Timer->getTime() - lastTime);
 
 	RenderSpritesheet(m_Player->m_Texture, m_Player->m_x, m_Player->m_y, viewMatrix, orthoMatrix, TEXTURE_TYPE);
 	m_Player->RenderBullets(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
 
-	m_BadBois->SetRatePerFrame(0.05);
-	m_BadBois->Create(300, -100, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f), 0, sm_Timer->getTime());
 	m_BadBois->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader, sm_Timer->getTime() - lastTime);
 
 	RenderRect(m_HealthBarBackground, 750, 20 * 3, viewMatrix, orthoMatrix, COLOR_TYPE);

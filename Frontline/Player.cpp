@@ -54,7 +54,7 @@ bool Player::Frame(bool enableInput, double time) {
 				m_BulletType += 1;
 			}
 		}
-		if (m_Input->IsKeyDown(VK_SHIFT) && m_speed != 2) m_speed = 2; else m_speed = 4;
+		if (m_Input->IsKeyDown(VK_SHIFT)) m_speed = 2; else m_speed = 4;
 		//W87 A65 S83 D68 
 		if (m_Input->IsKeyDown(VK_RIGHT) || m_Input->IsKeyDown(68)) m_keys[0] = true; else m_keys[0] = false;
 		if (m_Input->IsKeyDown(VK_LEFT) || m_Input->IsKeyDown(65)) m_keys[1] = true; else m_keys[1] = false;

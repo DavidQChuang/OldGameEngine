@@ -39,6 +39,9 @@ public:
 	TexturedSpritesheet* GetTexture();
 
 	void MoveBullet(int, double);
+
+	void SetState(bool);
+	bool m_on;
 protected:
 	int m_bMax, m_Active;
 
