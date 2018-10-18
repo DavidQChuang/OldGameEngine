@@ -63,7 +63,7 @@ bool ITextureShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHA
 	ID3D10Blob* errorMessage;
 	ID3D10Blob* vertexShaderBuffer;
 	ID3D10Blob* pixelShaderBuffer;
-	D3D11_INPUT_ELEMENT_DESC polygonLayout[4];
+	D3D11_INPUT_ELEMENT_DESC polygonLayout[3];
 	unsigned int numElements;
 	D3D11_BUFFER_DESC matrixBufferDesc;
 	//We have a new variable to hold the description of the texture sampler that will be setup in this function.
@@ -143,14 +143,6 @@ bool ITextureShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHA
 	polygonLayout[2].AlignedByteOffset = 0;
 	polygonLayout[2].InputSlotClass = D3D11_INPUT_PER_INSTANCE_DATA;
 	polygonLayout[2].InstanceDataStepRate = 1;
-
-	polygonLayout[3].SemanticName = "COLOR";
-	polygonLayout[3].SemanticIndex = 1;
-	polygonLayout[3].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	polygonLayout[3].InputSlot = 0;
-	polygonLayout[3].AlignedByteOffset = 0;
-	polygonLayout[3].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
-	polygonLayout[3].InstanceDataStepRate = 0;
 
 	// Get a count of the elements in the layout.
 	numElements = sizeof(polygonLayout) / sizeof(polygonLayout[0]);

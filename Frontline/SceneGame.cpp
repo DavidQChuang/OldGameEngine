@@ -56,6 +56,10 @@ bool SceneGame::Initialize() {
 		return false;
 	}
 
+	/*m_FPS = new TexturedText();
+	m_FPS->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
+		800,600,FONT_	PIX_FIVE,5*3);*/
+
 	result = m_HUD->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\GUI\\HUD.sprite",
 		800, 600, 14*3, 85*3);

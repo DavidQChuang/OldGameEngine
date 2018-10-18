@@ -4,7 +4,7 @@ SamplerState SampleType;
 struct PixelInputType {
 	float4 position : SV_POSITION;
 	float2 tex : TEXCOORD0;
-	float4 color : COLOR;
+	nointerpolation float4 color : COLOR;
 };
 
 float4 TexturePixelShader(PixelInputType input) : SV_TARGET{
