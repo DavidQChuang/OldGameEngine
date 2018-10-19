@@ -147,6 +147,19 @@ void TexturedRect::Shutdown() {
 }
 
 
+
+bool TexturedRect::Render(ID3D11DeviceContext* deviceContext) {
+	bool result;
+	// Re-build the dynamic vertex buffer for rendering to possibly a different location on the screen.
+	result = UpdateBuffers(deviceContext, m_posX, m_posY);
+	if (!result) return false;
+
+	// Put the vertex and index buffers on the graphics pipeline to prepare them for drawing.
+	RenderBuffers(deviceContext);
+
+	return true;
+}
+
 bool TexturedRect::Render(ID3D11DeviceContext* deviceContext, int positionX, int positionY) {
 	bool result;
 	m_posX = positionX;
@@ -335,6 +348,11 @@ void TexturedRect::Resize() {
 void TexturedRect::Resize(int width, int height) {
 	m_imageWidth = width;
 	m_imageHeight = height;
+}
+
+void TexturedRect::SetPos(int x, int y) {
+	m_posX = x;
+	m_posY = y;
 }
 
 void TexturedRect::ShutdownBuffers() {

@@ -26,6 +26,7 @@ public:
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int, int);
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, DirectX::XMFLOAT4, int, int, int, int);
 	void Shutdown();
+	bool Render(ID3D11DeviceContext*);
 	bool Render(ID3D11DeviceContext*, int, int);
 	bool Render(ID3D11DeviceContext*, int, int, DirectX::XMFLOAT4);
 
@@ -38,6 +39,8 @@ public:
 
 	void SetShaderType(int);
 	int m_shaderType;
+
+	void SetPos(int, int);
 
 	virtual void Resize();
 	virtual void Resize(int, int);

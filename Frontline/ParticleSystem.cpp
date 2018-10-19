@@ -189,7 +189,7 @@ void ParticleSystem::Create(int velX, int velY, int bottom, int top) {
 		particles[m_Active].color = DirectX::XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 		particles[m_Active].width = 1.0f;
 		particles[m_Active].height = 1.0f;
-		particles[m_Active].data = distribution(generator) / 32;
+		AdditionalCreate(distribution(generator), particles[m_Active]);
 		m_Active++;
 	}
 }

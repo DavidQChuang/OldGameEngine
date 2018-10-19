@@ -20,7 +20,7 @@ protected:
 		double lifestart;
 		int lifetime;
 		DirectX::XMFLOAT4 color;
-		int data;
+		float data;
 	};
 public:
 	ParticleSystem(int, int, int, int, int, int, int);

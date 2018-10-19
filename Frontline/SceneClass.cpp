@@ -20,7 +20,7 @@ SceneClass::~SceneClass() {
 
 bool SceneClass::RenderRect(TexturedRect* object, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
 	DirectX::XMMATRIX matrix = XMMatrixTranslation(object->m_posX - 400 + object->m_imageWidth / 2, -object->m_posY + 300 - object->m_imageHeight / 2, 0.f);
-	object->Render(sm_Direct3D->GetDeviceContext(), object->m_posX, object->m_posY);
+	object->Render(sm_Direct3D->GetDeviceContext());
 	switch (shaderType) {
 	case COLOR_TYPE:
 		return sm_ShaderClass->m_ColorShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix);
@@ -52,7 +52,7 @@ bool SceneClass::RenderRect(TexturedRect* object, XMMATRIX viewMatrix, XMMATRIX 
 
 bool SceneClass::RenderRect(TexturedRect* object, float rot, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
 	DirectX::XMMATRIX matrix = XMMatrixRotationZ(XMConvertToRadians(rot)) * XMMatrixTranslation(object->m_posX - 400 + object->m_imageWidth / 2, -object->m_posY + 300 - object->m_imageHeight / 2, 0.f);
-	object->Render(sm_Direct3D->GetDeviceContext(), object->m_posX, object->m_posY);
+	object->Render(sm_Direct3D->GetDeviceContext());
 	switch (shaderType) {
 	case COLOR_TYPE:
 		return sm_ShaderClass->m_ColorShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix);
