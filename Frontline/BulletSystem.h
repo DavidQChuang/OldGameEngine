@@ -19,7 +19,7 @@ public:
 	BulletSystem();
 	BulletSystem(int);
 	~BulletSystem();
-	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*, double);
+	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*, float);
 	void Create(float, float, DirectX::XMFLOAT4, int);
 	void Create(float, float, float, float, DirectX::XMFLOAT4, int);
 
@@ -38,7 +38,7 @@ public:
 	ID3D11ShaderResourceView* GetTextureResource();
 	TexturedSpritesheet* GetTexture();
 
-	void MoveBullet(int, double);
+	void MoveBullet(int, float);
 
 	void SetState(bool);
 	bool m_on;

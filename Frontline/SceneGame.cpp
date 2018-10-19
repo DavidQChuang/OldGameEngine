@@ -58,7 +58,7 @@ bool SceneGame::Initialize() {
 
 	/*m_FPS = new TexturedText();
 	m_FPS->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
-		800,600,FONT_	PIX_FIVE,5*3);*/
+		800,600,FONT_PIX_FIVE,5*3);*/
 
 	result = m_HUD->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\GUI\\HUD.sprite",
@@ -292,7 +292,7 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 			m_ParticleSystem->Create(0, 0, -8, -5);
 		}
 	}
-	m_ParticleSystem->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass, sm_Timer->getTime() - lastTime);
+	m_ParticleSystem->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass);
 
 	RenderSpritesheet(m_Player->m_Texture, m_Player->m_x, m_Player->m_y, viewMatrix, orthoMatrix, TEXTURE_TYPE);
 	m_Player->RenderBullets(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);

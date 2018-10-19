@@ -27,7 +27,7 @@ public:
 	ParticleSystem(int, int, int, int, int, int, int, int, int);
 	ParticleSystem(const ParticleSystem&);
 	~ParticleSystem();
-	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ShaderClass*, double);
+	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ShaderClass*);
 	void Create();
 	void Create(int, int);
 	void Create(int, int, int);
@@ -41,14 +41,14 @@ public:
 	 
 protected:
 	virtual bool ParticleMovement(Particle&) = 0;
-
+	virtual void AdditionalCreate(float, Particle&) = 0;
 	int m_pMax, m_Active;
 	Particle* particles;
 	int m_x, m_y, m_width, m_height;
 	int m_Lifetime, m_LifeRandom;
 	int m_Generate, m_GenRandom;
-	double m_Time;
-	bool start;
+	float m_Time;
+	float m_lastTime;
 
 	TexturedRect* m_Texture;
 	Timer* m_Timer;
