@@ -5,7 +5,7 @@
 #include "Options.h"
 class ModelClass {
 private:
-	struct VertexType {
+	struct H_2D_TEXTURE_RESOURCETYPE {
 		DirectX::XMFLOAT3 position;
 		DirectX::XMFLOAT2 texture;
 		DirectX::XMFLOAT3 normal;

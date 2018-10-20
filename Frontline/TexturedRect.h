@@ -3,20 +3,6 @@
 #include "TextureClass.h"
 #include "Engine.h"
 class TexturedRect {
-protected:
-	struct ColorVertexType {
-		DirectX::XMFLOAT3 position;
-		DirectX::XMFLOAT4 color;
-	};
-	struct VertexType {
-		DirectX::XMFLOAT3 position;
-		DirectX::XMFLOAT2 texture;
-	};
-	struct ColoredVertexType {
-		DirectX::XMFLOAT3 position;
-		DirectX::XMFLOAT2 texture;
-		DirectX::XMFLOAT4 color;
-	};
 public:
 	TexturedRect();
 	TexturedRect(const TexturedRect&);
@@ -34,13 +20,14 @@ public:
 	ID3D11ShaderResourceView* GetTexture();
 
 	int m_imageWidth, m_imageHeight;
+	int m_previousImageWidth, m_previousImageHeight;
+	int m_screenWidth, m_screenHeight;
 
 	void SetShaderType(int);
 	int m_shaderType;
 
 	void SetPos(int, int);
 
-	virtual void Resize();
 	virtual void Resize(int, int);
 	//void ChangeColor(DirectX::XMFLOAT4);
 	int m_posX, m_posY;
@@ -58,6 +45,4 @@ protected:
 	int m_vertexCount, m_indexCount;
 	TextureClass* m_Texture;
 	DirectX::XMFLOAT4 m_previousColor;
-
-	int m_previousPosX, m_previousPosY;
 };

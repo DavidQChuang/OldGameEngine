@@ -30,7 +30,7 @@ bool InstancedTexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext
 	m_imageWidth = imageWidth;
 	m_imageHeight = imageHeight;
 
-	m_shaderType = COLOR_TYPE;
+	m_shaderType = H_2D_COLOR_SHADERTYPE;
 
 	m_Color = color;
 	m_previousColor = color;
@@ -61,7 +61,7 @@ bool InstancedTexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext
 	m_originalImageWidth = imageWidth;
 	m_originalImageHeight = imageHeight;
 
-	m_shaderType = TEXTURE_TYPE;
+	m_shaderType = H_2D_TEXTURE_RTYPE;
 
 	m_Color = DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f);
 	m_previousColor = DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f);
@@ -98,7 +98,7 @@ bool InstancedTexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext
 	m_originalImageWidth = imageWidth;
 	m_originalImageHeight = imageHeight;
 
-	m_shaderType = COLOR_TEXTURE_TYPE;
+	m_shaderType = H_2D_COLOR_TEXTURE_SHADERTYPE;
 
 	m_Color = color;
 	m_previousColor = color;
@@ -177,9 +177,9 @@ ID3D11ShaderResourceView* InstancedTexturedRect::GetTexture() {
 
 
 bool InstancedTexturedRect::InitializeBuffers(ID3D11Device* device) {
-	ColorVertexType* colortype = 0;
-	ColoredVertexType* coloredtype = 0;
-	VertexType* texturetype = 0;
+	H_2D_COLOR_RESOURCETYPE* colortype = 0;
+	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredtype = 0;
+	H_2D_TEXTURE_RESOURCETYPE* texturetype = 0;
 
 	unsigned long* indices;
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
@@ -192,19 +192,19 @@ bool InstancedTexturedRect::InitializeBuffers(ID3D11Device* device) {
 	m_indexCount = 6;
 
 	switch (m_shaderType) {
-	case COLOR_TYPE:
+	case H_2D_COLOR_SHADERTYPE:
 		// Create the vertex array.
-		colortype = new ColorVertexType[m_vertexCount];
+		colortype = new H_2D_COLOR_RESOURCETYPE[m_vertexCount];
 		if (!colortype) {
 			return false;
 		}
 		// Initialize vertex array to zeros at first.
-		memset(colortype, 0, (sizeof(ColorVertexType) * m_vertexCount));
+		memset(colortype, 0, (sizeof(H_2D_COLOR_RESOURCETYPE) * m_vertexCount));
 
 
 		// Set up the description of the static vertex buffer.
 		vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-		vertexBufferDesc.ByteWidth = sizeof(ColorVertexType) * m_vertexCount;
+		vertexBufferDesc.ByteWidth = sizeof(H_2D_COLOR_RESOURCETYPE) * m_vertexCount;
 		vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		vertexBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		vertexBufferDesc.MiscFlags = 0;
@@ -215,19 +215,19 @@ bool InstancedTexturedRect::InitializeBuffers(ID3D11Device* device) {
 		vertexData.SysMemPitch = 0;
 		vertexData.SysMemSlicePitch = 0;
 		break;
-	case TEXTURE_TYPE:
+	case H_2D_TEXTURE_RTYPE:
 		// Create the vertex array.
-		texturetype = new VertexType[m_vertexCount];
+		texturetype = new H_2D_TEXTURE_RESOURCETYPE[m_vertexCount];
 		if (!texturetype) {
 			return false;
 		}
 		// Initialize vertex array to zeros at first.
-		memset(texturetype, 0, (sizeof(VertexType) * m_vertexCount));
+		memset(texturetype, 0, (sizeof(H_2D_TEXTURE_RESOURCETYPE) * m_vertexCount));
 
 
 		// Set up the description of the static vertex buffer.
 		vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-		vertexBufferDesc.ByteWidth = sizeof(VertexType) * m_vertexCount;
+		vertexBufferDesc.ByteWidth = sizeof(H_2D_TEXTURE_RESOURCETYPE) * m_vertexCount;
 		vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		vertexBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		vertexBufferDesc.MiscFlags = 0;
@@ -238,19 +238,19 @@ bool InstancedTexturedRect::InitializeBuffers(ID3D11Device* device) {
 		vertexData.SysMemPitch = 0;
 		vertexData.SysMemSlicePitch = 0;
 		break;
-	case COLOR_TEXTURE_TYPE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE:
 		// Create the vertex array.
-		coloredtype = new ColoredVertexType[m_vertexCount];
+		coloredtype = new H_2D_COLOR_TEXTURE_RESOURCETYPE[m_vertexCount];
 		if (!coloredtype) {
 			return false;
 		}
 		// Initialize vertex array to zeros at first.
-		memset(coloredtype, 0, (sizeof(ColoredVertexType) * m_vertexCount));
+		memset(coloredtype, 0, (sizeof(H_2D_COLOR_TEXTURE_RESOURCETYPE) * m_vertexCount));
 
 
 		// Set up the description of the static vertex buffer.
 		vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-		vertexBufferDesc.ByteWidth = sizeof(ColoredVertexType) * m_vertexCount;
+		vertexBufferDesc.ByteWidth = sizeof(H_2D_COLOR_TEXTURE_RESOURCETYPE) * m_vertexCount;
 		vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		vertexBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		vertexBufferDesc.MiscFlags = 0;
@@ -309,11 +309,11 @@ void InstancedTexturedRect::ShutdownBuffers() {
 
 bool InstancedTexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positionX, int positionY, DirectX::XMFLOAT4 color) {
 	float left, right, top, bottom;
-	ColorVertexType* colortype = 0;
-	ColoredVertexType* coloredtype = 0;
+	H_2D_COLOR_RESOURCETYPE* colortype = 0;
+	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredtype = 0;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	ColorVertexType* colorPtr;
-	ColoredVertexType* coloredPtr;
+	H_2D_COLOR_RESOURCETYPE* colorPtr;
+	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredPtr;
 	HRESULT result;
 
 
@@ -336,9 +336,9 @@ bool InstancedTexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, in
 	bottom = top - (float)m_imageHeight;
 
 	switch (m_shaderType) {
-	case COLOR_TYPE:
+	case H_2D_COLOR_SHADERTYPE:
 		// Create the vertex array.
-		colortype = new ColorVertexType[m_vertexCount];
+		colortype = new H_2D_COLOR_RESOURCETYPE[m_vertexCount];
 		if (!colortype) {
 			return false;
 		}
@@ -362,20 +362,20 @@ bool InstancedTexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, in
 		}
 
 		// Get a pointer to the data in the vertex buffer.
-		colorPtr = (ColorVertexType*)mappedResource.pData;
+		colorPtr = (H_2D_COLOR_RESOURCETYPE*)mappedResource.pData;
 
 		// Copy the data into the vertex buffer.
-		memcpy(colorPtr, (void*)colortype, (sizeof(ColorVertexType) * m_vertexCount));
+		memcpy(colorPtr, (void*)colortype, (sizeof(H_2D_COLOR_RESOURCETYPE) * m_vertexCount));
 
 		// Unlock the vertex buffer.
 		deviceContext->Unmap(m_vertexBuffer, 0);
 		break;
-	case TEXTURE_TYPE:
+	case H_2D_TEXTURE_RTYPE:
 		return UpdateBuffers(deviceContext, positionX, positionY);
 		break;
-	case COLOR_TEXTURE_TYPE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE:
 		// Create the vertex array.
-		coloredtype = new ColoredVertexType[m_vertexCount];
+		coloredtype = new H_2D_COLOR_TEXTURE_RESOURCETYPE[m_vertexCount];
 		if (!coloredtype) {
 			return false;
 		}
@@ -404,10 +404,10 @@ bool InstancedTexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, in
 		}
 
 		// Get a pointer to the data in the vertex buffer.
-		coloredPtr = (ColoredVertexType*)mappedResource.pData;
+		coloredPtr = (H_2D_COLOR_TEXTURE_RESOURCETYPE*)mappedResource.pData;
 
 		// Copy the data into the vertex buffer.
-		memcpy(coloredPtr, (void*)coloredtype, (sizeof(ColoredVertexType) * m_vertexCount));
+		memcpy(coloredPtr, (void*)coloredtype, (sizeof(H_2D_COLOR_TEXTURE_RESOURCETYPE) * m_vertexCount));
 
 		// Unlock the vertex buffer.
 		deviceContext->Unmap(m_vertexBuffer, 0);
@@ -430,9 +430,9 @@ bool InstancedTexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, in
 
 bool InstancedTexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positionX, int positionY) {
 	float left, right, top, bottom;
-	VertexType* vertices;
+	H_2D_TEXTURE_RESOURCETYPE* vertices;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	VertexType* verticesPtr;
+	H_2D_TEXTURE_RESOURCETYPE* verticesPtr;
 	HRESULT result;
 
 
@@ -442,7 +442,7 @@ bool InstancedTexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, in
 		return true;
 	}
 
-	if (m_shaderType == COLOR_TEXTURE_TYPE || m_shaderType == COLOR_TYPE) return UpdateBuffers(deviceContext, positionX, positionY, m_Color);
+	if (m_shaderType == H_2D_COLOR_TEXTURE_SHADERTYPE || m_shaderType == H_2D_COLOR_SHADERTYPE) return UpdateBuffers(deviceContext, positionX, positionY, m_Color);
 	// If it has changed then update the position it is being rendered to.
 	m_previousPosX = positionX;
 	m_previousPosY = positionY;
@@ -459,7 +459,7 @@ bool InstancedTexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, in
 	// Calculate the screen coordinates of the bottom of the bitmap.
 	bottom = top - (float)m_imageHeight;
 	// Create the vertex array.
-	vertices = new VertexType[m_vertexCount];
+	vertices = new H_2D_TEXTURE_RESOURCETYPE[m_vertexCount];
 	if (!vertices) {
 		return false;
 	}
@@ -484,10 +484,10 @@ bool InstancedTexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, in
 	}
 
 	// Get a pointer to the data in the vertex buffer.
-	verticesPtr = (VertexType*)mappedResource.pData;
+	verticesPtr = (H_2D_TEXTURE_RESOURCETYPE*)mappedResource.pData;
 
 	// Copy the data into the vertex buffer.
-	memcpy(verticesPtr, (void*)vertices, (sizeof(VertexType) * m_vertexCount));
+	memcpy(verticesPtr, (void*)vertices, (sizeof(H_2D_TEXTURE_RESOURCETYPE) * m_vertexCount));
 
 	// Unlock the vertex buffer.
 	deviceContext->Unmap(m_vertexBuffer, 0);
@@ -507,14 +507,14 @@ void InstancedTexturedRect::RenderBuffers(ID3D11DeviceContext* deviceContext) {
 
 	// Set vertex buffer stride and offset.
 	switch (m_shaderType) {
-	case COLOR_TYPE:
-		stride[0] = sizeof(ColorVertexType);
+	case H_2D_COLOR_SHADERTYPE:
+		stride[0] = sizeof(H_2D_COLOR_RESOURCETYPE);
 		break;
-	case TEXTURE_TYPE:
-		stride[0] = sizeof(VertexType);
+	case H_2D_TEXTURE_RTYPE:
+		stride[0] = sizeof(H_2D_TEXTURE_RESOURCETYPE);
 		break;
-	case COLOR_TEXTURE_TYPE:
-		stride[0] = sizeof(ColoredVertexType);
+	case H_2D_COLOR_TEXTURE_SHADERTYPE:
+		stride[0] = sizeof(H_2D_COLOR_TEXTURE_RESOURCETYPE);
 		break;
 	}
 	stride[1] = sizeof(InstanceType);

@@ -109,7 +109,7 @@ bool ColorShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* 
 		return false;
 	}
 	// Create the vertex input layout description.
-	// This setup needs to match the VertexType stucture in the TexturedRect and in the shader.
+	// This setup needs to match the H_2D_TEXTURE_RESOURCETYPE stucture in the TexturedRect and in the shader.
 	polygonLayout[0].SemanticName = "POSITION";
 	polygonLayout[0].SemanticIndex = 0;
 	polygonLayout[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;

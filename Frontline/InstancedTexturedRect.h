@@ -4,15 +4,15 @@
 #include "Engine.h"
 class InstancedTexturedRect {
 protected:
-	struct ColorVertexType {
+	struct H_2D_COLOR_RESOURCETYPE {
 		DirectX::XMFLOAT3 position;
 		DirectX::XMFLOAT4 color;
 	};
-	struct VertexType {
+	struct H_2D_TEXTURE_RESOURCETYPE {
 		DirectX::XMFLOAT3 position;
 		DirectX::XMFLOAT2 texture;
 	};
-	struct ColoredVertexType {
+	struct H_2D_COLOR_TEXTURE_RESOURCETYPE {
 		DirectX::XMFLOAT3 position;
 		DirectX::XMFLOAT2 texture;
 		DirectX::XMFLOAT4 color;

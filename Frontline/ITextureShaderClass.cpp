@@ -116,10 +116,10 @@ bool ITextureShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHA
 	if (FAILED(result)) {
 		return false;
 	}
-	//The input layout has changed as we now have a texture element instead of color.The first position element stays unchanged but the SemanticName and Format of the second element have been changed to TEXCOORD and DXGI_FORMAT_R32G32_FLOAT.These two changes will now align this layout with our new VertexType in both the TexturedRect definition and the typedefs in the shader files.
+	//The input layout has changed as we now have a texture element instead of color.The first position element stays unchanged but the SemanticName and Format of the second element have been changed to TEXCOORD and DXGI_FORMAT_R32G32_FLOAT.These two changes will now align this layout with our new H_2D_TEXTURE_RESOURCETYPE in both the TexturedRect definition and the typedefs in the shader files.
 
 	// Create the vertex input layout description.
-	// This setup needs to match the VertexType stucture in the TexturedRect and in the shader.
+	// This setup needs to match the H_2D_TEXTURE_RESOURCETYPE stucture in the TexturedRect and in the shader.
 	polygonLayout[0].SemanticName = "COLOR";
 	polygonLayout[0].SemanticIndex = 0;
 	polygonLayout[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;

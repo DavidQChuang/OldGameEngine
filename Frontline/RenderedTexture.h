@@ -6,7 +6,7 @@
 class RenderedTexture
 {
 private:
-	struct VertexType
+	struct H_2D_TEXTURE_RESOURCETYPE
 	{
 		DirectX::XMFLOAT3 position;
 		DirectX::XMFLOAT2 texture;

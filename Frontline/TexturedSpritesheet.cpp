@@ -27,17 +27,14 @@ bool TexturedSpritesheet::Initialize(ID3D11Device* device, ID3D11DeviceContext* 
 	m_imageWidth = spriteWidth * spriteAmount;
 	m_imageHeight = imageHeight;
 
-	m_originalImageWidth = m_imageWidth;
-	m_originalImageHeight = imageHeight;
-
 	m_spriteWidth = spriteWidth;
 	m_originalSpriteWidth = spriteWidth;
 	
-	m_shaderType = TEXTURE_TYPE;
+	m_shaderType = H_2D_TEXTURE_SHADERTYPE;
 
 	// Initialize the previous rendering position to negative one.
-	m_previousPosX = -1;
-	m_previousPosY = -1;
+	m_previousImageWidth = -1;
+	m_previousImageHeight = -1;
 
 	m_Color = DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f);
 	m_previousColor = DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f);
@@ -71,17 +68,14 @@ bool TexturedSpritesheet::Initialize(ID3D11Device* device, ID3D11DeviceContext* 
 	m_imageWidth = spriteWidth * spriteAmount;
 	m_imageHeight = imageHeight;
 
-	m_originalImageWidth = m_imageWidth;
-	m_originalImageHeight = imageHeight;
-
 	m_spriteWidth = spriteWidth;
 	m_originalSpriteWidth = spriteWidth;
 
-	m_shaderType = COLOR_TEXTURE_TYPE;
+	m_shaderType = H_2D_COLOR_TEXTURE_SHADERTYPE;
 
 	// Initialize the previous rendering position to negative one.
-	m_previousPosX = -1;
-	m_previousPosY = -1;
+	m_previousImageWidth = -1;
+	m_previousImageHeight = -1;
 
 	m_Color = color;
 	m_previousColor = color;
@@ -104,12 +98,6 @@ bool TexturedSpritesheet::Initialize(ID3D11Device* device, ID3D11DeviceContext* 
 
 void TexturedSpritesheet::SetSprite(int l) {
 	m_currentSprite = l;
-}
-
-void TexturedSpritesheet::Resize() {
-	m_imageWidth = m_originalImageWidth;
-	m_spriteWidth = m_originalSpriteWidth;
-	m_imageHeight = m_originalImageHeight;
 }
 
 void TexturedSpritesheet::Resize(int width, int height) {
@@ -148,22 +136,19 @@ bool TexturedSpritesheet::Render(ID3D11DeviceContext* deviceContext, int positio
 }
 bool TexturedSpritesheet::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positionX, int positionY) {
 	float left, right, top, bottom;
-	VertexType* vertices;
+	H_2D_TEXTURE_RESOURCETYPE* vertices;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	VertexType* verticesPtr;
+	H_2D_TEXTURE_RESOURCETYPE* verticesPtr;
 	HRESULT result;
 	// If the position we are rendering this bitmap to has not changed then don't update the vertex buffer since it
 	// currently has the correct parameters.
-	if ((positionX == m_previousPosX) && (positionY == m_previousPosY) && (m_previousSprite == m_currentSprite)) {
+	if ((m_imageWidth == m_previousImageWidth) && (m_imageHeight == m_previousImageHeight) && (m_previousSprite == m_currentSprite)) {
 		return true;
 	}
-	if (m_shaderType == COLOR_TEXTURE_TYPE || m_shaderType == COLOR_TYPE) {
+	if (m_shaderType == H_2D_COLOR_TEXTURE_SHADERTYPE || m_shaderType == H_2D_COLOR_SHADERTYPE) {
 		UpdateBuffers(deviceContext, positionX, positionY, m_Color); 
 		return true;
 	}
-	// If it has changed then update the position it is being rendered to.
-	m_previousPosX = positionX;
-	m_previousPosY = positionY;
 	m_previousSprite = m_currentSprite;
 
 	m_spriteWidth = m_imageWidth / m_spriteAmount;
@@ -180,7 +165,7 @@ bool TexturedSpritesheet::UpdateBuffers(ID3D11DeviceContext* deviceContext, int 
 	bottom = top - (float)m_imageHeight;
 
 	// Create the vertex array.
-	vertices = new VertexType[m_vertexCount];
+	vertices = new H_2D_TEXTURE_RESOURCETYPE[m_vertexCount];
 	if (!vertices) {
 		return false;
 	}
@@ -203,13 +188,17 @@ bool TexturedSpritesheet::UpdateBuffers(ID3D11DeviceContext* deviceContext, int 
 	}
 
 	// Get a pointer to the data in the vertex buffer.
-	verticesPtr = (VertexType*)mappedResource.pData;
+	verticesPtr = (H_2D_TEXTURE_RESOURCETYPE*)mappedResource.pData;
 
 	// Copy the data into the vertex buffer.
-	memcpy(verticesPtr, (void*)vertices, (sizeof(VertexType) * m_vertexCount));
+	memcpy(verticesPtr, (void*)vertices, (sizeof(H_2D_TEXTURE_RESOURCETYPE) * m_vertexCount));
 
 	// Unlock the vertex buffer.
 	deviceContext->Unmap(m_vertexBuffer, 0);
+
+	// If it has changed then update the position it is being rendered to.
+	m_previousImageWidth = m_imageWidth;
+	m_previousImageHeight = m_imageHeight;
 
 	// Release the vertex array as it is no longer needed.
 	delete[] vertices;
@@ -220,15 +209,15 @@ bool TexturedSpritesheet::UpdateBuffers(ID3D11DeviceContext* deviceContext, int 
 
 bool TexturedSpritesheet::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positionX, int positionY, DirectX::XMFLOAT4 color) {
 	float left, right, top, bottom;
-	ColoredVertexType* coloredtype = 0;
+	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredtype = 0;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	ColoredVertexType* coloredPtr;
+	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredPtr;
 	HRESULT result;
 
 
 	// If the position we are rendering this bitmap to has not changed then don't update the vertex buffer since it
 	// currently has the correct parameters.
-	if ((positionX == m_previousPosX) && (positionY == m_previousPosY) && (color.x == m_previousColor.x) && (color.y == m_previousColor.y) && (color.z == m_previousColor.z) && (color.w == m_previousColor.w) && (m_previousSprite == m_currentSprite)) {
+	if ((m_imageWidth == m_previousImageWidth) && (m_imageHeight == m_previousImageHeight) && (color.x == m_previousColor.x) && (color.y == m_previousColor.y) && (color.z == m_previousColor.z) && (color.w == m_previousColor.w) && (m_previousSprite == m_currentSprite)) {
 		return true;
 	}
 	// Calculate the screen coordinates of the left side of the bitmap.
@@ -243,9 +232,9 @@ bool TexturedSpritesheet::UpdateBuffers(ID3D11DeviceContext* deviceContext, int 
 	// Calculate the screen coordinates of the bottom of the bitmap.
 	bottom = top - (float)m_imageHeight;
 
-	if (m_shaderType == COLOR_TEXTURE_TYPE) {
+	if (m_shaderType == H_2D_COLOR_TEXTURE_SHADERTYPE) {
 		// Create the vertex array.
-		coloredtype = new ColoredVertexType[m_vertexCount];
+		coloredtype = new H_2D_COLOR_TEXTURE_RESOURCETYPE[m_vertexCount];
 		if (!coloredtype) {
 			return false;
 		}
@@ -273,10 +262,10 @@ bool TexturedSpritesheet::UpdateBuffers(ID3D11DeviceContext* deviceContext, int 
 		}
 
 		// Get a pointer to the data in the vertex buffer.
-		coloredPtr = (ColoredVertexType*)mappedResource.pData;
+		coloredPtr = (H_2D_COLOR_TEXTURE_RESOURCETYPE*)mappedResource.pData;
 
 		// Copy the data into the vertex buffer.
-		memcpy(coloredPtr, (void*)coloredtype, (sizeof(ColoredVertexType) * m_vertexCount));
+		memcpy(coloredPtr, (void*)coloredtype, (sizeof(H_2D_COLOR_TEXTURE_RESOURCETYPE) * m_vertexCount));
 
 		// Unlock the vertex buffer.
 		deviceContext->Unmap(m_vertexBuffer, 0);
@@ -286,8 +275,8 @@ bool TexturedSpritesheet::UpdateBuffers(ID3D11DeviceContext* deviceContext, int 
 		return result;
 	}
 	// If it has changed then update the position it is being rendered to.
-	m_previousPosX = positionX;
-	m_previousPosY = positionY;
+	m_previousImageWidth = m_imageWidth;
+	m_previousImageHeight = m_imageHeight;
 	m_previousSprite = m_currentSprite;
 
 	m_previousColor = color;

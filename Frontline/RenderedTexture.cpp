@@ -88,7 +88,7 @@ int RenderedTexture::GetIndexCount()
 
 bool RenderedTexture::InitializeBuffers(ID3D11Device* device)
 {
-	VertexType* vertices;
+	H_2D_TEXTURE_RESOURCETYPE* vertices;
 	unsigned long* indices;
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
@@ -103,7 +103,7 @@ bool RenderedTexture::InitializeBuffers(ID3D11Device* device)
 	m_indexCount = m_vertexCount;
 
 	// Create the vertex array.
-	vertices = new VertexType[m_vertexCount];
+	vertices = new H_2D_TEXTURE_RESOURCETYPE[m_vertexCount];
 	if (!vertices)
 	{
 		return false;
@@ -117,7 +117,7 @@ bool RenderedTexture::InitializeBuffers(ID3D11Device* device)
 	}
 
 	// Initialize vertex array to zeros at first.
-	memset(vertices, 0, (sizeof(VertexType) * m_vertexCount));
+	memset(vertices, 0, (sizeof(H_2D_TEXTURE_RESOURCETYPE) * m_vertexCount));
 
 	// Load the index array with data.
 	for (i = 0; i<m_indexCount; i++)
@@ -127,7 +127,7 @@ bool RenderedTexture::InitializeBuffers(ID3D11Device* device)
 
 	// Set up the description of the static vertex buffer.
 	vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	vertexBufferDesc.ByteWidth = sizeof(VertexType) * m_vertexCount;
+	vertexBufferDesc.ByteWidth = sizeof(H_2D_TEXTURE_RESOURCETYPE) * m_vertexCount;
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	vertexBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	vertexBufferDesc.MiscFlags = 0;
@@ -199,9 +199,9 @@ void RenderedTexture::ShutdownBuffers()
 bool RenderedTexture::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positionX, int positionY)
 {
 	float left, right, top, bottom;
-	VertexType* vertices;
+	H_2D_TEXTURE_RESOURCETYPE* vertices;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	VertexType* verticesPtr;
+	H_2D_TEXTURE_RESOURCETYPE* verticesPtr;
 	HRESULT result;
 
 
@@ -229,7 +229,7 @@ bool RenderedTexture::UpdateBuffers(ID3D11DeviceContext* deviceContext, int posi
 	bottom = top - (float)m_imageHeight;
 
 	// Create the vertex array.
-	vertices = new VertexType[m_vertexCount];
+	vertices = new H_2D_TEXTURE_RESOURCETYPE[m_vertexCount];
 	if (!vertices)
 	{
 		return false;
@@ -264,10 +264,10 @@ bool RenderedTexture::UpdateBuffers(ID3D11DeviceContext* deviceContext, int posi
 	}
 
 	// Get a pointer to the data in the vertex buffer.
-	verticesPtr = (VertexType*)mappedResource.pData;
+	verticesPtr = (H_2D_TEXTURE_RESOURCETYPE*)mappedResource.pData;
 
 	// Copy the data into the vertex buffer.
-	memcpy(verticesPtr, (void*)vertices, (sizeof(VertexType) * m_vertexCount));
+	memcpy(verticesPtr, (void*)vertices, (sizeof(H_2D_TEXTURE_RESOURCETYPE) * m_vertexCount));
 
 	// Unlock the vertex buffer.
 	deviceContext->Unmap(m_vertexBuffer, 0);
@@ -287,7 +287,7 @@ void RenderedTexture::RenderBuffers(ID3D11DeviceContext* deviceContext)
 
 
 	// Set vertex buffer stride and offset.
-	stride = sizeof(VertexType);
+	stride = sizeof(H_2D_TEXTURE_RESOURCETYPE);
 	offset = 0;
 
 	// Set the vertex buffer to active in the input assembler so it can be rendered.

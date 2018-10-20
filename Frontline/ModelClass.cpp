@@ -69,7 +69,7 @@ ID3D11ShaderResourceView* ModelClass::GetTexture() {
 
 
 bool ModelClass::InitializeBuffers(ID3D11Device* device) {
-	VertexType* vertices;
+	H_2D_TEXTURE_RESOURCETYPE* vertices;
 	unsigned long* indices;
 	D3D11_BUFFER_DESC vertexBufferDesc, indexBufferDesc;
 	D3D11_SUBRESOURCE_DATA vertexData, indexData;
@@ -77,7 +77,7 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device) {
 	int i;
 
 	// Create the vertex array.
-	vertices = new VertexType[m_vertexCount];
+	vertices = new H_2D_TEXTURE_RESOURCETYPE[m_vertexCount];
 	if (!vertices) {
 		return false;
 	}
@@ -98,7 +98,7 @@ bool ModelClass::InitializeBuffers(ID3D11Device* device) {
 
 	// Set up the description of the static vertex buffer.
 	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	vertexBufferDesc.ByteWidth = sizeof(VertexType) * m_vertexCount;
+	vertexBufferDesc.ByteWidth = sizeof(H_2D_TEXTURE_RESOURCETYPE) * m_vertexCount;
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	vertexBufferDesc.CPUAccessFlags = 0;
 	vertexBufferDesc.MiscFlags = 0;
@@ -168,7 +168,7 @@ void ModelClass::RenderBuffers(ID3D11DeviceContext* deviceContext) {
 
 
 	// Set vertex buffer stride and offset.
-	stride = sizeof(VertexType);
+	stride = sizeof(H_2D_TEXTURE_RESOURCETYPE);
 	offset = 0;
 
 	// Set the vertex buffer to active in the input assembler so it can be rendered.

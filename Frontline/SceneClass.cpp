@@ -22,29 +22,29 @@ bool SceneClass::RenderRect(TexturedRect* object, XMMATRIX viewMatrix, XMMATRIX 
 	DirectX::XMMATRIX matrix = XMMatrixTranslation(object->m_posX - 400 + object->m_imageWidth / 2, -object->m_posY + 300 - object->m_imageHeight / 2, 0.f);
 	object->Render(sm_Direct3D->GetDeviceContext());
 	switch (shaderType) {
-	case COLOR_TYPE:
+	case H_2D_COLOR_SHADERTYPE:
 		return sm_ShaderClass->m_ColorShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix);
 		break;
-	case TEXTURE_TYPE:
+	case H_2D_TEXTURE_SHADERTYPE:
 		return sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
-	case COLOR_TEXTURE_TYPE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE:
 		return sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
-	case COLOR_TYPE | TRANSPARENCY:
+	case H_2D_COLOR_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case TEXTURE_TYPE | TRANSPARENCY:
+	case H_2D_TEXTURE_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case COLOR_TEXTURE_TYPE | TRANSPARENCY:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case COLOR_TYPE | INSTANCE:
+	case H_2D_COLOR_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
-	case TEXTURE_TYPE | INSTANCE:
+	case H_2D_TEXTURE_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
-	case COLOR_TEXTURE_TYPE | INSTANCE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
 	}
 	return false;
@@ -54,29 +54,29 @@ bool SceneClass::RenderRect(TexturedRect* object, float rot, XMMATRIX viewMatrix
 	DirectX::XMMATRIX matrix = XMMatrixRotationZ(XMConvertToRadians(rot)) * XMMatrixTranslation(object->m_posX - 400 + object->m_imageWidth / 2, -object->m_posY + 300 - object->m_imageHeight / 2, 0.f);
 	object->Render(sm_Direct3D->GetDeviceContext());
 	switch (shaderType) {
-	case COLOR_TYPE:
+	case H_2D_COLOR_SHADERTYPE:
 		return sm_ShaderClass->m_ColorShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix);
 		break;
-	case TEXTURE_TYPE:
+	case H_2D_TEXTURE_SHADERTYPE:
 		return sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
-	case COLOR_TEXTURE_TYPE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE:
 		return sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
-	case COLOR_TYPE | TRANSPARENCY:
+	case H_2D_COLOR_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case TEXTURE_TYPE | TRANSPARENCY:
+	case H_2D_TEXTURE_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case COLOR_TEXTURE_TYPE | TRANSPARENCY:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case COLOR_TYPE | INSTANCE:
+	case H_2D_COLOR_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
-	case TEXTURE_TYPE | INSTANCE:
+	case H_2D_TEXTURE_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
-	case COLOR_TEXTURE_TYPE | INSTANCE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
 	}
 	return false;
@@ -86,29 +86,29 @@ bool SceneClass::RenderRect(TexturedRect* object, int x, int y, XMMATRIX viewMat
 	DirectX::XMMATRIX matrix = XMMatrixTranslation(x - 400 + object->m_imageWidth / 2, -y + 300 - object->m_imageHeight / 2, 0.f);
 	object->Render(sm_Direct3D->GetDeviceContext(), x, y);
 	switch (shaderType) {
-	case COLOR_TYPE:
+	case H_2D_COLOR_SHADERTYPE:
 		return sm_ShaderClass->m_ColorShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix);
 		break;
-	case TEXTURE_TYPE:
+	case H_2D_TEXTURE_SHADERTYPE:
 		return sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
-	case COLOR_TEXTURE_TYPE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE:
 		return sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
-	case COLOR_TYPE | TRANSPARENCY:
+	case H_2D_COLOR_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case TEXTURE_TYPE | TRANSPARENCY:
+	case H_2D_TEXTURE_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case COLOR_TEXTURE_TYPE | TRANSPARENCY:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case COLOR_TYPE | INSTANCE:
+	case H_2D_COLOR_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
-	case TEXTURE_TYPE | INSTANCE:
+	case H_2D_TEXTURE_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
-	case COLOR_TEXTURE_TYPE | INSTANCE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
 	}
 	return false;
@@ -117,29 +117,29 @@ bool SceneClass::RenderRect(TexturedRect* object, int x, int y, float rot, XMMAT
 	DirectX::XMMATRIX matrix = XMMatrixRotationZ(XMConvertToRadians(rot))* XMMatrixTranslation(x - 400 + object->m_imageWidth / 2, -y + 300 - object->m_imageHeight / 2, 0.f);
 	object->Render(sm_Direct3D->GetDeviceContext(), x, y);
 	switch (shaderType) {
-	case COLOR_TYPE:
+	case H_2D_COLOR_SHADERTYPE:
 		return sm_ShaderClass->m_ColorShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix);
 		break;
-	case TEXTURE_TYPE:
+	case H_2D_TEXTURE_SHADERTYPE:
 		return sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
-	case COLOR_TEXTURE_TYPE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE:
 		return sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
-	case COLOR_TYPE | TRANSPARENCY:
+	case H_2D_COLOR_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case TEXTURE_TYPE | TRANSPARENCY:
+	case H_2D_TEXTURE_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case COLOR_TEXTURE_TYPE | TRANSPARENCY:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case COLOR_TYPE | INSTANCE:
+	case H_2D_COLOR_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
-	case TEXTURE_TYPE | INSTANCE:
+	case H_2D_TEXTURE_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
-	case COLOR_TEXTURE_TYPE | INSTANCE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
 	}
 	return false;
@@ -150,29 +150,29 @@ bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, XM
 	DirectX::XMMATRIX matrix = XMMatrixTranslation(x - 400 + object->m_spriteWidth / 2, -y + 300 - object->m_imageHeight / 2, 0.f);
 	object->Render(sm_Direct3D->GetDeviceContext(), x, y);
 	switch (shaderType) {
-	case COLOR_TYPE:
+	case H_2D_COLOR_SHADERTYPE:
 		return sm_ShaderClass->m_ColorShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix);
 		break;
-	case TEXTURE_TYPE:
+	case H_2D_TEXTURE_SHADERTYPE:
 		return sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
-	case COLOR_TEXTURE_TYPE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE:
 		return sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
-	case COLOR_TYPE | TRANSPARENCY:
+	case H_2D_COLOR_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case TEXTURE_TYPE | TRANSPARENCY:
+	case H_2D_TEXTURE_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case COLOR_TEXTURE_TYPE | TRANSPARENCY:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case COLOR_TYPE | INSTANCE:
+	case H_2D_COLOR_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
-	case TEXTURE_TYPE | INSTANCE:
+	case H_2D_TEXTURE_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
-	case COLOR_TEXTURE_TYPE | INSTANCE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
 	}
 	return false;
@@ -183,29 +183,29 @@ bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, in
 	object->SetSprite(sprite);
 	object->Render(sm_Direct3D->GetDeviceContext(), x, y);
 	switch (shaderType) {
-	case COLOR_TYPE:
+	case H_2D_COLOR_SHADERTYPE:
 		return sm_ShaderClass->m_ColorShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix);
 		break;
-	case TEXTURE_TYPE:
+	case H_2D_TEXTURE_SHADERTYPE:
 		return sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
-	case COLOR_TEXTURE_TYPE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE:
 		return sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
-	case COLOR_TYPE | TRANSPARENCY:
+	case H_2D_COLOR_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case TEXTURE_TYPE | TRANSPARENCY:
+	case H_2D_TEXTURE_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case COLOR_TEXTURE_TYPE | TRANSPARENCY:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case COLOR_TYPE | INSTANCE:
+	case H_2D_COLOR_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
-	case TEXTURE_TYPE | INSTANCE:
+	case H_2D_TEXTURE_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
-	case COLOR_TEXTURE_TYPE | INSTANCE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
 	}
 	return false;
@@ -214,29 +214,29 @@ bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, fl
 	DirectX::XMMATRIX matrix = XMMatrixRotationZ(rot) * XMMatrixTranslation(x - 400 + object->m_spriteWidth / 2, -y + 300 - object->m_imageHeight / 2, 0.f);
 	object->Render(sm_Direct3D->GetDeviceContext(), x, y);
 	switch (shaderType) {
-	case COLOR_TYPE:
+	case H_2D_COLOR_SHADERTYPE:
 		return sm_ShaderClass->m_ColorShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix);
 		break;
-	case TEXTURE_TYPE:
+	case H_2D_TEXTURE_SHADERTYPE:
 		return sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
-	case COLOR_TEXTURE_TYPE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE:
 		return sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
-	case COLOR_TYPE | TRANSPARENCY:
+	case H_2D_COLOR_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case TEXTURE_TYPE | TRANSPARENCY:
+	case H_2D_TEXTURE_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case COLOR_TEXTURE_TYPE | TRANSPARENCY:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case COLOR_TYPE | INSTANCE:
+	case H_2D_COLOR_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
-	case TEXTURE_TYPE | INSTANCE:
+	case H_2D_TEXTURE_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
-	case COLOR_TEXTURE_TYPE | INSTANCE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
 	}
 }
@@ -245,29 +245,29 @@ bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int x, int y, fl
 	object->SetSprite(spritenumber);
 	object->Render(sm_Direct3D->GetDeviceContext(), x, y);
 	switch (shaderType) {
-	case COLOR_TYPE:
+	case H_2D_COLOR_SHADERTYPE:
 		return sm_ShaderClass->m_ColorShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix);
 		break;
-	case TEXTURE_TYPE:
+	case H_2D_TEXTURE_SHADERTYPE:
 		return sm_ShaderClass->m_TextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
-	case COLOR_TEXTURE_TYPE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE:
 		return sm_ShaderClass->m_ColorTextureShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture());
 		break;
-	case COLOR_TYPE | TRANSPARENCY:
+	case H_2D_COLOR_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case TEXTURE_TYPE | TRANSPARENCY:
+	case H_2D_TEXTURE_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case COLOR_TEXTURE_TYPE | TRANSPARENCY:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE | H_2D_TRANSPARENCY_SHADERMOD:
 		//return sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), object->GetIndexCount(), matrix, viewMatrix, orthoMatrix, object->GetTexture(), 1.f);
 		break;
-	case COLOR_TYPE | INSTANCE:
+	case H_2D_COLOR_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
-	case TEXTURE_TYPE | INSTANCE:
+	case H_2D_TEXTURE_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
-	case COLOR_TEXTURE_TYPE | INSTANCE:
+	case H_2D_COLOR_TEXTURE_SHADERTYPE | H_2D_INSTANCE_SHADERMOD:
 		break;
 	}
 	return false;
