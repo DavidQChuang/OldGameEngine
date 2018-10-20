@@ -46,7 +46,7 @@ bool BulletSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Dire
 			bullet.y += bullet.velY * elapsed / 16;
 		}
 			
-		matrix = XMMatrixScaling(1.1f,1.1f,1.f) * XMMatrixRotationZ(atan(bullet.velY/bullet.velX)+3.1415926535/2) * XMMatrixTranslation(bullet.x - 400 + m_Texture->m_spriteWidth / 2, -bullet.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
+		matrix = XMMatrixScaling(1.1f,1.1f,1.f) * XMMatrixRotationZ(atan(bullet.velY/bullet.velX)+XM_PI/2) * XMMatrixTranslation(bullet.x - 400 + m_Texture->m_spriteWidth / 2, -bullet.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
 		m_Texture->SetSprite(bullet.type);
 		m_Texture->Render(direct3d->GetDeviceContext(), bullet.x, bullet.y, bullet.color);
 		shader->Render(direct3d->GetDeviceContext(), GetIndexCount(), matrix, viewMatrix, orthoMatrix, GetTextureResource());
@@ -90,7 +90,7 @@ void BulletSystem::Create(float x, float y, DirectX::XMFLOAT4 color, int type) {
 		m_Bullets[m_Active].velY = 0;
 		m_Bullets[m_Active].color = color;
 		m_Bullets[m_Active].type = type;
-		m_Bullets[m_Active].data = m_Active;
+		m_Bullets[m_Active].data = 0;
 		m_Active++;
 	}
 }
@@ -102,12 +102,14 @@ void BulletSystem::Create(float x, float y, float velX, float velY, DirectX::XMF
 		m_Bullets[m_Active].velY = velY;
 		m_Bullets[m_Active].color = color;
 		m_Bullets[m_Active].type = type;
-		m_Bullets[m_Active].data = m_Active;
+		m_Bullets[m_Active].data = 0;
 
 		m_Active++;
 	}
 }
-
+void BulletSystem::SetData(int id, float data) {
+	m_Bullets[id].data = data;
+}
 void BulletSystem::MoveBullet(int id, float time) {
 	Bullet& bullet = m_Bullets[id];
 	BulletMovement(m_Bullets[id]);
@@ -119,9 +121,6 @@ int BulletSystem::GetActive() {
 	return m_Active;
 }
 
-BulletSystem::Bullet BulletSystem::GetBullet(int x) {
-	return m_Bullets[x];
-}
 DirectX::XMFLOAT2* BulletSystem::GetBulletsCoords() {
 	DirectX::XMFLOAT2* list = new DirectX::XMFLOAT2[m_Active];
 	for (int i = 0; i < m_Active; i++) {

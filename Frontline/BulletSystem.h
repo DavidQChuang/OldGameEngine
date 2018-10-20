@@ -13,7 +13,7 @@ public:
 		float y;
 		float velX;
 		float velY;
-		int data;
+		float data;
 		DirectX::XMFLOAT4 color;
 	};
 	BulletSystem();
@@ -26,19 +26,17 @@ public:
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int, int, int);
 	void Shutdown();
 
-	void Delete(int);
-
-	int GetActive();
-
 	int GetIndexCount();
 
-	Bullet GetBullet(int);
 	DirectX::XMFLOAT2* GetBulletsCoords();
 
 	ID3D11ShaderResourceView* GetTextureResource();
 	TexturedSpritesheet* GetTexture();
 
+	void SetData(int, float);
 	void MoveBullet(int, float);
+	int GetActive();
+	void Delete(int);
 
 	void SetState(bool);
 	bool m_on;

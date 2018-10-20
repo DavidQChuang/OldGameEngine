@@ -33,9 +33,7 @@ public:
 	int GetIndexCount();
 	ID3D11ShaderResourceView* GetTexture();
 
-	int m_screenWidth, m_screenHeight;
 	int m_imageWidth, m_imageHeight;
-	int m_originalImageWidth, m_originalImageHeight;
 
 	void SetShaderType(int);
 	int m_shaderType;

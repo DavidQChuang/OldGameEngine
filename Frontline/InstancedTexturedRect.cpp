@@ -1,10 +1,11 @@
 
 #include "InstancedTexturedRect.h"
 #include <sstream>
-InstancedTexturedRect::InstancedTexturedRect() {
+InstancedTexturedRect::InstancedTexturedRect(int max) {
 	m_vertexBuffer = 0;
-	m_indexBuffer = 0;
+	m_instanceBuffer = 0;
 	m_Texture = 0;
+	m_instancePos = new int(max);
 }
 
 
@@ -29,14 +30,7 @@ bool InstancedTexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext
 	m_imageWidth = imageWidth;
 	m_imageHeight = imageHeight;
 
-	m_originalImageWidth = imageWidth;
-	m_originalImageHeight = imageHeight;
-
 	m_shaderType = COLOR_TYPE;
-
-	// Initialize the previous rendering position to negative one.
-	m_previousPosX = -1;
-	m_previousPosY = -1;
 
 	m_Color = color;
 	m_previousColor = color;
@@ -68,10 +62,6 @@ bool InstancedTexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext
 	m_originalImageHeight = imageHeight;
 
 	m_shaderType = TEXTURE_TYPE;
-
-	// Initialize the previous rendering position to negative one.
-	m_previousPosX = -1;
-	m_previousPosY = -1;
 
 	m_Color = DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f);
 	m_previousColor = DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f);
@@ -279,39 +269,7 @@ bool InstancedTexturedRect::InitializeBuffers(ID3D11Device* device) {
 		return false;
 	}
 
-	// Create the index array.
-	indices = new unsigned long[m_indexCount];
-	if (!indices) {
-		return false;
-	}
 
-
-	// Load the index array with data.
-	indices[0] = 0;
-	indices[1] = 1;
-	indices[2] = 2;
-	indices[3] = 0;
-	indices[4] = 3;
-	indices[5] = 1;
-
-	// Set up the description of the static index buffer.
-	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	indexBufferDesc.ByteWidth = sizeof(unsigned long) * m_indexCount;
-	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	indexBufferDesc.CPUAccessFlags = 0;
-	indexBufferDesc.MiscFlags = 0;
-	indexBufferDesc.StructureByteStride = 0;
-
-	// Give the subresource structure a pointer to the index data.
-	indexData.pSysMem = indices;
-	indexData.SysMemPitch = 0;
-	indexData.SysMemSlicePitch = 0;
-
-	// Create the index buffer.
-	result = device->CreateBuffer(&indexBufferDesc, &indexData, &m_indexBuffer);
-	if (FAILED(result)) {
-		return false;
-	}
 
 	// Release the arrays now that the vertex and index buffers have been created and loaded.
 	delete[] colortype;
@@ -320,9 +278,6 @@ bool InstancedTexturedRect::InitializeBuffers(ID3D11Device* device) {
 	coloredtype = 0;
 	delete[] texturetype;
 	texturetype = 0;
-
-	delete[] indices;
-	indices = 0;
 
 	return true;
 }
@@ -339,9 +294,9 @@ void InstancedTexturedRect::Resize(int width, int height) {
 
 void InstancedTexturedRect::ShutdownBuffers() {
 	// Release the index buffer.
-	if (m_indexBuffer) {
-		m_indexBuffer->Release();
-		m_indexBuffer = 0;
+	if (m_instanceBuffer) {
+		m_instanceBuffer->Release();
+		m_instanceBuffer = 0;
 	}
 
 	// Release the vertex buffer.
@@ -546,29 +501,36 @@ bool InstancedTexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, in
 
 
 void InstancedTexturedRect::RenderBuffers(ID3D11DeviceContext* deviceContext) {
-	unsigned int stride;
-	unsigned int offset;
+	unsigned int stride[2];
+	unsigned int offset[2];	
+	ID3D11Buffer* bufferPointers[2];
 
 	// Set vertex buffer stride and offset.
 	switch (m_shaderType) {
 	case COLOR_TYPE:
-		stride = sizeof(ColorVertexType);
+		stride[0] = sizeof(ColorVertexType);
 		break;
 	case TEXTURE_TYPE:
-		stride = sizeof(VertexType);
+		stride[0] = sizeof(VertexType);
 		break;
 	case COLOR_TEXTURE_TYPE:
-		stride = sizeof(ColoredVertexType);
+		stride[0] = sizeof(ColoredVertexType);
 		break;
 	}
-	offset = 0;
+	stride[1] = sizeof(InstanceType);
+
+	offset[0] = 0;
+	offset[1] = 0;
+
+	bufferPointers[0] = m_vertexBuffer;
+	bufferPointers[0] = m_instanceBuffer;
 
 	// Set the vertex buffer to active in the input assembler so it can be rendered.
-	deviceContext->IASetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
+	deviceContext->IASetVertexBuffers(0, 2, bufferPointers, stride, offset);
 
 	// Set the index buffer to active in the input assembler so it can be rendered.
 	deviceContext->IASetIndexBuffer(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
-
+	d
 	// Set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
 	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 

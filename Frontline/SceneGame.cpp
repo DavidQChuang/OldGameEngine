@@ -29,7 +29,7 @@ bool SceneGame::Initialize() {
 	m_BadBois = new EnemySystem();
 	m_BadBois->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\Sprites\\Enemies\\Enemy1.sprites",
-		800, 600, 9 * 3, 9 * 3, 4);
+		800, 600, 18 * 3, 18 * 3, 4);
 
 	m_DODGE = new EnemyBulletSystem(600);
 	m_DODGE->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),

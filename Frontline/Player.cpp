@@ -111,14 +111,16 @@ bool Player::Frame(bool enableInput, double time) {
 				m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, (time - bulletTime) - intergar * 33);
 				m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, (time - bulletTime) - intergar * 33);
 				if (m_BulletType == 2) {
-					m_Bullets->Create(m_x + m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
+					m_Bullets->Create(m_x + m_Bullets->GetTexture()->m_spriteWidth * (1 - gap + 2),
 						m_y + bulletOffset,
 						DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 0.8f), m_BulletType);
-					m_Bullets->Create(m_x + m_Texture->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
+					m_Bullets->Create(m_x + m_Texture->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth * (1 - gap + 2),
 						m_y + bulletOffset,
 						DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 0.8f), m_BulletType);
 					m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, (time - bulletTime) - intergar * 33);
 					m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, (time - bulletTime) - intergar * 33);
+					m_Bullets->SetData(m_Bullets->GetActive() - 2, 1);
+					m_Bullets->SetData(m_Bullets->GetActive() - 1, 2);
 				}
 			}
 			bulletTime = time-remainder;

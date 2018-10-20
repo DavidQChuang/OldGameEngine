@@ -2,7 +2,7 @@
 
 #include "TextureClass.h"
 #include "Engine.h"
-class TexturedRect {
+class InstancedTexturedRect {
 protected:
 	struct ColorVertexType {
 		DirectX::XMFLOAT3 position;
@@ -21,9 +21,9 @@ protected:
 		DirectX::XMFLOAT3 position;
 	};
 public:
-	TexturedRect();
-	TexturedRect(const TexturedRect&);
-	~TexturedRect();
+	InstancedTexturedRect(int);
+	InstancedTexturedRect(const InstancedTexturedRect&);
+	~InstancedTexturedRect();
 
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, DirectX::XMFLOAT4, int, int, int, int);
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int, int);
@@ -45,7 +45,8 @@ public:
 	virtual void Resize();
 	virtual void Resize(int, int);
 	//void ChangeColor(DirectX::XMFLOAT4);
-	int m_posX, m_posY;
+	const int m_posX = 400, m_posY = 300;
+	int* m_instancePos;
 	DirectX::XMFLOAT4 m_Color;
 protected:
 	bool InitializeBuffers(ID3D11Device*);
@@ -56,10 +57,8 @@ protected:
 
 	bool LoadTexture(ID3D11Device*, ID3D11DeviceContext*, char*);
 	void ReleaseTexture();
-	ID3D11Buffer *m_vertexBuffer, *m_indexBuffer;
+	ID3D11Buffer *m_vertexBuffer, *m_instanceBuffer;
 	int m_vertexCount, m_indexCount;
 	TextureClass* m_Texture;
 	DirectX::XMFLOAT4 m_previousColor;
-
-	int m_previousPosX, m_previousPosY;
 };

@@ -19,10 +19,9 @@ void PlayerBulletSystem::BulletMovement(Bullet& b) {
 		b.velY = -20;
 		break;
 	case 2:
-		if (b.data % 4 == 0) {
+		if (b.data == 1) {
 			b.velX = -5;
-		}
-		else if (b.data % 4 == 1){
+		} else if (b.data == 2){
 			b.velX = 5;
 		}
 		b.velY = -15;
