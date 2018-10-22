@@ -222,6 +222,9 @@
     <ClCompile Include="ParticleSystem.cpp">
       <Filter>Header Files\World\Graphics\2D</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerPS.cpp">
+      <Filter>Header Files\World\Graphics\2D\ParticleSystems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -352,6 +355,9 @@
     </ClInclude>
     <ClInclude Include="Engine.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerPS.h">
+      <Filter>Header Files\World\Graphics\2D\ParticleSystems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

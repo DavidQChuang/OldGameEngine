@@ -4,6 +4,7 @@
 #include "Options.h"
 #include "PlayerBS.h"
 #include "TexturedSpritesheet.h"
+#include "PlayerPS.h"
 
 class Player {
 public:
@@ -43,6 +44,7 @@ public:
 
 	PlayerBulletSystem* m_Bullets;
 
+	PlayerPS* m_PlayerParticles;
 protected:
 	double lastTime;
 	double elapsedTime;

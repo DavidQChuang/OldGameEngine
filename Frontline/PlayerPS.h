@@ -1,9 +1,9 @@
 #pragma once
 #include "ParticleSystem.h"
 
-class TitlePS : public ParticleSystem {
+class PlayerPS : public ParticleSystem {
 public:
-	TitlePS(int);
+	PlayerPS(int);
 	bool ParticleMovement(Particle&);
 	void AdditionalCreate(float, Particle&);
 };

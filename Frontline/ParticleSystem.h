@@ -23,18 +23,18 @@ protected:
 		float data;
 	};
 public:
-	ParticleSystem(int, int, int, int, int, int, int);
-	ParticleSystem(int, int, int, int, int, int, int, int, int);
+	ParticleSystem(int);
 	ParticleSystem(const ParticleSystem&);
 	~ParticleSystem();
+
+	void SetParameters(int, int, int, int, int, int);
+	void SetParameters(int, int, int, int, int, int, int, int);
+
 	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ShaderClass*);
 	void Create();
 	void Create(int, int);
 	void Create(int, int, int);
 	void Create(int, int, int, int);
-
-	void SetX(int);
-	void SetY(int);
 
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int, int);
 	void Shutdown();

@@ -18,14 +18,15 @@ SceneGame::SceneGame(HWND hwnd, D3DClass* d3dclass, CameraClass* cameraclass, Sh
 bool SceneGame::Initialize() {
 	bool result;
 	//(int x, int y, int width, int height, int max, int lifetime, int lifeRandom, int gen, int genRand)
-	m_ParticleSystem = new TitlePS(0, 600, 800, 1, 2000, 3000, 100, 1, 0);
+	m_ParticleSystem = new TitlePS(1000);
 	if (!m_ParticleSystem) {
 		return false;
 	}
-
+	m_ParticleSystem->SetParameters(0, 600, 800, 1, 3000, 100, 1, 0);
 	result = m_ParticleSystem->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\Sprites\\Particles\\Fire.sprite",
 		800, 600, 16 * 4, 16 * 4);
+
 	m_BadBois = new EnemySystem();
 	m_BadBois->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\Sprites\\Enemies\\Enemy1.sprites",

@@ -58,7 +58,7 @@ bool EnemySystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Direc
 	return true;
 }
 void EnemySystem::SetRatePerFrame(float rate) {
-	bulletDelta = (1 /rate)*16;
+	m_delta = (1 /rate)*16;
 }
 bool EnemySystem::CheckCollision(DirectX::XMFLOAT2 bulletLocations) {
 	return true;
@@ -77,6 +77,11 @@ DirectX::XMFLOAT2 EnemySystem::EnemyMovement(EnemySystem::Enemy& enemy) {
 		break;
 	}
 	return DirectX::XMFLOAT2(x, y);
+}
+void EnemySystem::MoveEnemy(EnemySystem::Enemy& enemy, float delta) {
+	DirectX::XMFLOAT2 movement = EnemyMovement(enemy);
+	enemy.x += movement.x * delta / 10;
+	enemy.y += movement.y * delta / 10;
 }
 
 void EnemySystem::Delete(int b) {
@@ -97,9 +102,9 @@ void EnemySystem::Shutdown() {
 	}
 }
 void EnemySystem::Create(float x, float y, DirectX::XMFLOAT4 color, int type, double time) {
-	if (time - bulletTime > bulletDelta) {
-		int enemies = floor((time - bulletTime) / bulletDelta);
-		double remainder = time - bulletTime - enemies * bulletDelta;
+	if (time - m_lastSpawnTime > m_delta) {
+		int enemies = floor((time - m_lastSpawnTime) / m_delta);
+		double remainder = time - m_lastSpawnTime - enemies * m_delta;
 		for (int intergar = 0; intergar < enemies; intergar++) {
 			if (m_Active < m_bMax) {
 				m_Enemies[m_Active].x = x;
@@ -111,11 +116,11 @@ void EnemySystem::Create(float x, float y, DirectX::XMFLOAT4 color, int type, do
 					m_Enemies[m_Active].health = 10;
 					break;
 				}
-
+				MoveEnemy(m_Enemies[m_Active], (time - m_lastSpawnTime) - intergar * 33);
 				m_Active++;
 			}
 		}
-		bulletTime = time - remainder;
+		m_lastSpawnTime = time - remainder;
 	}
 }
 

@@ -8,10 +8,13 @@ Player::Player(Input* input, int xp, int yp) {
 	m_Bullets = 0;
 	m_Texture = 0;
 	m_BulletType = 0;
+	m_PlayerParticles = 0;
+
 	lastTime = -1;
 	elapsedTime = 0;
 	bulletTime = 0;
 	lastEstTime = 0;
+
 	state = 0;
 	m_hp = 2;
 	m_mp = 4;
@@ -29,13 +32,24 @@ bool Player::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext
 	result = m_Texture->Initialize(device, deviceContext,
 		textureFilename,
 		screenWidth, screenHeight, imageWidth, imageHeight, spriteAmount);
-	if (!result) {
-		return false;
-	}
+	if (!result) return false;
+
 	m_Bullets = new PlayerBulletSystem(150);
-	m_Bullets->Initialize(device, deviceContext,
+	result = m_Bullets->Initialize(device, deviceContext,
 		bulletFilename,
 		screenWidth, screenHeight, 6*3, 6*3, 3);
+	if (!result) return false;
+
+	m_PlayerParticles = new PlayerPS(150);
+	if (!m_PlayerParticles) {
+		return false;
+	}
+	m_PlayerParticles->SetParameters(0, 600, 800, 1, 3000, 100, 1, 0);
+	result = m_PlayerParticles->Initialize(device, deviceContext,
+		".\\Data\\Images\\Sprites\\Particles\\Fire.sprite",
+		800, 600, 16 * 4, 16 * 4);
+	if (!result) return false;
+
 	return true;
 }
 bool Player::Frame(bool enableInput, double time) {

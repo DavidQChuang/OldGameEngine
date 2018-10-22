@@ -137,6 +137,7 @@
     </ClCompile>
     <ClCompile Include="ITextureShaderClass.cpp" />
     <ClCompile Include="PlayerBS.cpp" />
+    <ClCompile Include="PlayerPS.cpp" />
     <ClCompile Include="TexturedButton.cpp" />
     <ClCompile Include="TexturedRect.cpp" />
     <ClCompile Include="TexturedSpritesheet.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Engine.h" />
     <ClInclude Include="GraphicsClass.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="PlayerPS.h" />
     <ClInclude Include="InstancedTexturedRect.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>

@@ -14,7 +14,8 @@ SceneMainMenu::SceneMainMenu(HWND hwnd, D3DClass* d3dclass, CameraClass* camerac
 
 bool SceneMainMenu::Initialize() {
 	bool result;
-	m_Flame = new TitlePS(0, 600, 800, 1, 2000, 3000, 100, 1, 0);
+	m_Flame = new TitlePS(2000);
+	m_Flame->SetParameters(0, 600, 800, 1, 3000, 100, 1, 0);
 	if (!m_Flame) {
 		return false;
 	}

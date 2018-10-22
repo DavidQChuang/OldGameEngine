@@ -1,31 +1,19 @@
 #include "ParticleSystem.h"
-ParticleSystem::ParticleSystem(int x, int y, int max, int lifetime, int lifeRandom, int gen, int genRand) {
+ParticleSystem::ParticleSystem(int max) {
 	particles = new Particle[max];
-	m_x = x;
-	m_y = y;
+
+	m_x = 0;
+	m_y = 0;
 	m_width = 0;
 	m_height = 0;
+	m_Lifetime = 0;
+	m_LifeRandom = 0;
+	m_Generate = 0;
+	m_GenRandom = 0;
 	m_pMax = max;
+
 	m_Active = 0;
-	m_Lifetime = lifetime;
-	m_LifeRandom = lifeRandom;
-	m_Generate = gen;
-	m_GenRandom = genRand;
-	m_Timer = new Timer();
-	m_Texture = 0;
-}
-ParticleSystem::ParticleSystem(int x, int y, int width, int height, int max, int lifetime, int lifeRandom, int gen, int genRand) {
-	particles = new Particle[max];
-	m_x = x;
-	m_y = y;
-	m_width = width;
-	m_height = height;
-	m_pMax = max;
-	m_Active = 0;
-	m_Lifetime = lifetime;
-	m_LifeRandom = lifeRandom;
-	m_Generate = gen;
-	m_GenRandom = genRand;
+
 	m_Timer = new Timer();
 	m_Texture = 0;
 }
@@ -34,8 +22,31 @@ ParticleSystem::ParticleSystem(const ParticleSystem& other) {
 }
 
 ParticleSystem::~ParticleSystem() {
+
 }
 
+//(int x, int y, int lifetime, int lifeRandom, int gen, int genRand)
+void ParticleSystem::SetParameters(int x, int y, int lifetime, int lifeRandom, int gen, int genRand) {
+	m_x = x;
+	m_y = y;
+	m_width = 0;
+	m_height = 0;
+	m_Lifetime = lifetime;
+	m_LifeRandom = lifeRandom;
+	m_Generate = gen;
+	m_GenRandom = genRand;
+}
+//(int x, int y, int width, int height, int lifetime, int lifeRandom, int gen, int genRand)
+void ParticleSystem::SetParameters(int x, int y, int width, int height, int lifetime, int lifeRandom, int gen, int genRand) {
+	m_x = x;
+	m_y = y;
+	m_width = width;
+	m_height = height;
+	m_Lifetime = lifetime;
+	m_LifeRandom = lifeRandom;
+	m_Generate = gen;
+	m_GenRandom = genRand;
+}
 bool ParticleSystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext,
 	char* textureFilename,
 	int screenWidth, int screenHeight, int imageWidth, int imageHeight) {
@@ -54,14 +65,6 @@ bool ParticleSystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* devic
 
 	m_lastTime = m_Timer->getTime();
 	return true;
-}
-
-void ParticleSystem::SetX(int x) {
-	m_x = x;
-}
-
-void ParticleSystem::SetY(int y) {
-	m_y = y;
 }
 
 bool ParticleSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ShaderClass* shader) {

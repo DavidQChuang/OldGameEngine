@@ -22,6 +22,8 @@ public:
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int, int, int);
 	void Shutdown();
 
+	void MoveEnemy(Enemy&, float);
+
 	void Delete(int);
 
 	int GetActive();
@@ -47,6 +49,6 @@ protected:
 
 	DirectX::XMFLOAT2 EnemyMovement(Enemy&);
 	bool CheckCollision(DirectX::XMFLOAT2);
-	int bulletTime;
-	int bulletDelta;
+	int m_lastSpawnTime;
+	int m_delta;
 };
