@@ -25,19 +25,21 @@ bool EnemySystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCo
 	}
 	return true;
 }
-bool EnemySystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader, double elapsed) {
+bool EnemySystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader, TexturedSpritesheet* bullet, BulletSystem::Bullet* bullets, int max, double elapsed) {
 	bool result;
 	DirectX::XMMATRIX matrix;
 	if (m_Active != 0) {
 		for (int i = 0; i < m_Active; i++) {
 			Enemy& enemy = m_Enemies[i];
-
-			if (enemy.y <= -200 || enemy.y >= 800 || enemy.x <= -200 || enemy.y >= 1000 || enemy.health <= 0) {
+			//for(int b = )
+			//if(CheckCollision(i,))
+			
+			if (enemy.y <= -200 || enemy.y >= 800 || enemy.x <= -200 || enemy.y >= 1000 || enemy.health <= 0 || CheckCollision(i,bullet,bullets,max)) {
 				Delete(i);
 				continue;
 			}
 			if (m_on) {
-				DirectX::XMFLOAT2 movement = EnemyMovement(enemy);
+				DirectX::XMFLOAT2 movement = EnemyMovement(i);
 				//velX = pixels per 16.7ms(1 60fps frame) 
 				//velX * 60 (distance traveled in 1 sec)
 				//m_Timer->getTime() / 1000 (seconds passed)
@@ -60,28 +62,36 @@ bool EnemySystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Direc
 void EnemySystem::SetRatePerFrame(float rate) {
 	m_delta = (1 /rate)*16;
 }
-bool EnemySystem::CheckCollision(DirectX::XMFLOAT2 bulletLocations) {
-	return true;
+bool EnemySystem::CheckCollision(int number, TexturedSpritesheet* bullet, BulletSystem::Bullet* bullets, int max) {
+	for (int b = 0; b < max; b++) {
+		if (m_Enemies[number].x > bullets[b].x + bullet->m_spriteWidth &&
+			m_Enemies[number].y > bullets[b].y + bullet->m_imageHeight &&
+			m_Enemies[number].x + m_Texture->m_spriteWidth < bullets[b].x &&
+			m_Enemies[number].y + m_Texture->m_imageHeight < bullets[b].y) {
+			return true;
+		}
+	}
+	return false;
 }
 
 void EnemySystem::SetState(bool on) {
 	m_on = on;
 }
 
-DirectX::XMFLOAT2 EnemySystem::EnemyMovement(EnemySystem::Enemy& enemy) {
+DirectX::XMFLOAT2 EnemySystem::EnemyMovement(int enemy) {
 	float x = 0;
 	float y = 0;
-	switch (enemy.type) {
+	switch (m_Enemies[enemy].type) {
 	case 0:
 		y++;
 		break;
 	}
 	return DirectX::XMFLOAT2(x, y);
 }
-void EnemySystem::MoveEnemy(EnemySystem::Enemy& enemy, float delta) {
+void EnemySystem::MoveEnemy(int enemy, float delta) {
 	DirectX::XMFLOAT2 movement = EnemyMovement(enemy);
-	enemy.x += movement.x * delta / 10;
-	enemy.y += movement.y * delta / 10;
+	m_Enemies[enemy].x += movement.x * delta / 10;
+	m_Enemies[enemy].y += movement.y * delta / 10;
 }
 
 void EnemySystem::Delete(int b) {
@@ -116,7 +126,7 @@ void EnemySystem::Create(float x, float y, DirectX::XMFLOAT4 color, int type, do
 					m_Enemies[m_Active].health = 10;
 					break;
 				}
-				MoveEnemy(m_Enemies[m_Active], (time - m_lastSpawnTime) - intergar * 33);
+				MoveEnemy(m_Active, (time - m_lastSpawnTime) - intergar * 33);
 				m_Active++;
 			}
 		}

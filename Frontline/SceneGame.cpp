@@ -298,7 +298,7 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 	RenderSpritesheet(m_Player->m_Texture, m_Player->m_x, m_Player->m_y, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	m_Player->RenderBullets(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
 
-	m_BadBois->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader, sm_Timer->getTime() - lastTime);
+	m_BadBois->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader, m_Player->m_Bullets->GetTexture(), m_Player->m_Bullets->m_Bullets, m_Player->m_Bullets->m_Max, sm_Timer->getTime() - lastTime);
 
 	RenderRect(m_HealthBarBackground, 750, 20 * 3, viewMatrix, orthoMatrix, H_2D_COLOR_SHADERTYPE);
 	RenderRect(m_MagicBarBackground, 750, 66 * 3, viewMatrix, orthoMatrix, H_2D_COLOR_SHADERTYPE);

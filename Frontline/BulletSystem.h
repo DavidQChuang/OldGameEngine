@@ -40,11 +40,10 @@ public:
 
 	void SetState(bool);
 	bool m_on;
-protected:
-	int m_bMax, m_Active;
-
-	TexturedSpritesheet* m_Texture;
 	Bullet* m_Bullets;
+	int m_Max, m_Active;
+protected:
+	TexturedSpritesheet* m_Texture;
 
 	virtual void BulletMovement(Bullet&) = 0;
 };

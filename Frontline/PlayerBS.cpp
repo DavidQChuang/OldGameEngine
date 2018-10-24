@@ -5,7 +5,7 @@ PlayerBulletSystem::~PlayerBulletSystem() {
 }
 PlayerBulletSystem::PlayerBulletSystem(int x) {
 	m_Bullets = new Bullet[x];
-	m_bMax = x;
+	m_Max = x;
 	m_Active = 0;
 	m_Texture = 0;
 }

@@ -3,7 +3,7 @@ BulletSystem::BulletSystem() {
 }
 BulletSystem::BulletSystem(int x) {
 	m_Bullets = new Bullet[x];
-	m_bMax = x;
+	m_Max = x;
 	m_Active = 0;
 	m_Texture = 0;
 	m_on = true;
@@ -83,7 +83,7 @@ void BulletSystem::Shutdown() {
 	}
 }
 void BulletSystem::Create(float x, float y, DirectX::XMFLOAT4 color, int type) {
-	if (m_Active < m_bMax) {
+	if (m_Active < m_Max) {
 		m_Bullets[m_Active].x = x;
 		m_Bullets[m_Active].y = y;
 		m_Bullets[m_Active].velX = 0;
@@ -95,7 +95,7 @@ void BulletSystem::Create(float x, float y, DirectX::XMFLOAT4 color, int type) {
 	}
 }
 void BulletSystem::Create(float x, float y, float velX, float velY, DirectX::XMFLOAT4 color, int type) {
-	if (m_Active < m_bMax) {
+	if (m_Active < m_Max) {
 		m_Bullets[m_Active].x = x;
 		m_Bullets[m_Active].y = y;
 		m_Bullets[m_Active].velX = velX;

@@ -21,16 +21,22 @@ public:
 	virtual bool Render(XMMATRIX, XMMATRIX, XMMATRIX)=0;
 	bool m_active;
 
-	bool RenderRect(TexturedRect*, XMMATRIX, XMMATRIX, int);
-	bool RenderRect(TexturedRect*, float, XMMATRIX, XMMATRIX, int);
-	bool RenderRect(TexturedRect*, int, int, XMMATRIX, XMMATRIX, int);
-	bool RenderRect(TexturedRect*, int, int, float, XMMATRIX, XMMATRIX, int);
+	inline bool RenderRectMatrix(TexturedRect*, XMMATRIX, XMMATRIX, XMMATRIX, int);
+	inline bool RenderRect(TexturedRect*, XMMATRIX, XMMATRIX, int);
+	inline bool RenderRect(TexturedRect*, float, XMMATRIX, XMMATRIX, int);
+	inline bool RenderRect(TexturedRect*, float, float, XMMATRIX, XMMATRIX, int);
+	inline bool RenderRect(TexturedRect*, float, float, float, XMMATRIX, XMMATRIX, int);
+	inline bool RenderRect(TexturedRect*, int, int, XMMATRIX, XMMATRIX, int);
+	inline bool RenderRect(TexturedRect*, int, int, float, XMMATRIX, XMMATRIX, int);
+	inline bool RenderRect(TexturedRect*, int, int, float, float, XMMATRIX, XMMATRIX, int);
+	inline bool RenderRect(TexturedRect*, int, int, float, float, float, XMMATRIX, XMMATRIX, int);
 	//int x, int y, [float rot], [int spritenumber]
 	//after matrices, shader info
-	bool RenderSpritesheet(TexturedSpritesheet*, int, int, XMMATRIX, XMMATRIX, int);
-	bool RenderSpritesheet(TexturedSpritesheet*, int, int, int, XMMATRIX, XMMATRIX, int);
-	bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, XMMATRIX, XMMATRIX, int);
-	bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, int, XMMATRIX, XMMATRIX, int);
+	inline bool RenderSpritesheetMatrix(TexturedSpritesheet*, XMMATRIX, XMMATRIX, XMMATRIX, int);
+	inline bool RenderSpritesheet(TexturedSpritesheet*, int, int, XMMATRIX, XMMATRIX, int);
+	inline bool RenderSpritesheet(TexturedSpritesheet*, int, int, int, XMMATRIX, XMMATRIX, int);
+	inline bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, XMMATRIX, XMMATRIX, int);
+	inline bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, int, XMMATRIX, XMMATRIX, int);
 	//bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, int, XMMATRIX, XMMATRIX, int);
 
 	bool RenderModel(ModelClass*, XMMATRIX, XMMATRIX, int);

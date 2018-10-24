@@ -135,6 +135,9 @@
     <ClCompile Include="InstancedTexturedRect.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="InstanceSystem.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="ITextureShaderClass.cpp" />
     <ClCompile Include="PlayerBS.cpp" />
     <ClCompile Include="PlayerPS.cpp" />
@@ -177,6 +180,9 @@
     <ClInclude Include="Engine.h" />
     <ClInclude Include="GraphicsClass.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="InstanceSystem.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="PlayerPS.h" />
     <ClInclude Include="InstancedTexturedRect.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>

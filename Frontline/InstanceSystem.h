@@ -5,26 +5,19 @@
 #include "Timer.h"
 #include "colortextureshader.h"
 #include "D3DClass.h"
-#include "BulletSystem.h"
-class EnemySystem {
+class InstanceSystem {
 public:
-	struct Enemy {
-		int type;
-		float x;
-		float y;
-		DirectX::XMFLOAT4 color;
-		int health;
-	};
-	EnemySystem();
-	~EnemySystem();
-	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*, TexturedSpritesheet*, BulletSystem::Bullet*, int, double);
+	InstanceSystem();
+	~InstanceSystem();
+	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*, double);
 	void Create(float, float, DirectX::XMFLOAT4, int, double);
 
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int, int, int);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, DirectX::XMFLOAT4(), int, int, int, int, int);
 	void Shutdown();
 
 	void MoveEnemy(int, float);
-	bool CheckCollision(int, TexturedSpritesheet*, BulletSystem::Bullet*, int);
+
 	void Delete(int);
 
 	int GetActive();
@@ -34,9 +27,7 @@ public:
 	void SetState(bool);
 	void SetRatePerFrame(float);
 
-	Enemy GetEnemy(int);
-	Enemy* GetEnemies();
-	DirectX::XMFLOAT2* GetEnemiesCoords();
+	DirectX::XMINT2 GetInstanceCoords(int);
 
 	ID3D11ShaderResourceView* GetTextureResource();
 	TexturedSpritesheet* GetTexture();
@@ -49,6 +40,7 @@ protected:
 	Enemy* m_Enemies;
 
 	DirectX::XMFLOAT2 EnemyMovement(int);
+	bool CheckCollision(int, DirectX::XMFLOAT2, int);
 	int m_lastSpawnTime;
 	int m_delta;
 };
