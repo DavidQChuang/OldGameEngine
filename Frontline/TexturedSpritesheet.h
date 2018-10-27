@@ -16,9 +16,6 @@ public:
 	
 	void SetSprite(int);
 
-	void Resize();
-	void Resize(int, int);
-
 	int m_spriteWidth;
 	int m_originalSpriteWidth;
 
@@ -27,8 +24,8 @@ public:
 
 	int m_spriteAmount;
 protected:
-	bool UpdateBuffers(ID3D11DeviceContext*, int, int);
-	bool UpdateBuffers(ID3D11DeviceContext*, int, int, DirectX::XMFLOAT4);
+	bool UpdateBuffers(ID3D11DeviceContext*);
+	bool UpdateBuffers(ID3D11DeviceContext*, DirectX::XMFLOAT4);
 
 	float m_spriteSize;
 

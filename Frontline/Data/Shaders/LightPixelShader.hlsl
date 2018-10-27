@@ -14,7 +14,7 @@ struct PixelInputType {
 	float3 normal : NORMAL;
 };
 
-float4 LightPixelShader(PixelInputType input) : SV_TARGET{
+float4 main(PixelInputType input) : SV_TARGET{
 	float4 textureColor;
 	float3 lightDir;
 	float lightIntensity;

@@ -40,5 +40,6 @@ private:
 
 	bool m_TimerStart;
 
+	double m_lastTime;
 	int m_Counter;
 };

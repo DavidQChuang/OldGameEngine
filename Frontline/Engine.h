@@ -2,10 +2,27 @@
 #include <DirectXMath.h>
 #ifndef __HYPERION_ENGINE_H__
 #define __HYPERION_ENGINE_H__
+
+//////////////////
+// Typedefs
+//////////////////
+
+// To help avoid confusion in SceneClass::RenderX between different parameters.
+typedef float H_SCALE;
+
+typedef float H_ROT;
+
+typedef int H_POS;
+
+//////////////////
+// Enums
+//////////////////
+
 //  Shader types
 //  2D/3D: Dimension
 //  Shader Resource Type
 //  SHADERTYPE/SHADERMOD: Shader Type / Shader Modifier
+
 enum H_SHADERTYPE {
 	H_2D_COLOR_SHADERTYPE = 1,
 	H_2D_TEXTURE_SHADERTYPE = 2,
@@ -15,10 +32,14 @@ enum H_SHADERTYPE {
 	H_3D_LIGHT_SHADERTYPE = 32
 };
 
+//////////////////
+// Structs
+//////////////////
+
 //  Resource types
 //  2D/3D: Dimension
 //  Shader name
-//  RTYPE/RMOD: Resource Type / Resource Modifier
+//  RESOURCETYPE/RESOURCEMOD: Resource Type / Resource Modifier
 
 struct H_2D_COLOR_RESOURCETYPE {
 	DirectX::XMFLOAT3 position;

@@ -29,9 +29,6 @@ bool TexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	m_imageWidth = imageWidth;
 	m_imageHeight = imageHeight;
 
-	m_previousImageWidth = -1;
-	m_previousImageHeight = -1;
-
 	m_shaderType = H_2D_COLOR_SHADERTYPE;
 
 	m_Color = color;
@@ -60,9 +57,6 @@ bool TexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	m_imageWidth = imageWidth;
 	m_imageHeight = imageHeight;
 
-	m_previousImageWidth = -1;
-	m_previousImageHeight = -1;
-
 	m_shaderType = H_2D_TEXTURE_SHADERTYPE;
 
 	m_Color = DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f);
@@ -80,6 +74,10 @@ bool TexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 		return false;
 	}
 
+	// Re-build the dynamic vertex buffer for rendering to possibly a different location on the screen.
+	result = UpdateBuffers(deviceContext);
+	if (!result) return false;
+
 	return true;
 }
 
@@ -96,9 +94,6 @@ bool TexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	// Store the size in pixels that this bitmap should be rendered at.
 	m_imageWidth = imageWidth;
 	m_imageHeight = imageHeight;
-
-	m_previousImageWidth = -1;
-	m_previousImageHeight = -1;
 
 	m_shaderType = H_2D_COLOR_TEXTURE_SHADERTYPE;
 	
@@ -136,10 +131,12 @@ void TexturedRect::Shutdown() {
 
 
 
-bool TexturedRect::Render(ID3D11DeviceContext* deviceContext) {
+bool TexturedRect::Render(ID3D11DeviceContext* deviceContext, int positionX, int positionY) {
 	bool result;
+	m_posX = positionX;
+	m_posY = positionY;
 	// Re-build the dynamic vertex buffer for rendering to possibly a different location on the screen.
-	result = UpdateBuffers(deviceContext, m_posX, m_posY);
+	result = UpdateBuffers(deviceContext);
 	if (!result) return false;
 
 	// Put the vertex and index buffers on the graphics pipeline to prepare them for drawing.
@@ -152,9 +149,6 @@ bool TexturedRect::Render(ID3D11DeviceContext* deviceContext, int positionX, int
 	bool result;
 	m_posX = positionX;
 	m_posY = positionY;
-	// Re-build the dynamic vertex buffer for rendering to possibly a different location on the screen.
-	result = UpdateBuffers(deviceContext, positionX, positionY);
-	if (!result) return false;
 
 	// Put the vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	RenderBuffers(deviceContext);
@@ -168,7 +162,7 @@ bool TexturedRect::Render(ID3D11DeviceContext* deviceContext, int positionX, int
 	m_posX = positionX;
 	m_posY = positionY;
 	// Re-build the dynamic vertex buffer for rendering to possibly a different location on the screen.
-	result = UpdateBuffers(deviceContext, positionX, positionY, color);
+	result = UpdateBuffers(deviceContext, color);
 	if (!result) return false;
 
 	// Put the vertex and index buffers on the graphics pipeline to prepare them for drawing.
@@ -328,14 +322,18 @@ bool TexturedRect::InitializeBuffers(ID3D11Device* device) {
 	return true;
 }
 
-void TexturedRect::Resize(int width, int height) {
-	m_imageWidth = width;
-	m_imageHeight = height;
+void TexturedRect::SetSize(H_SCALE width, H_SCALE height) {
+	m_scaleX = width;
+	m_scaleY = height;
 }
 
-void TexturedRect::SetPos(int x, int y) {
+void TexturedRect::SetPos(H_POS x, H_POS y) {
 	m_posX = x;
 	m_posY = y;
+}
+
+void TexturedRect::SetRot(H_ROT z) {
+	m_rot = z;
 }
 
 void TexturedRect::ShutdownBuffers() {
@@ -353,7 +351,7 @@ void TexturedRect::ShutdownBuffers() {
 	return;
 }
 
-bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positionX, int positionY, DirectX::XMFLOAT4 color) {
+bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, DirectX::XMFLOAT4 color) {
 	float left, right, top, bottom;
 	H_2D_COLOR_RESOURCETYPE* colortype = 0;
 	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredtype = 0;
@@ -365,7 +363,7 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positio
 
 	// If the position we are rendering this bitmap to has not changed then don't update the vertex buffer since it
 	// currently has the correct parameters.
-	if ((m_imageWidth == m_previousImageWidth) && (m_imageHeight == m_previousImageHeight) && (color.x == m_previousColor.x) && (color.y == m_previousColor.y) && (color.z == m_previousColor.z) && (color.w == m_previousColor.w)) {
+	if ((color.x == m_previousColor.x) && (color.y == m_previousColor.y) && (color.z == m_previousColor.z) && (color.w == m_previousColor.w)) {
 		return true;
 	}
 
@@ -417,7 +415,7 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positio
 		deviceContext->Unmap(m_vertexBuffer, 0);
 		break;
 	case H_2D_TEXTURE_SHADERTYPE:
-		return UpdateBuffers(deviceContext, positionX, positionY);
+		return UpdateBuffers(deviceContext);
 		break;
 	case H_2D_COLOR_TEXTURE_SHADERTYPE:
 		// Create the vertex array.
@@ -459,9 +457,6 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positio
 		deviceContext->Unmap(m_vertexBuffer, 0);
 		break;
 	}
-	// If it has changed then update the position it is being rendered to.
-	m_previousImageWidth = m_imageWidth;
-	m_previousImageHeight = m_imageHeight;
 
 	m_previousColor = color;
 
@@ -474,7 +469,7 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positio
 	return true;
 }
 
-bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positionX, int positionY) {
+bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext) {
 	float left, right, top, bottom;
 	H_2D_TEXTURE_RESOURCETYPE* vertices;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -484,8 +479,9 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positio
 
 	// If the position we are rendering this bitmap to has not changed then don't update the vertex buffer since it
 	// currently has the correct parameters.
-	if ((m_imageWidth == m_previousImageWidth) && (m_imageHeight == m_previousImageHeight)) return true;
-	if (m_shaderType == H_2D_COLOR_TEXTURE_SHADERTYPE || m_shaderType == H_2D_COLOR_SHADERTYPE) return UpdateBuffers(deviceContext, positionX, positionY, m_Color);
+	if (m_shaderType == H_2D_COLOR_TEXTURE_SHADERTYPE || m_shaderType == H_2D_COLOR_SHADERTYPE) {
+		return UpdateBuffers(deviceContext, m_Color);
+	}
 
 	// Calculate the screen coordinates of the left side of the bitmap.
 	left = -m_imageWidth/2;
@@ -531,10 +527,6 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, int positio
 
 	// Unlock the vertex buffer.
 	deviceContext->Unmap(m_vertexBuffer, 0);
-
-	// If it has changed then update the position it is being rendered to.
-	m_previousImageWidth = m_imageWidth;
-	m_previousImageHeight = m_imageHeight;
 
 	// Release the vertex array as it is no longer needed.
 	delete[] vertices;

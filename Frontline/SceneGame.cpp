@@ -13,6 +13,7 @@ SceneGame::SceneGame(HWND hwnd, D3DClass* d3dclass, CameraClass* cameraclass, Sh
 	m_Model = 0;
 	m_BadBois = 0;
 	m_DODGE = 0;
+	m_lastTime = 0;
 }
 
 bool SceneGame::Initialize() {
@@ -36,22 +37,27 @@ bool SceneGame::Initialize() {
 	m_DODGE->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\Sprites\\Bullets\\Bullets.sprites",
 		800, 600, 6 * 3, 6 * 3, 3);
-	m_HealthBar = new TexturedRect(); 
-	m_HealthBar->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(), 
-		DirectX::XMFLOAT4(213.f / 255.f, 29.f / 255.f, 29.f / 255.f, 1.f), 
-		800, 600, 8 * 3-1, 31 * 3); 
-	m_MagicBar = new TexturedRect(); 
-	m_MagicBar->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(), 
-		DirectX::XMFLOAT4(30.f / 255.f, 151.f / 255.f, 195.f / 255.f, 1.f), 
-		800, 600, 8 * 3-1, 31 * 3); 
-	m_HealthBarBackground = new TexturedRect(); 
-	m_HealthBarBackground->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(), 
-		DirectX::XMFLOAT4(155.f / 255.f, 44.f / 255.f, 44.f / 255.f, 1.f), 
-		800, 600, 8 * 3-1, 31 * 3); 
-	m_MagicBarBackground = new TexturedRect(); 
-	m_MagicBarBackground->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(), 
-		DirectX::XMFLOAT4(25.f / 255.f, 110.f / 255.f, 150.f / 255.f, 1.f), 
-		800, 600, 8 * 3-1, 31 * 3); 
+
+	m_HealthBar = new TexturedRect();
+	m_HealthBar->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
+		DirectX::XMFLOAT4(213.f / 255.f, 29.f / 255.f, 29.f / 255.f, 1.f),
+		800, 600, 8 * 3 - 1, 31 * 3);
+
+	m_MagicBar = new TexturedRect();
+	m_MagicBar->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
+		DirectX::XMFLOAT4(30.f / 255.f, 151.f / 255.f, 195.f / 255.f, 1.f),
+		800, 600, 8 * 3 - 1, 31 * 3);
+
+	m_HealthBarBackground = new TexturedRect();
+	m_HealthBarBackground->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
+		DirectX::XMFLOAT4(155.f / 255.f, 44.f / 255.f, 44.f / 255.f, 1.f),
+		800, 600, 8 * 3 - 1, 31 * 3);
+
+	m_MagicBarBackground = new TexturedRect();
+	m_MagicBarBackground->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
+		DirectX::XMFLOAT4(25.f / 255.f, 110.f / 255.f, 150.f / 255.f, 1.f),
+		800, 600, 8 * 3 - 1, 31 * 3);
+
 	m_HUD = new TexturedRect();
 	if (!m_HUD) {
 		return false;
@@ -63,7 +69,7 @@ bool SceneGame::Initialize() {
 
 	result = m_HUD->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\GUI\\HUD.sprite",
-		800, 600, 14*3, 85*3);
+		800, 600, 14 * 3, 85 * 3);
 	if (!result) {
 		MessageBoxW(sm_hwnd, L"Could not initialize the game HUD. 1", L"Error", MB_OK);
 		return false;
@@ -101,7 +107,7 @@ bool SceneGame::Initialize() {
 
 	result = m_BulletSelect->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\Sprites\\Bullets\\Bullets.sprites",
-		800, 600, 12*3, 12*3,3);
+		800, 600, 12 * 3, 12 * 3, 3);
 	if (!result) {
 		MessageBoxW(sm_hwnd, L"Could not initialize the game HUD. 2", L"Error", MB_OK);
 		return false;
@@ -128,7 +134,7 @@ bool SceneGame::Initialize() {
 	result = m_Player->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\Sprites\\Character\\Player.sprites",
 		".\\Data\\Images\\Sprites\\Bullets\\Bullets.sprites",
-		800, 600, 16*3, 18*3, 8);
+		800, 600, 16 * 3, 18 * 3, 8);
 	if (!result) {
 		MessageBoxW(sm_hwnd, L"Could not initialize the player sprite. 1", L"Error", MB_OK);
 		return false;
@@ -140,12 +146,18 @@ bool SceneGame::Initialize() {
 	}
 
 	// Initialize the model object.
-	result = m_Model->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(), 
-		".\\Data\\Models\\Cube.model", 
+	result = m_Model->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
+		".\\Data\\Models\\Cube.model",
 		".\\Data\\Models\\Face.texture");
 	if (!result) {
 		MessageBoxW(sm_hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 	}
+
+	sm_Timer->Start();
+	sm_ShaderClass->m_Light->SetAmbientColor(0.2f, 0.2f, 0.2f, 1.0f);
+	sm_ShaderClass->m_Light->SetDiffuseColor(0.f, 0.f, 0.f, 1.0f);
+	m_lastTime = sm_Timer->getTime();
+	m_BadBois->SetRatePerFrame(0.05);
 
 	return true;
 }
@@ -213,7 +225,7 @@ void SceneGame::Shutdown() {
 		m_MagicBarBackground = 0;
 	}
 
-	if (m_DODGE){
+	if (m_DODGE) {
 		m_DODGE->Shutdown();
 		delete m_DODGE;
 		m_DODGE = 0;
@@ -240,19 +252,11 @@ void SceneGame::Shutdown() {
 float rotation = 90;
 XMMATRIX cubeMatrix;
 XMMATRIX rotMatrix;
-double lastTime;
 bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX orthoMatrix) {
 	bool result;
-	if (!m_active) {
-		m_active = true;
-		sm_Timer->Start();
-		sm_ShaderClass->m_Light->SetAmbientColor(0.2f, 0.2f, 0.2f, 1.0f);
-		sm_ShaderClass->m_Light->SetDiffuseColor(0.f, 0.f, 0.f, 1.0f);
-		lastTime = sm_Timer->getTime();
-	}
 	switch (m_GameState) {
 	case 0:
-		rotation += (sm_Timer->getTime() - lastTime) / 4;
+		rotation += (sm_Timer->getTime() - m_lastTime) / 4;
 		if (rotation > 360) rotation = 0;
 
 		m_Player->Frame(true, sm_Timer->getTime());
@@ -261,7 +265,6 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 		m_Player->m_Bullets->SetState(true);
 
 		m_BadBois->SetState(true);
-		m_BadBois->SetRatePerFrame(0.05);
 		m_BadBois->Create(300, -100, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f), 0, sm_Timer->getTime());
 
 		if (m_Input->OnKeyDown(VK_ESCAPE)) m_GameState = 1;
@@ -277,7 +280,7 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 	m_Model->Render(sm_Direct3D->GetDeviceContext());
 
 	rotMatrix = DirectX::XMMatrixRotationRollPitchYaw(0, XMConvertToRadians(rotation), XMConvertToRadians(rotation));
-	cubeMatrix = rotMatrix * DirectX::XMMatrixTranslation(0.f,1.f,0.f);
+	cubeMatrix = rotMatrix * DirectX::XMMatrixTranslation(0.f, 1.f, 0.f);
 	// Render the model using the light shader.
 	result = sm_ShaderClass->m_LightShader->Render(sm_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), cubeMatrix, viewMatrix, projectionMatrix,
 		m_Model->GetTexture(), sm_ShaderClass->m_Light->GetDirection(), sm_ShaderClass->m_Light->GetAmbientColor(), sm_ShaderClass->m_Light->GetDiffuseColor());
@@ -298,15 +301,15 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 	RenderSpritesheet(m_Player->m_Texture, m_Player->m_x, m_Player->m_y, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	m_Player->RenderBullets(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
 
-	m_BadBois->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader, m_Player->m_Bullets->GetTexture(), m_Player->m_Bullets->m_Bullets, m_Player->m_Bullets->m_Max, sm_Timer->getTime() - lastTime);
+	m_BadBois->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader, m_Player->m_Bullets->GetTexture(), m_Player->m_Bullets->m_Bullets, m_Player->m_Bullets->m_Max, sm_Timer->getTime() - m_lastTime);
 
 	RenderRect(m_HealthBarBackground, 750, 20 * 3, viewMatrix, orthoMatrix, H_2D_COLOR_SHADERTYPE);
 	RenderRect(m_MagicBarBackground, 750, 66 * 3, viewMatrix, orthoMatrix, H_2D_COLOR_SHADERTYPE);
 
-	m_HealthBar->Resize(m_HealthBar->m_imageWidth, m_HealthBar->m_imageHeight * (m_Player->m_hp / 3));
+	m_HealthBar->SetSize(1.f, m_Player->m_hp / 3);
 	RenderRect(m_HealthBar, 750, 20 * 3, viewMatrix, orthoMatrix, H_2D_COLOR_SHADERTYPE);
 
-	m_MagicBar->Resize(m_MagicBar->m_imageWidth, m_MagicBar->m_imageHeight * (m_Player->m_mp / 6));
+	m_MagicBar->SetSize(1.f, m_Player->m_mp / 6);
 	RenderRect(m_MagicBar, 750, 66 * 3, viewMatrix, orthoMatrix, H_2D_COLOR_SHADERTYPE);
 
 	RenderRect(m_HUD, 740, 12 * 3, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
@@ -315,6 +318,6 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 	RenderSpritesheet(m_BulletSelect, 740 + 3, 36 + 107 * 3, m_Player->m_BulletType, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 
 	m_Input->Update();
-	lastTime = sm_Timer->getTime();
+	m_lastTime = sm_Timer->getTime();
 	return true;
 }

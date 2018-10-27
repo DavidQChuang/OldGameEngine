@@ -32,10 +32,36 @@ public:
 	inline bool RenderRect(TexturedRect*, int, int, float, float, float, XMMATRIX, XMMATRIX, int);
 
 	inline bool RenderSpritesheetMatrix(TexturedSpritesheet*, XMMATRIX, XMMATRIX, XMMATRIX, int);
+	//  Rotation
+	//inline bool RenderSpritesheet(TexturedSpritesheet*, float, XMMATRIX, XMMATRIX, int);
+	//  Scaling
+	//inline bool RenderSpritesheet(TexturedSpritesheet*, float, float, XMMATRIX, XMMATRIX, int);
+	//  Scaling and Rotation
+	//inline bool RenderSpritesheet(TexturedSpritesheet*, float, float, float, XMMATRIX, XMMATRIX, int);
+	//  Rotation and Sprite number
+	//inline bool RenderSpritesheet(TexturedSpritesheet*, float, int, XMMATRIX, XMMATRIX, int);
+	//  Scaling and Sprite number
+	//inline bool RenderSpritesheet(TexturedSpritesheet*, float, float, int, XMMATRIX, XMMATRIX, int);
+	//  Scaling, Rotation, and Sprite number
+	//inline bool RenderSpritesheet(TexturedSpritesheet*, float, float, float, int, XMMATRIX, XMMATRIX, int);
+	//  Sprite number
+	//inline bool RenderSpritesheet(TexturedSpritesheet*, int, XMMATRIX, XMMATRIX, int);
+	//  Position
 	inline bool RenderSpritesheet(TexturedSpritesheet*, int, int, XMMATRIX, XMMATRIX, int);
+	//  Position and Sprite number
 	inline bool RenderSpritesheet(TexturedSpritesheet*, int, int, int, XMMATRIX, XMMATRIX, int);
+	//  Position and Rotation
 	inline bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, XMMATRIX, XMMATRIX, int);
+	//  Position and Scaling
+	//inline bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, float, XMMATRIX, XMMATRIX, int);
+	//  Position, Scaling, and Rotation
+	//inline bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, float, float, XMMATRIX, XMMATRIX, int);
+	//  Position, Rotation, and Sprite number
 	inline bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, int, XMMATRIX, XMMATRIX, int);
+	//  Position, Scaling, and Sprite number
+	//inline bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, float, int, XMMATRIX, XMMATRIX, int);
+	//  Position, Scaling, Rotation, and Sprite number
+	//inline bool RenderSpritesheet(TexturedSpritesheet*, int, int, float, float, float, int, XMMATRIX, XMMATRIX, int);
 
 	inline bool RenderModel(ModelClass*, XMMATRIX, XMMATRIX, int);
 private:
@@ -82,7 +108,7 @@ inline bool SceneClass::RenderRectMatrix(TexturedRect* object, XMMATRIX matrix, 
 
 //
 //  Abstraction for writing a TexturedRect to buffer. 
-//  Uses TexturedRect.m_posX & m_posY
+//  Uses TexturedRect.m_posX and m_posY
 //
 inline bool SceneClass::RenderRect(TexturedRect* object, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
 	DirectX::XMMATRIX matrix = DirectX::XMMatrixTranslation(object->m_posX - 400 + object->m_imageWidth / 2, -object->m_posY + 300 - object->m_imageHeight / 2, 0.f);

@@ -16,7 +16,7 @@ struct PixelInputType {
 	float3 normal : NORMAL;
 };
 
-PixelInputType LightVertexShader(VertexInputType input)
+PixelInputType main(VertexInputType input)
 {
 	PixelInputType output;
 
