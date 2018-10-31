@@ -5,6 +5,11 @@ TexturedRect::TexturedRect() {
 	m_vertexBuffer = 0;
 	m_indexBuffer = 0;
 	m_Texture = 0;
+	m_posX = 0;
+	m_posY = 0;
+	m_scaleX = 1.f;
+	m_scaleY = 1.f;
+	m_rot = 0.f;
 }
 
 
@@ -127,22 +132,6 @@ void TexturedRect::Shutdown() {
 	ShutdownBuffers();
 
 	return;
-}
-
-
-
-bool TexturedRect::Render(ID3D11DeviceContext* deviceContext, int positionX, int positionY) {
-	bool result;
-	m_posX = positionX;
-	m_posY = positionY;
-	// Re-build the dynamic vertex buffer for rendering to possibly a different location on the screen.
-	result = UpdateBuffers(deviceContext);
-	if (!result) return false;
-
-	// Put the vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	RenderBuffers(deviceContext);
-
-	return true;
 }
 
 bool TexturedRect::Render(ID3D11DeviceContext* deviceContext, int positionX, int positionY) {

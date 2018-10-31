@@ -8,13 +8,13 @@ public:
 	TexturedRect(const TexturedRect&);
 	~TexturedRect();
 
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, DirectX::XMFLOAT4, int, int, int, int);
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int, int);
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, DirectX::XMFLOAT4, int, int, int, int);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, DirectX::XMFLOAT4, int, int);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, DirectX::XMFLOAT4, int, int);
+
 	void Shutdown();
+
 	bool Render(ID3D11DeviceContext*);
-	bool Render(ID3D11DeviceContext*, int, int);
-	bool Render(ID3D11DeviceContext*, int, int, DirectX::XMFLOAT4);
 
 	int GetIndexCount();
 	ID3D11ShaderResourceView* GetTexture();
@@ -28,12 +28,13 @@ public:
 	void SetPos(H_POS, H_POS);
 	void SetSize(H_SCALE, H_SCALE);
 	void SetRot(H_ROT);
+	void SetColor(H_COLORRGBA);
 	//void ChangeColor(DirectX::XMFLOAT4);
 
 	H_POS m_posX, m_posY;
 	H_SCALE m_scaleX, m_scaleY;
 	H_ROT m_rot;
-	DirectX::XMFLOAT4 m_Color;
+	H_COLORRGBA m_Color;
 protected:
 	bool InitializeBuffers(ID3D11Device*);
 	void ShutdownBuffers();
