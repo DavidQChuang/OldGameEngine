@@ -5,11 +5,12 @@ TexturedRect::TexturedRect() {
 	m_vertexBuffer = 0;
 	m_indexBuffer = 0;
 	m_Texture = 0;
-	m_posX = 0;
-	m_posY = 0;
+
 	m_scaleX = 1.f;
 	m_scaleY = 1.f;
 	m_rot = 0.f;
+	m_posX = 0;
+	m_posY = 0;
 }
 
 
@@ -21,20 +22,16 @@ TexturedRect::~TexturedRect() {
 }
 
 bool TexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext,
-	DirectX::XMFLOAT4 color,
-	int screenWidth, int screenHeight, int imageWidth, int imageHeight) {
+	H_COLORRGBA color,
+	H_DIMENSION imageWidth, H_DIMENSION imageHeight) {
 	bool result;
 
-
-	// Store the screen size.
-	m_screenWidth = screenWidth;
-	m_screenHeight = screenHeight;
+	// Set shader type.
+	m_shaderType = H_2D_COLOR_SHADERTYPE;
 
 	// Store the size in pixels that this bitmap should be rendered at.
 	m_imageWidth = imageWidth;
 	m_imageHeight = imageHeight;
-
-	m_shaderType = H_2D_COLOR_SHADERTYPE;
 
 	m_Color = color;
 	m_previousColor = color;
@@ -50,19 +47,15 @@ bool TexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 
 bool TexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext,
 	char* textureFilename,
-	int screenWidth, int screenHeight, int imageWidth, int imageHeight) {
+	H_DIMENSION imageWidth, H_DIMENSION imageHeight) {
 	bool result;
 
-
-	// Store the screen size.
-	m_screenWidth = screenWidth;
-	m_screenHeight = screenHeight;
+	// Set shader type.
+	m_shaderType = H_2D_TEXTURE_SHADERTYPE;
 
 	// Store the size in pixels that this bitmap should be rendered at.
 	m_imageWidth = imageWidth;
 	m_imageHeight = imageHeight;
-
-	m_shaderType = H_2D_TEXTURE_SHADERTYPE;
 
 	m_Color = DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f);
 	m_previousColor = DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f);
@@ -79,34 +72,23 @@ bool TexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 		return false;
 	}
 
-	// Re-build the dynamic vertex buffer for rendering to possibly a different location on the screen.
-	result = UpdateBuffers(deviceContext);
-	if (!result) return false;
-
 	return true;
 }
 
 bool TexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext,
-	char* textureFilename, DirectX::XMFLOAT4 color,
-	int screenWidth, int screenHeight, int imageWidth, int imageHeight) {
+	char* textureFilename, H_COLORRGBA color,
+	H_DIMENSION imageWidth, H_DIMENSION imageHeight) {
 	bool result;
 
-
-	// Store the screen size.
-	m_screenWidth = screenWidth;
-	m_screenHeight = screenHeight;
+	// Set shader type.
+	m_shaderType = H_2D_COLOR_TEXTURE_SHADERTYPE;
 
 	// Store the size in pixels that this bitmap should be rendered at.
 	m_imageWidth = imageWidth;
 	m_imageHeight = imageHeight;
-
-	m_shaderType = H_2D_COLOR_TEXTURE_SHADERTYPE;
 	
 	m_Color = color;
 	m_previousColor = color;
-
-	m_Color = color;
-	m_Color = color;
 
 	// Initialize the vertex and index buffers.
 	result = InitializeBuffers(device);
@@ -134,43 +116,8 @@ void TexturedRect::Shutdown() {
 	return;
 }
 
-bool TexturedRect::Render(ID3D11DeviceContext* deviceContext, int positionX, int positionY) {
-	bool result;
-	m_posX = positionX;
-	m_posY = positionY;
-
-	// Put the vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	RenderBuffers(deviceContext);
-
-	return true;
-}
-
-
-bool TexturedRect::Render(ID3D11DeviceContext* deviceContext, int positionX, int positionY, DirectX::XMFLOAT4 color) {
-	bool result;
-	m_posX = positionX;
-	m_posY = positionY;
-	// Re-build the dynamic vertex buffer for rendering to possibly a different location on the screen.
-	result = UpdateBuffers(deviceContext, color);
-	if (!result) return false;
-
-	// Put the vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	RenderBuffers(deviceContext);
-
-	return true;
-}
-
-int TexturedRect::GetIndexCount() {
-	return m_indexCount;
-}
-
-
-ID3D11ShaderResourceView* TexturedRect::GetTexture() {
-	return m_Texture->GetTexture();
-}
-
-
 bool TexturedRect::InitializeBuffers(ID3D11Device* device) {
+	int left, right, top, bottom;
 	H_2D_COLOR_RESOURCETYPE* colortype = 0;
 	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredtype = 0;
 	H_2D_TEXTURE_RESOURCETYPE* texturetype = 0;
@@ -192,8 +139,19 @@ bool TexturedRect::InitializeBuffers(ID3D11Device* device) {
 		if (!colortype) {
 			return false;
 		}
-		// Initialize vertex array to zeros at first.
-		memset(colortype, 0, (sizeof(H_2D_COLOR_RESOURCETYPE) * m_vertexCount));
+
+		// Load the vertex array with data.
+		colortype[0].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
+		colortype[0].color = m_Color;
+
+		colortype[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f);  // Bottom right.
+		colortype[1].color = m_Color;
+
+		colortype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f);  // Bottom left.
+		colortype[2].color = m_Color;
+
+		colortype[3].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
+		colortype[3].color = m_Color;
 
 
 		// Set up the description of the static vertex buffer.
@@ -210,14 +168,35 @@ bool TexturedRect::InitializeBuffers(ID3D11Device* device) {
 		vertexData.SysMemSlicePitch = 0;
 		break;
 	case H_2D_TEXTURE_SHADERTYPE:
+		// Calculate the screen coordinates of the left side of the bitmap.
+		left = -m_imageWidth / 2;
+
+		// Calculate the screen coordinates of the right side of the bitmap.
+		right = left + (float)m_imageWidth;
+
+		// Calculate the screen coordinates of the top of the bitmap.
+		top = m_imageHeight / 2;
+
+		// Calculate the screen coordinates of the bottom of the bitmap.
+		bottom = top - (float)m_imageHeight;
+
 		// Create the vertex array.
 		texturetype = new H_2D_TEXTURE_RESOURCETYPE[m_vertexCount];
 		if (!texturetype) {
 			return false;
 		}
-		// Initialize vertex array to zeros at first.
-		memset(texturetype, 0, (sizeof(H_2D_TEXTURE_RESOURCETYPE) * m_vertexCount));
+		// Load the vertex array with data.
+		texturetype[0].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
+		texturetype[0].texture = DirectX::XMFLOAT2(0.0f, 0.0f);
 
+		texturetype[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f);  // Bottom right.
+		texturetype[1].texture = DirectX::XMFLOAT2(1.0f, 1.0f);
+
+		texturetype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f);  // Bottom left.
+		texturetype[2].texture = DirectX::XMFLOAT2(0.0f, 1.0f);
+
+		texturetype[3].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
+		texturetype[3].texture = DirectX::XMFLOAT2(1.0f, 0.0f);
 
 		// Set up the description of the static vertex buffer.
 		vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
@@ -238,8 +217,22 @@ bool TexturedRect::InitializeBuffers(ID3D11Device* device) {
 		if (!coloredtype) {
 			return false;
 		}
-		// Initialize vertex array to zeros at first.
-		memset(coloredtype, 0, (sizeof(H_2D_COLOR_TEXTURE_RESOURCETYPE) * m_vertexCount));
+		// Load the vertex array with data.
+		coloredtype[0].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
+		coloredtype[0].color = m_Color;
+		coloredtype[0].texture = DirectX::XMFLOAT2(0.0f, 0.0f);
+
+		coloredtype[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f);  // Bottom right.
+		coloredtype[1].color = m_Color;
+		coloredtype[1].texture = DirectX::XMFLOAT2(1.0f, 1.0f);
+
+		coloredtype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f);  // Bottom left.
+		coloredtype[2].color = m_Color;
+		coloredtype[2].texture = DirectX::XMFLOAT2(0.0f, 1.0f);
+
+		coloredtype[3].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
+		coloredtype[3].color = m_Color;
+		coloredtype[3].texture = DirectX::XMFLOAT2(1.0f, 0.0f);
 
 
 		// Set up the description of the static vertex buffer.
@@ -325,23 +318,8 @@ void TexturedRect::SetRot(H_ROT z) {
 	m_rot = z;
 }
 
-void TexturedRect::ShutdownBuffers() {
-	// Release the index buffer.
-	if (m_indexBuffer) {
-		m_indexBuffer->Release();
-		m_indexBuffer = 0;
-	}
-
-	// Release the vertex buffer.
-	if (m_vertexBuffer) {
-		m_vertexBuffer->Release();
-		m_vertexBuffer = 0;
-	}
-	return;
-}
-
-bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, DirectX::XMFLOAT4 color) {
-	float left, right, top, bottom;
+void TexturedRect::SetColor(ID3D11DeviceContext* deviceContext, H_COLORRGBA color) {
+	int left, right, top, bottom;
 	H_2D_COLOR_RESOURCETYPE* colortype = 0;
 	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredtype = 0;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
@@ -353,7 +331,7 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, DirectX::XM
 	// If the position we are rendering this bitmap to has not changed then don't update the vertex buffer since it
 	// currently has the correct parameters.
 	if ((color.x == m_previousColor.x) && (color.y == m_previousColor.y) && (color.z == m_previousColor.z) && (color.w == m_previousColor.w)) {
-		return true;
+		return;
 	}
 
 	// Calculate the screen coordinates of the left side of the bitmap.
@@ -373,7 +351,7 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, DirectX::XM
 		// Create the vertex array.
 		colortype = new H_2D_COLOR_RESOURCETYPE[m_vertexCount];
 		if (!colortype) {
-			return false;
+			return;
 		}
 		// Load the vertex array with data.
 		colortype[0].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
@@ -391,7 +369,7 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, DirectX::XM
 		// Lock the vertex buffer so it can be written to.
 		result = deviceContext->Map(m_vertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 		if (FAILED(result)) {
-			return false;
+			return;
 		}
 
 		// Get a pointer to the data in the vertex buffer.
@@ -403,14 +381,11 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, DirectX::XM
 		// Unlock the vertex buffer.
 		deviceContext->Unmap(m_vertexBuffer, 0);
 		break;
-	case H_2D_TEXTURE_SHADERTYPE:
-		return UpdateBuffers(deviceContext);
-		break;
 	case H_2D_COLOR_TEXTURE_SHADERTYPE:
 		// Create the vertex array.
 		coloredtype = new H_2D_COLOR_TEXTURE_RESOURCETYPE[m_vertexCount];
 		if (!coloredtype) {
-			return false;
+			return;
 		}
 		// Load the vertex array with data.
 		coloredtype[0].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
@@ -433,7 +408,7 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, DirectX::XM
 		// Lock the vertex buffer so it can be written to.
 		result = deviceContext->Map(m_vertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 		if (FAILED(result)) {
-			return false;
+			return;
 		}
 
 		// Get a pointer to the data in the vertex buffer.
@@ -454,78 +429,24 @@ bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext, DirectX::XM
 	coloredtype = 0;
 	delete[] colortype;
 	colortype = 0;
-
-	return true;
 }
 
-bool TexturedRect::UpdateBuffers(ID3D11DeviceContext* deviceContext) {
-	float left, right, top, bottom;
-	H_2D_TEXTURE_RESOURCETYPE* vertices;
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	H_2D_TEXTURE_RESOURCETYPE* verticesPtr;
-	HRESULT result;
-
-
-	// If the position we are rendering this bitmap to has not changed then don't update the vertex buffer since it
-	// currently has the correct parameters.
-	if (m_shaderType == H_2D_COLOR_TEXTURE_SHADERTYPE || m_shaderType == H_2D_COLOR_SHADERTYPE) {
-		return UpdateBuffers(deviceContext, m_Color);
+void TexturedRect::ShutdownBuffers() {
+	// Release the index buffer.
+	if (m_indexBuffer) {
+		m_indexBuffer->Release();
+		m_indexBuffer = 0;
 	}
 
-	// Calculate the screen coordinates of the left side of the bitmap.
-	left = -m_imageWidth/2;
-
-	// Calculate the screen coordinates of the right side of the bitmap.
-	right = left + (float)m_imageWidth;
-
-	// Calculate the screen coordinates of the top of the bitmap.
-	top = m_imageHeight/2;
-
-	// Calculate the screen coordinates of the bottom of the bitmap.
-	bottom = top - (float)m_imageHeight;
-	// Create the vertex array.
-	vertices = new H_2D_TEXTURE_RESOURCETYPE[m_vertexCount];
-	if (!vertices) {
-		return false;
+	// Release the vertex buffer.
+	if (m_vertexBuffer) {
+		m_vertexBuffer->Release();
+		m_vertexBuffer = 0;
 	}
-
-	// Load the vertex array with data.
-	vertices[0].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
-	vertices[0].texture = DirectX::XMFLOAT2(0.0f, 0.0f);
-
-	vertices[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f);  // Bottom right.
-	vertices[1].texture = DirectX::XMFLOAT2(1.0f, 1.0f);
-
-	vertices[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f);  // Bottom left.
-	vertices[2].texture = DirectX::XMFLOAT2(0.0f, 1.0f);
-
-	vertices[3].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
-	vertices[3].texture = DirectX::XMFLOAT2(1.0f, 0.0f);
-
-	// Lock the vertex buffer so it can be written to.
-	result = deviceContext->Map(m_vertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-	if (FAILED(result)) {
-		return false;
-	}
-
-	// Get a pointer to the data in the vertex buffer.
-	verticesPtr = (H_2D_TEXTURE_RESOURCETYPE*)mappedResource.pData;
-
-	// Copy the data into the vertex buffer.
-	memcpy(verticesPtr, (void*)vertices, (sizeof(H_2D_TEXTURE_RESOURCETYPE) * m_vertexCount));
-
-	// Unlock the vertex buffer.
-	deviceContext->Unmap(m_vertexBuffer, 0);
-
-	// Release the vertex array as it is no longer needed.
-	delete[] vertices;
-	vertices = 0;
-
-	return true;
+	return;
 }
 
-
-void TexturedRect::RenderBuffers(ID3D11DeviceContext* deviceContext) {
+void TexturedRect::Render(ID3D11DeviceContext* deviceContext) {
 	unsigned int stride;
 	unsigned int offset;
 
@@ -582,8 +503,4 @@ void TexturedRect::ReleaseTexture() {
 		m_Texture = 0;
 	}
 	return;
-}
-
-void TexturedRect::SetShaderType(int type) {
-	m_shaderType = type;
 }

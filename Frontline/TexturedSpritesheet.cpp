@@ -15,13 +15,8 @@ TexturedSpritesheet::~TexturedSpritesheet() {
 }
 bool TexturedSpritesheet::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext,
 	char* textureFilename,
-	int screenWidth, int screenHeight, int spriteWidth, int imageHeight, int spriteAmount) {
+	int spriteWidth, int imageHeight, int spriteAmount) {
 	bool result;
-
-
-	// Store the screen size.
-	m_screenWidth = screenWidth;
-	m_screenHeight = screenHeight;
 
 	// Store the size in pixels that this bitmap should be rendered at.
 	m_imageWidth = spriteWidth * spriteAmount;
@@ -52,7 +47,7 @@ bool TexturedSpritesheet::Initialize(ID3D11Device* device, ID3D11DeviceContext* 
 }
 bool TexturedSpritesheet::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext,
 	char* textureFilename, DirectX::XMFLOAT4 color,
-	int screenWidth, int screenHeight, int spriteWidth, int imageHeight, int spriteAmount) {
+	int spriteWidth, int imageHeight, int spriteAmount) {
 	bool result;
 
 

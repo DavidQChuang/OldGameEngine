@@ -1,7 +1,5 @@
 #pragma once
 
-#include "stdafx.h"
-#include "TextureClass.h"
 #include "TexturedRect.h"
 class TexturedSpritesheet : public TexturedRect {
 public:
@@ -9,15 +7,14 @@ public:
 	TexturedSpritesheet(const TexturedSpritesheet&);
 	~TexturedSpritesheet();
 
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int, int, int);
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, DirectX::XMFLOAT4, int, int, int, int, int);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, H_DIMENSION, H_DIMENSION, int);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, H_COLORRGBA, H_DIMENSION, H_DIMENSION, int);
 	bool Render(ID3D11DeviceContext*, int, int);
 	bool Render(ID3D11DeviceContext*, int, int, DirectX::XMFLOAT4);
 	
 	void SetSprite(int);
 
-	int m_spriteWidth;
-	int m_originalSpriteWidth;
+	H_DIMENSION m_spriteWidth;
 
 	int m_currentSprite;
 	int m_previousSprite;
