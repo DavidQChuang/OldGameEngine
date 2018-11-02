@@ -75,7 +75,7 @@ bool SceneGame::Initialize() {
 		MessageBoxW(sm_hwnd, L"Could not initialize the game HUD. 1", L"Error", MB_OK);
 		return false;
 	}
-
+	m_HUD->SetPos(740, 12 * 3);
 	/*m_FPS = new TexturedText();
 	m_FPS->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		800,600,FONT_PIX_FIVE,5*3);*/
@@ -256,8 +256,6 @@ void SceneGame::Shutdown() {
 	return;
 }
 float rotation = 90;
-XMMATRIX cubeMatrix;
-XMMATRIX rotMatrix;
 bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX orthoMatrix) {
 	bool result;
 	switch (m_GameState) {
@@ -285,8 +283,8 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 	}
 	m_Model->Render(sm_Direct3D->GetDeviceContext());
 
-	rotMatrix = DirectX::XMMatrixRotationRollPitchYaw(0, XMConvertToRadians(rotation), XMConvertToRadians(rotation));
-	cubeMatrix = rotMatrix * DirectX::XMMatrixTranslation(0.f, 1.f, 0.f);
+	XMMATRIX rotMatrix = DirectX::XMMatrixRotationRollPitchYaw(0, XMConvertToRadians(rotation), XMConvertToRadians(rotation));
+	XMMATRIX cubeMatrix = rotMatrix * DirectX::XMMatrixTranslation(0.f, 1.f, 0.f);
 	// Render the model using the light shader.
 	result = sm_ShaderClass->m_LightShader->Render(sm_Direct3D->GetDeviceContext(), m_Model->GetIndexCount(), cubeMatrix, viewMatrix, projectionMatrix,
 		m_Model->GetTexture(), sm_ShaderClass->m_Light->GetDirection(), sm_ShaderClass->m_Light->GetAmbientColor(), sm_ShaderClass->m_Light->GetDiffuseColor());
@@ -304,7 +302,8 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 	}
 	m_ParticleSystem->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass);
 
-	RenderSpritesheet(m_Player->m_Texture, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
+	result = RenderSpritesheet(m_Player->m_Texture, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
+	if (!result) return false;
 	m_Player->RenderBullets(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
 
 	m_BadBois->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader, m_Player->m_Bullets->GetTexture(), m_Player->m_Bullets->m_Bullets, m_Player->m_Bullets->m_Max, sm_Timer->getTime() - m_lastTime);
@@ -318,7 +317,8 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 	m_MagicBar->SetSize(1.f, m_Player->m_mp / 6);
 	RenderRect(m_MagicBar, viewMatrix, orthoMatrix, H_2D_COLOR_SHADERTYPE);
 
-	//RenderRect(m_HUD, 740, 12 * 3, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
+	result = RenderRect(m_HUD, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
+	if (!result) return false;
 	//RenderRect(m_BulletKeys, 740, 36 + 97 * 3, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	//RenderRect(m_AbilityContainers, 740, 36 + 106 * 3, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	//RenderSpritesheet(m_BulletSelect, 740 + 3, 36 + 107 * 3, m_Player->m_BulletType, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);

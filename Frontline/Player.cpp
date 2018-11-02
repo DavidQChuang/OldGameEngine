@@ -163,7 +163,8 @@ int Player::GetSpriteNumber() {
 }
 
 bool Player::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix) {
-	return m_Texture->Render(direct3d->GetDeviceContext());
+	m_Texture->Render(direct3d->GetDeviceContext());
+	return true;
 }
 bool Player::RenderBullets(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader) {
 	return m_Bullets->Render(direct3d, viewMatrix, orthoMatrix, shader, elapsedTime);
