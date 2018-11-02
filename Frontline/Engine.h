@@ -3,11 +3,17 @@
 #include <d3d11.h>
 #include <DirectXMath.h>
 
+//
+//  Default screen resolution
+//  Ideally updated per game
+//
+#define H_SCREENWIDTH  800
+#define H_SCREENHEIGHT 600
+
 //////////////////
 // Typedefs
 //////////////////
 
-// To help avoid confusion in SceneClass::RenderX between different parameters.
 typedef float H_SCALE;
 
 typedef float H_ROT;
@@ -39,13 +45,6 @@ enum H_2DSHADERTYPE {
 enum H_3DSHADERTYPE {
 	H_3D_LIGHT_SHADERTYPE = 1
 };
-
-//
-//  Default screen resolution
-//  Ideally updated per game
-//
-#define H_SCREENWIDTH  800
-#define H_SCREENHEIGHT 600
 
 //////////////////
 // Structs

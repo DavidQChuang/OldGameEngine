@@ -23,7 +23,7 @@ public:
 	void Create(float, float, DirectX::XMFLOAT4, int);
 	void Create(float, float, float, float, DirectX::XMFLOAT4, int);
 
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int, int, int);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int);
 	void Shutdown();
 
 	int GetIndexCount();

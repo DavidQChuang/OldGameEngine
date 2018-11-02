@@ -36,7 +36,7 @@ public:
 	void Create(int, int, int);
 	void Create(int, int, int, int);
 
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int, int);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int);
 	void Shutdown();
 	 
 protected:

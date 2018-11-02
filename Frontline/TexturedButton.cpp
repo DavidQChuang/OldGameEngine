@@ -8,6 +8,6 @@ bool TexturedButton::Hovered(HWND hwnd, long mouseX, long mouseY) {
 }
 
 ID3D11ShaderResourceView* TexturedButton::GetTexture(HWND hwnd, long mouseX, long mouseY) {
-	if (Hovered(hwnd, mouseX, mouseY)) SetSprite(2); else SetSprite(1);
+	//if (Hovered(hwnd, mouseX, mouseY)) SetSprite(2); else SetSprite(1);
 	return m_Texture->GetTexture();
 }

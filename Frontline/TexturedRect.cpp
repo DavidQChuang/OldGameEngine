@@ -34,7 +34,6 @@ bool TexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	m_imageHeight = imageHeight;
 
 	m_Color = color;
-	m_previousColor = color;
 
 	// Initialize the vertex and index buffers.
 	result = InitializeBuffers(device);
@@ -58,7 +57,6 @@ bool TexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	m_imageHeight = imageHeight;
 
 	m_Color = DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f);
-	m_previousColor = DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f);
 
 	// Initialize the vertex and index buffers.
 	result = InitializeBuffers(device);
@@ -88,7 +86,6 @@ bool TexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	m_imageHeight = imageHeight;
 	
 	m_Color = color;
-	m_previousColor = color;
 
 	// Initialize the vertex and index buffers.
 	result = InitializeBuffers(device);
@@ -330,7 +327,7 @@ void TexturedRect::SetColor(ID3D11DeviceContext* deviceContext, H_COLORRGBA colo
 
 	// If the position we are rendering this bitmap to has not changed then don't update the vertex buffer since it
 	// currently has the correct parameters.
-	if ((color.x == m_previousColor.x) && (color.y == m_previousColor.y) && (color.z == m_previousColor.z) && (color.w == m_previousColor.w)) {
+	if ((color.x == m_Color.x) && (color.y == m_Color.y) && (color.z == m_Color.z) && (color.w == m_Color.w)) {
 		return;
 	}
 
@@ -422,7 +419,7 @@ void TexturedRect::SetColor(ID3D11DeviceContext* deviceContext, H_COLORRGBA colo
 		break;
 	}
 
-	m_previousColor = color;
+	m_Color = color;
 
 	// Release the vertex array as it is no longer needed.
 	delete[] coloredtype;

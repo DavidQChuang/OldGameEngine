@@ -22,7 +22,7 @@ bool SceneMainMenu::Initialize() {
 
 	result = m_Flame->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\Sprites\\Particles\\Fire.sprite",
-		800, 600, 16 * 4, 16 * 4);
+		16 * 4, 16 * 4);
 	if (!result) {
 		MessageBoxW(sm_hwnd, L"Could not initialize the main menu particle system. 1", L"Error", MB_OK);
 		return false;
@@ -35,7 +35,7 @@ bool SceneMainMenu::Initialize() {
 
 	result = m_Background->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\Backgrounds\\MainMenu.background",
-		800, 600, 800, 600);
+		800, 600);
 	if (!result) {
 		MessageBoxW(sm_hwnd, L"Could not initialize the main menu background image. 1", L"Error", MB_OK);
 		return false;
@@ -48,7 +48,7 @@ bool SceneMainMenu::Initialize() {
 
 	result = m_Title->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\Sprites\\Title.image",
-		800, 600, 176*4, 18*4);
+		176*4, 18*4);
 	if (!result) {
 		MessageBoxW(sm_hwnd, L"Could not initialize the title image. 1", L"Error", MB_OK);
 		return false;
@@ -61,7 +61,7 @@ bool SceneMainMenu::Initialize() {
 
 	result = m_Play->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\GUI\\Buttons\\Play.images",
-		800, 600, 40*4, 12*4, 2);
+		40*4, 12*4, 2);
 	if (!result) {
 		MessageBoxW(sm_hwnd, L"Could not initialize the play button. 1", L"Error", MB_OK);
 		return false;

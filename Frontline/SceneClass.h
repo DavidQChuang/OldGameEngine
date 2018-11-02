@@ -21,6 +21,7 @@ public:
 	virtual bool Render(XMMATRIX, XMMATRIX, XMMATRIX) = 0;
 	bool m_active;
 
+	inline bool InitializeRect(TexturedRect*, char*, H_DIMENSION, H_DIMENSION);
 	inline bool RenderRect(TexturedRect*, XMMATRIX, XMMATRIX, int);
 
 	inline bool RenderSpritesheet(TexturedSpritesheet*, XMMATRIX, XMMATRIX, int);
@@ -35,7 +36,27 @@ protected:
 	ShaderClass* sm_ShaderClass;
 	Timer* sm_Timer;
 };
+inline bool SceneClass::InitializeRect(TexturedRect* object, char* filename, H_DIMENSION x, H_DIMENSION y) {
+	bool result;
 
+	object = new TexturedRect();
+	if (!object) {
+		std::wstring string = L"Could not initialize " + (wchar_t)filename;
+		LPCWSTR lpcwstr = string.c_str();
+		MessageBoxW(sm_hwnd, lpcwstr, L"Error", MB_OK);
+		return false;
+	}
+
+	result = object->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
+		filename,
+		x, y);
+	if (!result) {
+		std::wstring string = L"Could not initialize " + (wchar_t)filename;
+		LPCWSTR lpcwstr = string.c_str();
+		MessageBoxW(sm_hwnd, lpcwstr, L"Error", MB_OK);
+		return false;
+	}
+}
 //  
 //  Renders a TexturedRect from the buffer using a shader and passing a translation matrix as the world matrix.
 //  
@@ -108,10 +129,11 @@ inline bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, XMMATRIX 
 
 //
 //  Renders a TexturedRect from the buffer using a shader and passing a translation matrix as the world matrix.
-//
+//  @param object any t h o t?
+//  
 inline bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int spriteNumber, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
 	XMMATRIX matrix = XMMatrixScaling(object->m_scaleX, object->m_scaleY, 0) * XMMatrixRotationZ(object->m_rot) * XMMatrixTranslation(object->m_posX, object->m_posY, 0);
-	object->SetSprite(spriteNumber);
+	object->SetSprite(sm_Direct3D->GetDeviceContext(), spriteNumber);
 	object->Render(sm_Direct3D->GetDeviceContext());
 	switch (shaderType) {
 	case H_2D_COLOR_SHADERTYPE:

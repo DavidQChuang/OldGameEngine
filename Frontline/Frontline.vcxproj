@@ -131,6 +131,9 @@
     <ClCompile Include="D3DClass.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBS.cpp" />
+    <ClCompile Include="EntitySystem.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="GraphicsClass.cpp" />
     <ClCompile Include="InstancedTexturedRect.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -178,6 +181,9 @@
     <ClInclude Include="D3DClass.h" />
     <ClInclude Include="EnemyBS.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="EntitySystem.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="GraphicsClass.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="InstanceSystem.h">

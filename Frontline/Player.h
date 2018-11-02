@@ -11,7 +11,7 @@ public:
 	Player(Input*, int, int);
 
 	bool Frame(bool, double);
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, char*, int, int, int, int, int);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, char*, int, int, int);
 
 	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX);
 	bool RenderBullets(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*);

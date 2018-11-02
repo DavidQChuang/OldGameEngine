@@ -49,7 +49,7 @@ void ParticleSystem::SetParameters(int x, int y, int width, int height, int life
 }
 bool ParticleSystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext,
 	char* textureFilename,
-	int screenWidth, int screenHeight, int imageWidth, int imageHeight) {
+	int imageWidth, int imageHeight) {
 	bool result;
 	m_Texture = new TexturedRect();
 	if (!m_Texture) {
@@ -57,7 +57,7 @@ bool ParticleSystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* devic
 	}
 	result = m_Texture->Initialize(device, deviceContext,
 		textureFilename, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f),
-		screenWidth, screenHeight, imageWidth, imageHeight);
+		imageWidth, imageHeight);
 	if (!result) {
 		return false;
 	}
@@ -86,8 +86,8 @@ bool ParticleSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Di
 
 		matrix = XMMatrixScaling(particle.width,particle.height, 1.f) * XMMatrixTranslation(particle.x - 400 + m_Texture->m_imageWidth / 2, -particle.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
 		//m_Texture->Resize(m_Texture->m_originalImageWidth * particle.width, m_Texture->m_originalImageHeight * particle.height);
-		m_Texture->Render(direct3d->GetDeviceContext(), (int)particle.x, (int)particle.y, particle.color);
-		result = shader->m_ColorTextureShader->Render(direct3d->GetDeviceContext(), m_Texture->GetIndexCount(), matrix, viewMatrix, orthoMatrix, m_Texture->GetTexture());
+		m_Texture->Render(direct3d->GetDeviceContext());
+		result = shader->m_ColorTextureShader->Render(direct3d->GetDeviceContext(), m_Texture->m_indexCount, matrix, viewMatrix, orthoMatrix, m_Texture->m_Texture->GetTexture());
 		if (!result) {
 			return false;
 		}

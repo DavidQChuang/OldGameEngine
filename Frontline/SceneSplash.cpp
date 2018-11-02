@@ -18,7 +18,7 @@ bool SceneSplash::Initialize() {
 
  	result = m_Splash->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\Backgrounds\\DABDABSAVAGE.background",
-		800, 600, 800, 600);
+		800, 600);
 	if (!result) {
 		MessageBoxW(sm_hwnd, L"Could not initialize the splash screen. 1", L"Error", MB_OK);
 		return false;
@@ -53,7 +53,7 @@ bool SceneSplash::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRI
 	sm_Direct3D->TurnZBufferOff();
 
 	// Render the model using the texture shader.
-	m_Splash->Render(sm_Direct3D->GetDeviceContext(), ((Options::WIDTH / 2) - m_Splash->m_imageWidth / 2), 0, DirectX::XMFLOAT4(1.f,0.f,0.f,1.f));
+	//m_Splash->Render(sm_Direct3D->GetDeviceContext(), ((Options::WIDTH / 2) - m_Splash->m_imageWidth / 2), 0, DirectX::XMFLOAT4(1.f,0.f,0.f,1.f));
 	//result = sm_ShaderClass->m_TransparencyShader->Render(sm_Direct3D->GetDeviceContext(), m_Splash->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Splash->GetTexture(), blendAmount);
 	
 	//if (time > 6000) {

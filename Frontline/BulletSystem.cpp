@@ -13,7 +13,7 @@ BulletSystem::~BulletSystem() {
 
 bool BulletSystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext,
 	char* textureFilename,
-	int screenWidth, int screenHeight, int imageWidth, int imageHeight, int images) {
+	int imageWidth, int imageHeight, int images) {
 	bool result;
 	m_Texture = new TexturedSpritesheet();
 	if (!m_Texture) {
@@ -21,7 +21,7 @@ bool BulletSystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	}
 	result = m_Texture->Initialize(device, deviceContext,
 		textureFilename, DirectX::XMFLOAT4(1.f,1.f,1.f,1.f),
-		screenWidth, screenHeight, imageWidth, imageHeight, images);
+		imageWidth, imageHeight, images);
 	if (!result) {
 		return false;
 	}
@@ -46,9 +46,9 @@ bool BulletSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Dire
 			bullet.y += bullet.velY * elapsed / 16;
 		}
 			
-		matrix = XMMatrixScaling(1.1f,1.1f,1.f) * XMMatrixRotationZ(atan(bullet.velY/bullet.velX)+XM_PI/2) * XMMatrixTranslation(bullet.x - 400 + m_Texture->m_spriteWidth / 2, -bullet.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
-		m_Texture->SetSprite(bullet.type);
-		m_Texture->Render(direct3d->GetDeviceContext(), bullet.x, bullet.y, bullet.color);
+		matrix = XMMatrixScaling(1.f,1.f,1.f) * XMMatrixRotationZ(atan(bullet.velY/bullet.velX)+XM_PI/2) * XMMatrixTranslation(bullet.x - 400 + m_Texture->m_spriteWidth / 2, -bullet.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
+		m_Texture->SetSprite(direct3d->GetDeviceContext(), bullet.type);
+		m_Texture->Render(direct3d->GetDeviceContext());
 		shader->Render(direct3d->GetDeviceContext(), GetIndexCount(), matrix, viewMatrix, orthoMatrix, GetTextureResource());
 	}
 	return true;
@@ -57,10 +57,10 @@ void BulletSystem::SetState(bool on) {
 	m_on = on;
 }
 int BulletSystem::GetIndexCount() {
-	return m_Texture->GetIndexCount();
+	return m_Texture->m_indexCount;
 }
 ID3D11ShaderResourceView* BulletSystem::GetTextureResource() {
-	return m_Texture->GetTexture();
+	return m_Texture->m_Texture->GetTexture();
 }
 TexturedSpritesheet* BulletSystem::GetTexture() {
 	return m_Texture;

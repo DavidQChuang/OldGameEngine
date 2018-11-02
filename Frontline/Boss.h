@@ -8,7 +8,7 @@ class Boss {
 public:
 	bool Frame(double);
 	bool Render(ID3D11DeviceContext*);
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, char*, int, int, int, int, int);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, char*, int, int, int);
 
 	void Shutdown();
 

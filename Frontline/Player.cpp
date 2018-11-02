@@ -23,7 +23,7 @@ Player::Player(Input* input, int xp, int yp) {
 
 bool Player::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext,
 	char* textureFilename, char* bulletFilename,
-	int screenWidth, int screenHeight, int imageWidth, int imageHeight, int spriteAmount) {
+	int imageWidth, int imageHeight, int spriteAmount) {
 	bool result;
 	m_Texture = new TexturedSpritesheet();
 	if (!m_Texture) {
@@ -31,13 +31,13 @@ bool Player::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext
 	}
 	result = m_Texture->Initialize(device, deviceContext,
 		textureFilename,
-		screenWidth, screenHeight, imageWidth, imageHeight, spriteAmount);
+		imageWidth, imageHeight, spriteAmount);
 	if (!result) return false;
 
 	m_Bullets = new PlayerBulletSystem(150);
 	result = m_Bullets->Initialize(device, deviceContext,
 		bulletFilename,
-		screenWidth, screenHeight, 6*3, 6*3, 3);
+		6*3, 6*3, 3);
 	if (!result) return false;
 
 	m_PlayerParticles = new PlayerPS(150);
@@ -47,7 +47,7 @@ bool Player::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext
 	m_PlayerParticles->SetParameters(0, 600, 800, 1, 3000, 100, 1, 0);
 	result = m_PlayerParticles->Initialize(device, deviceContext,
 		".\\Data\\Images\\Sprites\\Particles\\Fire.sprite",
-		800, 600, 16 * 4, 16 * 4);
+		16 * 4, 16 * 4);
 	if (!result) return false;
 
 	return true;
@@ -163,20 +163,20 @@ int Player::GetSpriteNumber() {
 }
 
 bool Player::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix) {
-	return m_Texture->Render(direct3d->GetDeviceContext(), m_x, m_y);
+	return m_Texture->Render(direct3d->GetDeviceContext());
 }
 bool Player::RenderBullets(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader) {
 	return m_Bullets->Render(direct3d, viewMatrix, orthoMatrix, shader, elapsedTime);
 }
 
 int Player::GetIndexCount() {
-	return m_Texture->GetIndexCount();
+	return m_Texture->m_indexCount;
 }
 int Player::GetBulletIndexCount() {
 	return m_Bullets->GetIndexCount();
 }
 ID3D11ShaderResourceView* Player::GetTextureResource() {
-	return m_Texture->GetTexture();
+	return m_Texture->m_Texture->GetTexture();
 }
 ID3D11ShaderResourceView* Player::GetBulletTextureResource() {
 	return m_Bullets->GetTextureResource();

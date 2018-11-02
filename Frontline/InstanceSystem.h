@@ -6,14 +6,23 @@
 #include "colortextureshader.h"
 #include "D3DClass.h"
 class InstanceSystem {
+	virtual struct Instance {
+		float x;
+		float y;
+	};
+	virtual struct ColorInstance {
+		float x;
+		float y;
+		H_COLORRGBA color;
+	};
 public:
 	InstanceSystem();
 	~InstanceSystem();
-	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*, double);
-	void Create(float, float, DirectX::XMFLOAT4, int, double);
+	virtual bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*, double);
+	void Create(Instance);
 
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int, int, int);
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, DirectX::XMFLOAT4(), int, int, int, int, int);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, H_DIMENSION, H_DIMENSION, int);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, H_COLORRGBA, H_DIMENSION, H_DIMENSION, int);
 	void Shutdown();
 
 	void MoveEnemy(int, float);
@@ -39,8 +48,6 @@ protected:
 	TexturedSpritesheet* m_Texture;
 	Enemy* m_Enemies;
 
-	DirectX::XMFLOAT2 EnemyMovement(int);
-	bool CheckCollision(int, DirectX::XMFLOAT2, int);
 	int m_lastSpawnTime;
 	int m_delta;
 };

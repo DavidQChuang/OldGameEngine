@@ -11,7 +11,7 @@ EnemySystem::~EnemySystem() {
 
 bool EnemySystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext,
 	char* textureFilename,
-	int screenWidth, int screenHeight, int imageWidth, int imageHeight, int images) {
+	int imageWidth, int imageHeight, int images) {
 	bool result;
 	m_Texture = new TexturedSpritesheet();
 	if (!m_Texture) {
@@ -19,7 +19,7 @@ bool EnemySystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCo
 	}
 	result = m_Texture->Initialize(device, deviceContext,
 		textureFilename, DirectX::XMFLOAT4(1.f,1.f,1.f,1.f),
-		screenWidth, screenHeight, imageWidth, imageHeight, images);
+		imageWidth, imageHeight, images);
 	if (!result) {
 		return false;
 	}
@@ -47,10 +47,9 @@ bool EnemySystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Direc
 				enemy.x += movement.x * elapsed / 10;
 				enemy.y += movement.y * elapsed / 10;
 			}
-
 			matrix = XMMatrixTranslation(enemy.x - 400 + m_Texture->m_spriteWidth / 2, -enemy.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
-			m_Texture->SetSprite(enemy.type);
-			m_Texture->Render(direct3d->GetDeviceContext(), enemy.x, enemy.y, enemy.color);
+			m_Texture->SetSprite(direct3d->GetDeviceContext(), enemy.type);
+			m_Texture->Render(direct3d->GetDeviceContext());
 			result = shader->Render(direct3d->GetDeviceContext(), GetIndexCount(), matrix, viewMatrix, orthoMatrix, GetTextureResource());
 			if (!result) {
 				return false;
@@ -135,11 +134,11 @@ void EnemySystem::Create(float x, float y, DirectX::XMFLOAT4 color, int type, do
 }
 
 int EnemySystem::GetIndexCount() {
-	return m_Texture->GetIndexCount();
+	return m_Texture->m_indexCount;
 }
 
 ID3D11ShaderResourceView* EnemySystem::GetTextureResource() {
-	return m_Texture->GetTexture();
+	return m_Texture->m_Texture->GetTexture();
 }
 
 TexturedSpritesheet* EnemySystem::GetTexture() {
