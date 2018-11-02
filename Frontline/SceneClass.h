@@ -61,11 +61,11 @@ inline bool SceneClass::InitializeRect(TexturedRect* object, char* filename, H_D
 //  Renders a TexturedRect from the buffer using a shader and passing a translation matrix as the world matrix.
 //  
 inline bool SceneClass::RenderRect(TexturedRect* object, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
-	/*XMMATRIX matrix =
+	XMMATRIX matrix =
 		XMMatrixScaling(object->m_scaleX, object->m_scaleY, 0) *
 		XMMatrixRotationZ(object->m_rot) *
-		XMMatrixTranslation(object->m_posX - 400 + object->m_imageWidth / 2, -object->m_posY + 300 - object->m_imageHeight / 2, 0.f);*/
-	XMMATRIX matrix = XMMatrixTranslation(0.f, 0.f, 0.f);
+		XMMatrixTranslation(object->m_posX - 400 + object->m_imageWidth / 2, -object->m_posY + 300 - object->m_imageHeight / 2, 0.f);
+	//XMMATRIX matrix = XMMatrixTranslation(0.f, 0.f, 0.f);
 	object->Render(sm_Direct3D->GetDeviceContext());
 	switch (shaderType) {
 	case H_2D_COLOR_SHADERTYPE:
