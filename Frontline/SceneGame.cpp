@@ -258,7 +258,7 @@ void SceneGame::Shutdown() {
 float rotation = 90;
 bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX orthoMatrix) {
 	bool result;
-	switch (m_GameState) {
+	/*switch (m_GameState) {
 	case 0:
 		rotation += (sm_Timer->getTime() - m_lastTime) / 4;
 		if (rotation > 360) rotation = 0;
@@ -316,7 +316,7 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 
 	m_MagicBar->SetSize(1.f, m_Player->m_mp / 6);
 	RenderRect(m_MagicBar, viewMatrix, orthoMatrix, H_2D_COLOR_SHADERTYPE);
-
+	*/
 	result = RenderRect(m_HUD, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	if (!result) return false;
 	//RenderRect(m_BulletKeys, 740, 36 + 97 * 3, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
