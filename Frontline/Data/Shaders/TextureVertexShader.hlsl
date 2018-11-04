@@ -1,5 +1,7 @@
 cbuffer MatrixBuffer {
-	matrix worldMatrix;
+    matrix worldMatrix;
+    matrix viewMatrix;
+    matrix projectionMatrix;
 };
 
 struct VertexInputType {
