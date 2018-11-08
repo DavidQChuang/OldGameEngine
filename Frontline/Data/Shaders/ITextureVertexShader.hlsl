@@ -7,7 +7,7 @@ cbuffer MatrixBuffer {
 struct VertexInputType {
 	float4 position : SV_POSITION;
 	float2 tex : TEXCOORD0;
-	float3 instancePosition : TEXCOORD1;
+	float2 instancePosition : TEXCOORD1;
 };
 
 struct PixelInputType {
@@ -23,7 +23,6 @@ PixelInputType TextureVertexShader(VertexInputType input) {
 	// Calculate the position of the vertex against the world, view, and projection matrices.
 	input.position.x += input.instancePosition.x;
 	input.position.y += input.instancePosition.y;
-	input.position.z += input.instancePosition.z;
 
 	output.position = mul(input.position, worldMatrix);
 	output.position = mul(output.position, viewMatrix);

@@ -3,62 +3,54 @@
 #include "TextureClass.h"
 #include "Engine.h"
 class InstancedTexturedRect {
-protected:
-	struct H_2D_COLOR_RESOURCETYPE {
-		DirectX::XMFLOAT3 position;
-		DirectX::XMFLOAT4 color;
-	};
-	struct H_2D_TEXTURE_RESOURCETYPE {
-		DirectX::XMFLOAT3 position;
-		DirectX::XMFLOAT2 texture;
-	};
-	struct H_2D_COLOR_TEXTURE_RESOURCETYPE {
-		DirectX::XMFLOAT3 position;
-		DirectX::XMFLOAT2 texture;
-		DirectX::XMFLOAT4 color;
-	};
-	struct InstanceType {
-		DirectX::XMFLOAT3 position;
-	};
 public:
 	InstancedTexturedRect(int);
 	InstancedTexturedRect(const InstancedTexturedRect&);
 	~InstancedTexturedRect();
 
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, DirectX::XMFLOAT4, int, int, int, int);
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int, int);
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, DirectX::XMFLOAT4, int, int, int, int);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, H_COLORRGBA, H_DIMENSION, H_DIMENSION);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, H_DIMENSION, H_DIMENSION);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, H_COLORRGBA, H_DIMENSION, H_DIMENSION);
+
 	void Shutdown();
-	bool Render(ID3D11DeviceContext*, int, int);
-	bool Render(ID3D11DeviceContext*, int, int, DirectX::XMFLOAT4);
 
-	int GetIndexCount();
-	ID3D11ShaderResourceView* GetTexture();
+	void Render(ID3D11DeviceContext*);
 
-	int m_screenWidth, m_screenHeight;
-	int m_imageWidth, m_imageHeight;
-	int m_originalImageWidth, m_originalImageHeight;
+	// Get m_screenWidth & height from Engine.h instead of recieving it and storing it.
+	// int m_screenWidth, m_screenHeight;
 
-	void SetShaderType(int);
-	int m_shaderType;
+	H_2DSHADERTYPE m_shaderType;
 
-	virtual void Resize();
-	virtual void Resize(int, int);
-	//void ChangeColor(DirectX::XMFLOAT4);
-	const int m_posX = 400, m_posY = 300;
-	int* m_instancePos;
-	DirectX::XMFLOAT4 m_Color;
+	void SetPos(H_POS, H_POS, int);
+	void SetSize(H_SCALE, H_SCALE);
+	void SetRot(H_ROT);
+	virtual void SetColor(ID3D11DeviceContext*, H_COLORRGBA);
+
+	void CreateInstance(H_POS, H_POS);
+	// void ChangeColor(DirectX::XMFLOAT4);
+
+	int m_vertexCount, m_indexCount;
+	// Constant - size of original image.
+	H_DIMENSION m_imageWidth, m_imageHeight;
+	// Variable - properties of image to be rendered.
+	// Stored
+	H_POS* m_posX, m_posY;
+	H_SCALE m_scaleX, m_scaleY;
+	H_ROT m_rot;
+	H_COLORRGBA m_Color;
+
+	TextureClass* m_Texture;
+
+	int m_Active;
+	int m_Max;
 protected:
 	bool InitializeBuffers(ID3D11Device*);
-	void ShutdownBuffers();
-	virtual bool UpdateBuffers(ID3D11DeviceContext*, int, int);
-	virtual bool UpdateBuffers(ID3D11DeviceContext*, int, int, DirectX::XMFLOAT4);
-	void RenderBuffers(ID3D11DeviceContext*);
 
+	void ShutdownBuffers();
+
+	// Loads image texture from file.
 	bool LoadTexture(ID3D11Device*, ID3D11DeviceContext*, char*);
 	void ReleaseTexture();
-	ID3D11Buffer *m_vertexBuffer, *m_instanceBuffer;
-	int m_vertexCount, m_indexCount;
-	TextureClass* m_Texture;
-	DirectX::XMFLOAT4 m_previousColor;
+
+	ID3D11Buffer *m_vertexBuffer, *m_indexBuffer;
 };
