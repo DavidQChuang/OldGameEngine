@@ -19,7 +19,7 @@ SceneGame::SceneGame(HWND hwnd, D3DClass* d3dclass, CameraClass* cameraclass, Sh
 bool SceneGame::Initialize() {
 	bool result;
 	//(int x, int y, int width, int height, int max, int lifetime, int lifeRandom, int gen, int genRand)
-	m_ParticleSystem = new TitlePS(1000);
+	m_ParticleSystem = new TitlePS(3000);
 	if (!m_ParticleSystem) {
 		return false;
 	}
@@ -92,11 +92,12 @@ bool SceneGame::Initialize() {
 		MessageBoxW(sm_hwnd, L"Could not initialize the game HUD. 1", L"Error", MB_OK);
 		return false;
 	}
+	m_BulletKeys->SetPos(740, 36 + 97 * 3);
+
 	m_AbilityContainers = new TexturedRect();
 	if (!m_AbilityContainers) {
 		return false;
 	}
-
 	result = m_AbilityContainers->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		".\\Data\\Images\\GUI\\BulletContainer.sprite",
 		14 * 3, 42 * 3);
@@ -104,6 +105,7 @@ bool SceneGame::Initialize() {
 		MessageBoxW(sm_hwnd, L"Could not initialize the game HUD. 1", L"Error", MB_OK);
 		return false;
 	}
+	m_AbilityContainers->SetPos(740, 36 + 106 * 3);
 
 	m_BulletSelect = new TexturedSpritesheet();
 	if (!m_BulletSelect) {
@@ -117,6 +119,7 @@ bool SceneGame::Initialize() {
 		MessageBoxW(sm_hwnd, L"Could not initialize the game HUD. 2", L"Error", MB_OK);
 		return false;
 	}
+	m_BulletSelect->SetPos(740 + 3, 36 + 107 * 3);
 
 	m_Background = new TexturedRect();
 	if (!m_Background) {
@@ -130,6 +133,7 @@ bool SceneGame::Initialize() {
 		MessageBoxW(sm_hwnd, L"Could not initialize the game background. 1", L"Error", MB_OK);
 		return false;
 	}
+	m_Background->SetPos(740, 36 + 97 * 3);
 
 	m_Player = new Player(m_Input, 384, 350);
 	if (!m_Player) {
@@ -258,13 +262,13 @@ void SceneGame::Shutdown() {
 float rotation = 90;
 bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX orthoMatrix) {
 	bool result;
-	/*switch (m_GameState) {
+	switch (m_GameState) {
 	case 0:
 		rotation += (sm_Timer->getTime() - m_lastTime) / 4;
 		if (rotation > 360) rotation = 0;
 
 		m_Player->Frame(true, sm_Timer->getTime());
-		m_Player->m_Texture->SetSprite(sm_Direct3D->GetDeviceContext(), static_cast<int>(round(sm_Timer->getTime() / 90)) % 6);
+		m_Player->m_Texture->SetSprite(sm_Direct3D->GetDeviceContext(), static_cast<int>(sm_Timer->getTime() / 90) % 6);
 
 		m_Player->m_Bullets->SetState(true);
 
@@ -294,14 +298,15 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 
 	sm_Direct3D->TurnZBufferOff();
 
-	for (int bigoof = 0; bigoof < 10; bigoof++) {
+	for (int bigoof = 0; bigoof < 6; bigoof++) {
 		m_ParticleSystem->Create(0, 0, -5, -3);
-		if (bigoof % 6 == 0) {
+		if (bigoof == 0) {
 			m_ParticleSystem->Create(0, 0, -8, -5);
 		}
 	}
 	m_ParticleSystem->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass);
 
+	m_Player->m_Texture->SetPos(m_Player->m_x, m_Player->m_y);
 	result = RenderSpritesheet(m_Player->m_Texture, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	if (!result) return false;
 	m_Player->RenderBullets(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
@@ -316,12 +321,12 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 
 	m_MagicBar->SetSize(1.f, m_Player->m_mp / 6);
 	RenderRect(m_MagicBar, viewMatrix, orthoMatrix, H_2D_COLOR_SHADERTYPE);
-	*/
+
 	result = RenderRect(m_HUD, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	if (!result) return false;
-	//RenderRect(m_BulletKeys, 740, 36 + 97 * 3, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
-	//RenderRect(m_AbilityContainers, 740, 36 + 106 * 3, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
-	//RenderSpritesheet(m_BulletSelect, 740 + 3, 36 + 107 * 3, m_Player->m_BulletType, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
+	RenderRect(m_BulletKeys, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
+	RenderRect(m_AbilityContainers, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
+	RenderSpritesheet(m_BulletSelect, m_Player->m_BulletType, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 
 	m_Input->Update();
 	m_lastTime = sm_Timer->getTime();

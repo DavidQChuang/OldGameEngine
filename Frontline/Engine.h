@@ -3,14 +3,18 @@
 #include <d3d11.h>
 #include <DirectXMath.h>
 
-//
+/////////////////
+// Constants
+//////////////////
+
+//------------------------------------------------------------------------------
 //  Default screen resolution
 //  Ideally updated per game
 //
 #define H_SCREENWIDTH  800
 #define H_SCREENHEIGHT 600
 
-//////////////////
+/////////////////
 // Typedefs
 //////////////////
 
@@ -24,11 +28,11 @@ typedef int H_DIMENSION;
 
 typedef DirectX::XMFLOAT4 H_COLORRGBA;
 
-//////////////////
+/////////////////
 // Enums
 //////////////////
 
-//
+//------------------------------------------------------------------------------
 //  Shader types
 //  2D/3D: Dimension
 //  Shader Resource Type
@@ -46,11 +50,11 @@ enum H_3DSHADERTYPE {
 	H_3D_LIGHT_SHADERTYPE = 1
 };
 
-//////////////////
+/////////////////
 // Structs
 //////////////////
 
-//
+//------------------------------------------------------------------------------
 //  Resource types
 //  2D/3D: Dimension
 //  Shader name
@@ -76,3 +80,7 @@ struct H_2D_COLOR_TEXTURE_RESOURCETYPE {
 struct H_3D_LIGHT_RESOURCETYPE {
 
 };
+
+/////////////////
+// Functions
+/////////////////

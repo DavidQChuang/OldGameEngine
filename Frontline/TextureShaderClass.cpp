@@ -289,6 +289,9 @@ bool TextureShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext,
 	dataPtr = (MatrixBufferType*)mappedResource.pData;
 
 	// Copy the matrices into the constant buffer.
+	//dataPtr->world = XMMatrixMultiplyRows(worldMatrix, viewMatrix);
+	//dataPtr->world = XMMatrixMultiplyRows(dataPtr->world, projectionMatrix);
+	// [0].xyz
 	dataPtr->world = worldMatrix;
 	dataPtr->view = viewMatrix;
 	dataPtr->projection = projectionMatrix;
@@ -308,6 +311,7 @@ bool TextureShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext,
 
 	return true;
 }
+
 //RenderShader calls the shader technique to render the polygons.
 
 void TextureShaderClass::RenderShader(ID3D11DeviceContext* deviceContext, int indexCount) {

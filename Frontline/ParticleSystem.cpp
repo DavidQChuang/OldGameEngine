@@ -81,11 +81,12 @@ bool ParticleSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Di
 			m_Active--;
 			continue;
 		}
-		particle.x += particle.velX * (m_Timer->getTime() - m_lastTime) / 16;
-		particle.y += particle.velY * (m_Timer->getTime() - m_lastTime) / 16;
 
 		matrix = XMMatrixScaling(particle.width,particle.height, 1.f) * XMMatrixTranslation(particle.x - 400 + m_Texture->m_imageWidth / 2, -particle.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
 		//m_Texture->Resize(m_Texture->m_originalImageWidth * particle.width, m_Texture->m_originalImageHeight * particle.height);
+		m_Texture->SetColor(direct3d->GetDeviceContext(),particle.color);
+		particle.x += particle.velX * (m_Timer->getTime() - m_lastTime) / 16;
+		particle.y += particle.velY * (m_Timer->getTime() - m_lastTime) / 16;
 		m_Texture->Render(direct3d->GetDeviceContext());
 		result = shader->m_ColorTextureShader->Render(direct3d->GetDeviceContext(), m_Texture->m_indexCount, matrix, viewMatrix, orthoMatrix, m_Texture->m_Texture->GetTexture());
 		if (!result) {

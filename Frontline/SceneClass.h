@@ -62,7 +62,7 @@ inline bool SceneClass::InitializeRect(TexturedRect* object, char* filename, H_D
 //  
 inline bool SceneClass::RenderRect(TexturedRect* object, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
 	XMMATRIX matrix =
-		XMMatrixScaling(object->m_scaleX, object->m_scaleY, 0) *
+		XMMatrixScaling(object->m_scaleX, object->m_scaleY, 1.f) *
 		XMMatrixRotationZ(object->m_rot) *
 		XMMatrixTranslation(object->m_posX - 400 + object->m_imageWidth / 2, -object->m_posY + 300 - object->m_imageHeight / 2, 0.f);
 	//XMMATRIX matrix = XMMatrixTranslation(0.f, 0.f, 0.f);
@@ -101,7 +101,7 @@ inline bool SceneClass::RenderRect(TexturedRect* object, XMMATRIX viewMatrix, XM
 //
 inline bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
 	XMMATRIX matrix = 
-		XMMatrixScaling(object->m_scaleX, object->m_scaleY, 0) *
+		XMMatrixScaling(object->m_scaleX, object->m_scaleY, 1.f) *
 		XMMatrixRotationZ(object->m_rot) *
 		XMMatrixTranslation(object->m_posX - 400 + object->m_imageWidth / 2, -object->m_posY + 300 - object->m_imageHeight / 2, 0.f);
 	object->Render(sm_Direct3D->GetDeviceContext());
@@ -140,7 +140,7 @@ inline bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, XMMATRIX 
 //  
 inline bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int spriteNumber, XMMATRIX viewMatrix, XMMATRIX orthoMatrix, int shaderType) {
 	XMMATRIX matrix =
-		XMMatrixScaling(object->m_scaleX, object->m_scaleY, 0) *
+		XMMatrixScaling(object->m_scaleX, object->m_scaleY, 1.f) *
 		XMMatrixRotationZ(object->m_rot) *
 		XMMatrixTranslation(object->m_posX - 400 + object->m_imageWidth / 2, -object->m_posY + 300 - object->m_imageHeight / 2, 0.f);
 	object->SetSprite(sm_Direct3D->GetDeviceContext(), spriteNumber);

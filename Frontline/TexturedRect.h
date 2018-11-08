@@ -39,7 +39,7 @@ public:
 
 	TextureClass* m_Texture;
 protected:
-	bool InitializeBuffers(ID3D11Device*);
+	virtual bool InitializeBuffers(ID3D11Device*);
 
 	void ShutdownBuffers();
 

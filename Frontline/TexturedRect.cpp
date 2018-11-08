@@ -129,6 +129,18 @@ bool TexturedRect::InitializeBuffers(ID3D11Device* device) {
 	// Set the number of indices in the index array.
 	m_indexCount = 6;
 
+	// Calculate the screen coordinates of the left side of the bitmap.
+	left = -m_imageWidth / 2;
+
+	// Calculate the screen coordinates of the right side of the bitmap.
+	right = left + (float)m_imageWidth;
+
+	// Calculate the screen coordinates of the top of the bitmap.
+	top = m_imageHeight / 2;
+
+	// Calculate the screen coordinates of the bottom of the bitmap.
+	bottom = top - (float)m_imageHeight;
+
 	switch (m_shaderType) {
 	case H_2D_COLOR_SHADERTYPE:
 		// Create the vertex array.
@@ -165,17 +177,6 @@ bool TexturedRect::InitializeBuffers(ID3D11Device* device) {
 		vertexData.SysMemSlicePitch = 0;
 		break;
 	case H_2D_TEXTURE_SHADERTYPE:
-		// Calculate the screen coordinates of the left side of the bitmap.
-		left = -m_imageWidth / 2;
-
-		// Calculate the screen coordinates of the right side of the bitmap.
-		right = left + (float)m_imageWidth;
-
-		// Calculate the screen coordinates of the top of the bitmap.
-		top = m_imageHeight / 2;
-
-		// Calculate the screen coordinates of the bottom of the bitmap.
-		bottom = top - (float)m_imageHeight;
 
 		// Create the vertex array.
 		texturetype = new H_2D_TEXTURE_RESOURCETYPE[m_vertexCount];
