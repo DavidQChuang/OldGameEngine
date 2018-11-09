@@ -82,8 +82,7 @@ bool ColorTextureShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR
 		// If the shader failed to compile it should have writen something to the error message.
 		if (errorMessage) {
 			OutputShaderErrorMessage(errorMessage, hwnd, vsFilename);
-		}
-		else {
+		} else {
 			MessageBoxW(hwnd, vsFilename, L"Missing Shader File", MB_OK);
 		}
 
@@ -97,8 +96,7 @@ bool ColorTextureShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR
 		// If the shader failed to compile it should have writen something to the error message.
 		if (errorMessage) {
 			OutputShaderErrorMessage(errorMessage, hwnd, psFilename);
-		}
-		else {
+		} else {
 			MessageBoxW(hwnd, psFilename, L"Missing Shader File", MB_OK);
 		}
 
@@ -256,7 +254,7 @@ void ColorTextureShader::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND
 	fout.open("shader-error.txt");
 
 	// Write out the error message.
-	for (i = 0; i<bufferSize; i++) {
+	for (i = 0; i < bufferSize; i++) {
 		fout << compileErrors[i];
 	}
 

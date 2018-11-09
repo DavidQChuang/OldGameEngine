@@ -42,25 +42,25 @@ bool SceneGame::Initialize() {
 	m_HealthBar = new TexturedRect();
 	m_HealthBar->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		DirectX::XMFLOAT4(213.f / 255.f, 29.f / 255.f, 29.f / 255.f, 1.f),
-		8 * 3 - 1, 31 * 3);
+		(8 * 3) - 1, 31 * 3);
 	m_HealthBar->SetPos(750, 20 * 3);
 
 	m_MagicBar = new TexturedRect();
 	m_MagicBar->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		DirectX::XMFLOAT4(30.f / 255.f, 151.f / 255.f, 195.f / 255.f, 1.f),
-		8 * 3 - 1, 31 * 3);
+		(8 * 3) - 1, 31 * 3);
 	m_MagicBar->SetPos(750, 66 * 3);
 
 	m_HealthBarBackground = new TexturedRect();
 	m_HealthBarBackground->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		DirectX::XMFLOAT4(155.f / 255.f, 44.f / 255.f, 44.f / 255.f, 1.f),
-		8 * 3 - 1, 31 * 3);
+		(8 * 3) - 1, 31 * 3);
 	m_HealthBarBackground->SetPos(750, 20 * 3);
 
 	m_MagicBarBackground = new TexturedRect();
 	m_MagicBarBackground->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		DirectX::XMFLOAT4(25.f / 255.f, 110.f / 255.f, 150.f / 255.f, 1.f),
-		8 * 3 - 1, 31 * 3);
+		(8 * 3) - 1, 31 * 3);
 	m_MagicBarBackground->SetPos(750, 66 * 3);
 
 	m_HUD = new TexturedRect();
@@ -297,7 +297,7 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 	}
 
 	sm_Direct3D->TurnZBufferOff();
-
+	
 	for (int bigoof = 0; bigoof < 6; bigoof++) {
 		m_ParticleSystem->Create(0, 0, -5, -3);
 		if (bigoof == 0) {
@@ -327,7 +327,7 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 	RenderRect(m_BulletKeys, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	RenderRect(m_AbilityContainers, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	RenderSpritesheet(m_BulletSelect, m_Player->m_BulletType, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
-
+	
 	m_Input->Update();
 	m_lastTime = sm_Timer->getTime();
 	return true;

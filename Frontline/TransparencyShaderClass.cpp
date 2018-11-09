@@ -46,8 +46,7 @@ bool TransparencyShaderClass::Render(ID3D11DeviceContext* deviceContext, int ind
 
 	// Set the shader parameters that it will use for rendering.
 	result = SetShaderParameters(deviceContext, worldMatrix, viewMatrix, projectionMatrix, texture, blend);
-	if (!result)
-	{
+	if (!result) {
 		return false;
 	}
 
@@ -187,8 +186,8 @@ bool TransparencyShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, 
 		return false;
 	}
 
-		// Setup the description of the transparent dynamic constant buffer that is in the pixel shader.
-		transparentBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	// Setup the description of the transparent dynamic constant buffer that is in the pixel shader.
+	transparentBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 	transparentBufferDesc.ByteWidth = sizeof(TransparentBufferType);
 	transparentBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	transparentBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
@@ -263,7 +262,7 @@ void TransparencyShaderClass::OutputShaderErrorMessage(ID3D10Blob* errorMessage,
 	fout.open("shader-error.txt");
 
 	// Write out the error message.
-	for (i = 0; i<bufferSize; i++) {
+	for (i = 0; i < bufferSize; i++) {
 		fout << compileErrors[i];
 	}
 

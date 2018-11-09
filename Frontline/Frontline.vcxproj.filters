@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
@@ -13,53 +9,17 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Shaders">
-      <UniqueIdentifier>{2ccbc663-4237-4342-9674-f2bc0c83f1f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\System">
-      <UniqueIdentifier>{cb9af63b-66bd-4df7-9f8f-29d455020d97}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\System">
       <UniqueIdentifier>{3dd69048-5bc0-4913-b472-3bab1b3f1abc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Shaders">
       <UniqueIdentifier>{fe49578b-d31f-45c9-a6d5-e07eb13fdf12}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\System\Audio">
-      <UniqueIdentifier>{0bbf9278-ca88-428d-a4ab-e0e63fccb728}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\System\Audio">
       <UniqueIdentifier>{7632eca8-6479-4abb-96c0-ee5e6a919132}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\World">
       <UniqueIdentifier>{c1848755-5cab-4cc4-a424-f8535148870c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\World">
-      <UniqueIdentifier>{42be306d-c369-46f9-969a-249e48bdfb93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\World\Entities">
-      <UniqueIdentifier>{e17ec081-d189-49f8-858d-0f94b67b12d3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\World\Entities\2D">
-      <UniqueIdentifier>{0155fb9a-f6f0-4c6c-8329-5ebfbd83631e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\World\Graphics">
-      <UniqueIdentifier>{9220ec69-5cb1-4aed-a775-17771fb06746}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\World\Graphics\3D">
-      <UniqueIdentifier>{cbb8e86d-66e9-488a-be5a-bb2b6a313290}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\World\Graphics\Scene">
-      <UniqueIdentifier>{f4958134-6dcf-4490-ab9b-4888e57bab18}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\World\Graphics\2D">
-      <UniqueIdentifier>{c060e4f6-ace2-424e-a904-e407fa443a77}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\World\Graphics\2D\GUI">
-      <UniqueIdentifier>{29575da6-26ed-4531-8ed8-f0f691da9336}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\World\Graphics\3D\Scene">
-      <UniqueIdentifier>{39ebe78d-b416-4794-a636-0cc79688c7be}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\World\Entities">
       <UniqueIdentifier>{829dbb69-60f5-4564-aceb-1bb181653145}</UniqueIdentifier>
@@ -88,9 +48,6 @@
     <Filter Include="Header Files\World\Graphics\World">
       <UniqueIdentifier>{bd58cf9c-c172-4900-94c0-665b71b5cdd3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\World\Entities\2D\BulletSystem">
-      <UniqueIdentifier>{731be81e-5fe9-42e2-b227-ba25fcab42e3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\World\Entities\2D\BulletSystem">
       <UniqueIdentifier>{b623fbf3-3bf7-4449-9603-0501779d324c}</UniqueIdentifier>
     </Filter>
@@ -100,41 +57,11 @@
     <Filter Include="Header Files\Shaders\HLSL">
       <UniqueIdentifier>{b69ff4bd-3a33-4140-a869-2935368c603f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Other Stuff">
+      <UniqueIdentifier>{bc21d6a9-e90b-43e6-9109-38be075eefd7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Options.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraClass.cpp">
-      <Filter>Source Files\World\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicsClass.cpp">
-      <Filter>Source Files\World\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="D3DClass.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureClass.cpp">
-      <Filter>Source Files\World\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageClass.cpp">
-      <Filter>Source Files\World\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="LightClass.cpp">
-      <Filter>Source Files\World\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="ModelClass.cpp">
-      <Filter>Source Files\World\Graphics\3D\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerBS.cpp">
       <Filter>Header Files\World\Entities\2D\BulletSystem</Filter>
     </ClCompile>
@@ -149,9 +76,6 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Header Files\World\Entities\2D</Filter>
-    </ClCompile>
-    <ClCompile Include="TexturedText.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ColorTextureShader.cpp">
       <Filter>Header Files\Shaders</Filter>
@@ -230,6 +154,42 @@
     </ClCompile>
     <ClCompile Include="EntitySystem.cpp">
       <Filter>Header Files\World\Entities\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DClass.cpp">
+      <Filter>Header Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Header Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Options.cpp">
+      <Filter>Header Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Header Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelClass.cpp">
+      <Filter>Header Files\World\Graphics\3D\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureClass.cpp">
+      <Filter>Header Files\World\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraClass.cpp">
+      <Filter>Header Files\World\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsClass.cpp">
+      <Filter>Header Files\World\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageClass.cpp">
+      <Filter>Header Files\World\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="LightClass.cpp">
+      <Filter>Header Files\World\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TexturedText.cpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -387,6 +347,7 @@
     <None Include="Data\Images\GUI\Sniper.cur">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include=".clang-format" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shaders\ColorPixelShader.hlsl">

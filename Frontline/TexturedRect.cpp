@@ -84,7 +84,7 @@ bool TexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 	// Store the size in pixels that this bitmap should be rendered at.
 	m_imageWidth = imageWidth;
 	m_imageHeight = imageHeight;
-	
+
 	m_Color = color;
 
 	// Initialize the vertex and index buffers.
@@ -150,16 +150,16 @@ bool TexturedRect::InitializeBuffers(ID3D11Device* device) {
 		}
 
 		// Load the vertex array with data.
-		colortype[0].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
+		colortype[0].position = DirectX::XMFLOAT3(left, top, 0.0f); // Top left.
 		colortype[0].color = m_Color;
 
-		colortype[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f);  // Bottom right.
+		colortype[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f); // Bottom right.
 		colortype[1].color = m_Color;
 
-		colortype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f);  // Bottom left.
+		colortype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f); // Bottom left.
 		colortype[2].color = m_Color;
 
-		colortype[3].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
+		colortype[3].position = DirectX::XMFLOAT3(right, top, 0.0f); // Top right.
 		colortype[3].color = m_Color;
 
 
@@ -184,16 +184,16 @@ bool TexturedRect::InitializeBuffers(ID3D11Device* device) {
 			return false;
 		}
 		// Load the vertex array with data.
-		texturetype[0].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
+		texturetype[0].position = DirectX::XMFLOAT3(left, top, 0.0f); // Top left.
 		texturetype[0].texture = DirectX::XMFLOAT2(0.0f, 0.0f);
 
-		texturetype[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f);  // Bottom right.
+		texturetype[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f); // Bottom right.
 		texturetype[1].texture = DirectX::XMFLOAT2(1.0f, 1.0f);
 
-		texturetype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f);  // Bottom left.
+		texturetype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f); // Bottom left.
 		texturetype[2].texture = DirectX::XMFLOAT2(0.0f, 1.0f);
 
-		texturetype[3].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
+		texturetype[3].position = DirectX::XMFLOAT3(right, top, 0.0f); // Top right.
 		texturetype[3].texture = DirectX::XMFLOAT2(1.0f, 0.0f);
 
 		// Set up the description of the static vertex buffer.
@@ -216,19 +216,19 @@ bool TexturedRect::InitializeBuffers(ID3D11Device* device) {
 			return false;
 		}
 		// Load the vertex array with data.
-		coloredtype[0].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
+		coloredtype[0].position = DirectX::XMFLOAT3(left, top, 0.0f); // Top left.
 		coloredtype[0].color = m_Color;
 		coloredtype[0].texture = DirectX::XMFLOAT2(0.0f, 0.0f);
 
-		coloredtype[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f);  // Bottom right.
+		coloredtype[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f); // Bottom right.
 		coloredtype[1].color = m_Color;
 		coloredtype[1].texture = DirectX::XMFLOAT2(1.0f, 1.0f);
 
-		coloredtype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f);  // Bottom left.
+		coloredtype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f); // Bottom left.
 		coloredtype[2].color = m_Color;
 		coloredtype[2].texture = DirectX::XMFLOAT2(0.0f, 1.0f);
 
-		coloredtype[3].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
+		coloredtype[3].position = DirectX::XMFLOAT3(right, top, 0.0f); // Top right.
 		coloredtype[3].color = m_Color;
 		coloredtype[3].texture = DirectX::XMFLOAT2(1.0f, 0.0f);
 
@@ -352,16 +352,16 @@ void TexturedRect::SetColor(ID3D11DeviceContext* deviceContext, H_COLORRGBA colo
 			return;
 		}
 		// Load the vertex array with data.
-		colortype[0].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
+		colortype[0].position = DirectX::XMFLOAT3(left, top, 0.0f); // Top left.
 		colortype[0].color = color;
 
-		colortype[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f);  // Bottom right.
+		colortype[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f); // Bottom right.
 		colortype[1].color = color;
 
-		colortype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f);  // Bottom left.
+		colortype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f); // Bottom left.
 		colortype[2].color = color;
 
-		colortype[3].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
+		colortype[3].position = DirectX::XMFLOAT3(right, top, 0.0f); // Top right.
 		colortype[3].color = color;
 
 		// Lock the vertex buffer so it can be written to.
@@ -386,19 +386,19 @@ void TexturedRect::SetColor(ID3D11DeviceContext* deviceContext, H_COLORRGBA colo
 			return;
 		}
 		// Load the vertex array with data.
-		coloredtype[0].position = DirectX::XMFLOAT3(left, top, 0.0f);  // Top left.
+		coloredtype[0].position = DirectX::XMFLOAT3(left, top, 0.0f); // Top left.
 		coloredtype[0].color = color;
 		coloredtype[0].texture = DirectX::XMFLOAT2(0.0f, 0.0f);
 
-		coloredtype[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f);  // Bottom right.
+		coloredtype[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f); // Bottom right.
 		coloredtype[1].color = color;
 		coloredtype[1].texture = DirectX::XMFLOAT2(1.0f, 1.0f);
 
-		coloredtype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f);  // Bottom left.
+		coloredtype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f); // Bottom left.
 		coloredtype[2].color = color;
 		coloredtype[2].texture = DirectX::XMFLOAT2(0.0f, 1.0f);
 
-		coloredtype[3].position = DirectX::XMFLOAT3(right, top, 0.0f);  // Top right.
+		coloredtype[3].position = DirectX::XMFLOAT3(right, top, 0.0f); // Top right.
 		coloredtype[3].color = color;
 		coloredtype[3].texture = DirectX::XMFLOAT2(1.0f, 0.0f);
 

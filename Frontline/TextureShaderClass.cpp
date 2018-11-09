@@ -287,54 +287,7 @@ bool TextureShaderClass::SetShaderParameters(ID3D11DeviceContext* deviceContext,
 
 	// Get a pointer to the data in the constant buffer.
 	dataPtr = (MatrixBufferType*)mappedResource.pData;
-
-	// Copy the matrices into the constant buffer.
-	XMVECTOR r0 = worldMatrix.r[0];
-	XMVECTOR r1 = worldMatrix.r[1];
-	XMVECTOR r2 = worldMatrix.r[2];
-	XMVECTOR r3 = worldMatrix.r[3];
-	XMVectorSetX(r0, XMVectorGetX(worldMatrix.r[0]) * XMVectorGetX(viewMatrix.r[0]) * XMVectorGetX(projectionMatrix.r[0]));
-	XMVectorSetY(r0, XMVectorGetX(worldMatrix.r[0]) * XMVectorGetY(viewMatrix.r[0]) * XMVectorGetY(projectionMatrix.r[0]));
-	XMVectorSetZ(r0, XMVectorGetX(worldMatrix.r[0]) * XMVectorGetZ(viewMatrix.r[0]) * XMVectorGetZ(projectionMatrix.r[0]));
-	XMVectorSetW(r0, XMVectorGetX(worldMatrix.r[0]) * XMVectorGetW(viewMatrix.r[0]) * XMVectorGetW(projectionMatrix.r[0]));
-
-	XMVectorSetX(r1, XMVectorGetX(worldMatrix.r[1]) * XMVectorGetX(viewMatrix.r[1]) * XMVectorGetX(projectionMatrix.r[1]));
-	XMVectorSetY(r1, XMVectorGetX(worldMatrix.r[1]) * XMVectorGetY(viewMatrix.r[1]) * XMVectorGetY(projectionMatrix.r[1]));
-	XMVectorSetZ(r1, XMVectorGetX(worldMatrix.r[1]) * XMVectorGetZ(viewMatrix.r[1]) * XMVectorGetZ(projectionMatrix.r[1]));
-	XMVectorSetW(r1, XMVectorGetX(worldMatrix.r[1]) * XMVectorGetW(viewMatrix.r[1]) * XMVectorGetW(projectionMatrix.r[1]));
-
-	XMVectorSetX(r2, XMVectorGetX(worldMatrix.r[2]) * XMVectorGetX(viewMatrix.r[2]) * XMVectorGetX(projectionMatrix.r[2]));
-	XMVectorSetY(r2, XMVectorGetX(worldMatrix.r[2]) * XMVectorGetY(viewMatrix.r[2]) * XMVectorGetY(projectionMatrix.r[2]));
-	//XMVectorSetZ(r2, XMVectorGetX(worldMatrix.r[2]) * XMVectorGetZ(viewMatrix.r[2]) * XMVectorGetZ(projectionMatrix.r[2]));
-	XMVectorSetZ(r2, 1.f);
-	XMVectorSetW(r2, XMVectorGetX(worldMatrix.r[2]) * XMVectorGetW(viewMatrix.r[2]) * XMVectorGetW(projectionMatrix.r[2]));
-
-	XMVectorSetX(r3, XMVectorGetX(worldMatrix.r[3]) * XMVectorGetX(viewMatrix.r[3]) * XMVectorGetX(projectionMatrix.r[3]));
-	XMVectorSetY(r3, XMVectorGetX(worldMatrix.r[3]) * XMVectorGetY(viewMatrix.r[3]) * XMVectorGetY(projectionMatrix.r[3]));
-	XMVectorSetZ(r3, XMVectorGetX(worldMatrix.r[3]) * XMVectorGetZ(viewMatrix.r[3]) * XMVectorGetZ(projectionMatrix.r[3]));
-	XMVectorSetW(r3, XMVectorGetX(worldMatrix.r[3]) * XMVectorGetW(viewMatrix.r[3]) * XMVectorGetW(projectionMatrix.r[3]));
-
-	/*XMVectorSetX(r0, XMVectorGetX(worldMatrix.r[0]));
-	XMVectorSetY(r0, XMVectorGetX(worldMatrix.r[0]));
-	XMVectorSetZ(r0, XMVectorGetX(worldMatrix.r[0]));
-	XMVectorSetW(r0, XMVectorGetX(worldMatrix.r[0]));
-
-	XMVectorSetX(r1, XMVectorGetX(worldMatrix.r[1]));
-	XMVectorSetY(r1, XMVectorGetX(worldMatrix.r[1]));
-	XMVectorSetZ(r1, XMVectorGetX(worldMatrix.r[1]));
-	XMVectorSetW(r1, XMVectorGetX(worldMatrix.r[1]));
-
-	XMVectorSetX(r2, XMVectorGetX(worldMatrix.r[2]));
-	XMVectorSetY(r2, XMVectorGetX(worldMatrix.r[2]));
-	XMVectorSetZ(r2, XMVectorGetX(worldMatrix.r[2]));
-	XMVectorSetW(r2, XMVectorGetX(worldMatrix.r[2]));
-
-	XMVectorSetX(r3, XMVectorGetX(worldMatrix.r[3]));
-	XMVectorSetY(r3, XMVectorGetX(worldMatrix.r[3]));
-	XMVectorSetZ(r3, XMVectorGetX(worldMatrix.r[3]));
-	XMVectorSetW(r3, XMVectorGetX(worldMatrix.r[3]));*/
-
-	dataPtr->world = XMMATRIX(r0, r1, r2, r3);
+	dataPtr->world = worldMatrix;
 	dataPtr->view = viewMatrix;
 	dataPtr->projection = projectionMatrix;
 

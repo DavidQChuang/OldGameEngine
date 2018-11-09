@@ -11,7 +11,7 @@
 //  Default screen resolution
 //  Ideally updated per game
 //
-#define H_SCREENWIDTH  800
+#define H_SCREENWIDTH 800
 #define H_SCREENHEIGHT 600
 
 /////////////////
@@ -19,14 +19,15 @@
 //////////////////
 
 typedef float H_SCALE;
-
 typedef float H_ROT;
-
 typedef int H_POS;
-
 typedef int H_DIMENSION;
-
 typedef DirectX::XMFLOAT4 H_COLORRGBA;
+
+typedef DirectX::XMMATRIX H_WORLDMATRIX;
+typedef DirectX::XMMATRIX H_VIEWMATRIX;
+typedef DirectX::XMMATRIX H_PROJECTIONMATRIX;
+typedef DirectX::XMMATRIX H_ORTHOMATRIX;
 
 /////////////////
 // Enums
@@ -68,7 +69,6 @@ struct H_2D_COLOR_RESOURCETYPE {
 struct H_2D_TEXTURE_RESOURCETYPE {
 	DirectX::XMFLOAT3 position;
 	DirectX::XMFLOAT2 texture;
-
 };
 
 struct H_2D_COLOR_TEXTURE_RESOURCETYPE {
@@ -78,7 +78,6 @@ struct H_2D_COLOR_TEXTURE_RESOURCETYPE {
 };
 
 struct H_3D_LIGHT_RESOURCETYPE {
-
 };
 
 /////////////////

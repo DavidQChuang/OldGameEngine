@@ -82,7 +82,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 
 	// Now go through all the display modes and find the one that matches the screen width and height.
 	// When a match is found store the numerator and denominator of the refresh rate for that monitor.
-	for (i = 0; i<numModes; i++) {
+	for (i = 0; i < numModes; i++) {
 		if (displayModeList[i].Width == (unsigned int)screenWidth) {
 			if (displayModeList[i].Height == (unsigned int)screenHeight) {
 				numerator = displayModeList[i].RefreshRate.Numerator;
@@ -139,8 +139,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	if (m_vsync_enabled) {
 		swapChainDesc.BufferDesc.RefreshRate.Numerator = numerator;
 		swapChainDesc.BufferDesc.RefreshRate.Denominator = denominator;
-	}
-	else {
+	} else {
 		swapChainDesc.BufferDesc.RefreshRate.Numerator = 0;
 		swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
 	}
@@ -158,8 +157,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	// Set to full screen or windowed mode.
 	if (fullscreen) {
 		swapChainDesc.Windowed = false;
-	}
-	else {
+	} else {
 		swapChainDesc.Windowed = true;
 	}
 
@@ -307,7 +305,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-	ID3D11BlendState * blendState;
+	ID3D11BlendState* blendState;
 	result = m_device->CreateBlendState(&blendDesc, &blendState);
 
 	if (FAILED(result)) {
@@ -342,7 +340,7 @@ bool D3DClass::Initialize(int screenWidth, int screenHeight, bool vsync, HWND hw
 	// Clear the second depth stencil state before setting the parameters.
 	ZeroMemory(&depthDisabledStencilDesc, sizeof(depthDisabledStencilDesc));
 
-	// Now create a second depth stencil state which turns off the Z buffer for 2D rendering.  The only difference is 
+	// Now create a second depth stencil state which turns off the Z buffer for 2D rendering.  The only difference is
 	// that DepthEnable is set to false, all other parameters are the same as the other depth stencil state.
 	depthDisabledStencilDesc.DepthEnable = false;
 	depthDisabledStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
@@ -448,7 +446,7 @@ void D3DClass::EndScene() {
 	// Present the back buffer to the screen since rendering is complete.
 	if (m_vsync_enabled) {
 		// Lock to screen refresh rate.
-		m_swapChain->Present(1, 0);
+		m_swapChain->Present(0, 0);
 	} else {
 		// Present as fast as possible.
 		m_swapChain->Present(0, 0);
@@ -499,13 +497,11 @@ void D3DClass::TurnZBufferOff() {
 	m_deviceContext->OMSetDepthStencilState(m_depthDisabledStencilState, 1);
 	return;
 }
-ID3D11DepthStencilView* D3DClass::GetDepthStencilView()
-{
+ID3D11DepthStencilView* D3DClass::GetDepthStencilView() {
 	return m_depthStencilView;
 }
 
-void D3DClass::SetBackBufferRenderTarget()
-{
+void D3DClass::SetBackBufferRenderTarget() {
 	// Bind the render target view and depth stencil buffer to the output render pipeline.
 	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
 

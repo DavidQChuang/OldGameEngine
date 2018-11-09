@@ -235,6 +235,7 @@
     <ResourceCompile Include="Project2.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".clang-format" />
     <None Include="Data\Images\GUI\Cursor\Default.cur" />
     <None Include="Data\Images\GUI\Sniper.cur" />
   </ItemGroup>
