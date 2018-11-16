@@ -186,7 +186,7 @@ TexturedSpritesheet* Player::GetBulletTexture() {
 	return m_Bullets->GetTexture();
 }
 DirectX::XMFLOAT2* Player::GetBullets() {
-	m_Bullets->GetBulletsCoords();
+	return m_Bullets->GetBulletsCoords();
 }
 void Player::Shutdown() {
 	if (m_Texture) {

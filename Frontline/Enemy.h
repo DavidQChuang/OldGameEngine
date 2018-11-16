@@ -17,8 +17,8 @@ public:
 	};
 	EnemySystem();
 	~EnemySystem();
-	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*, TexturedSpritesheet*, BulletSystem::Bullet*, int, double);
-	void Create(float, float, DirectX::XMFLOAT4, int, double);
+	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*, TexturedSpritesheet*, BulletSystem::Bullet*, int, float);
+	void Create(H_POS, H_POS, H_COLORRGBA, int, float);
 
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int);
 	void Shutdown();

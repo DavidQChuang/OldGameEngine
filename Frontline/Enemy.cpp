@@ -25,7 +25,7 @@ bool EnemySystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCo
 	}
 	return true;
 }
-bool EnemySystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader, TexturedSpritesheet* bullet, BulletSystem::Bullet* bullets, int max, double elapsed) {
+bool EnemySystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader, TexturedSpritesheet* bullet, BulletSystem::Bullet* bullets, int max, float elapsed) {
 	bool result;
 	DirectX::XMMATRIX matrix;
 	if (m_Active != 0) {
@@ -110,9 +110,9 @@ void EnemySystem::Shutdown() {
 		m_Texture = 0;
 	}
 }
-void EnemySystem::Create(float x, float y, DirectX::XMFLOAT4 color, int type, double time) {
+void EnemySystem::Create(H_POS x, H_POS y, H_COLORRGBA color, int type, float time) {
 	if (time - m_lastSpawnTime > m_delta) {
-		int enemies = floor((time - m_lastSpawnTime) / m_delta);
+		int enemies = (int)floor((time - m_lastSpawnTime) / m_delta);
 		double remainder = time - m_lastSpawnTime - enemies * m_delta;
 		for (int intergar = 0; intergar < enemies; intergar++) {
 			if (m_Active < m_bMax) {

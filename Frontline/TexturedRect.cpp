@@ -14,8 +14,7 @@ TexturedRect::TexturedRect() {
 }
 
 
-TexturedRect::TexturedRect(const TexturedRect& other) {
-}
+TexturedRect::TexturedRect(const TexturedRect& other) {}
 
 
 TexturedRect::~TexturedRect() {

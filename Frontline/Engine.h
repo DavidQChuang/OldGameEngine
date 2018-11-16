@@ -29,6 +29,11 @@ typedef DirectX::XMMATRIX H_VIEWMATRIX;
 typedef DirectX::XMMATRIX H_PROJECTIONMATRIX;
 typedef DirectX::XMMATRIX H_ORTHOMATRIX;
 
+typedef struct {
+	float last;
+	float curr;
+} H_TIME;
+
 /////////////////
 // Enums
 //////////////////
@@ -83,3 +88,5 @@ struct H_3D_LIGHT_RESOURCETYPE {
 /////////////////
 // Functions
 /////////////////
+
+inline float seconds(float m) { return m * 1000; }
