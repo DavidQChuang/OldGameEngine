@@ -286,7 +286,7 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 
 	m_Input->Update();
 	m_lastTime = sm_Timer->getTime();
-	if (sm_Timer->getTime > 1000) {
+	if (sm_Timer->getTime() > 1000) {
 		RenderRect(m_BulletKeys, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	}
 	return true;

@@ -13,7 +13,6 @@ Player::Player(Input* input, int xp, int yp) {
 	lastTime = -1;
 	elapsedTime = 0;
 	bulletTime = 0;
-	lastEstTime = 0;
 
 	state = 0;
 	m_hp = 2;
@@ -37,7 +36,7 @@ bool Player::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext
 	m_Bullets = new PlayerBulletSystem(150);
 	result = m_Bullets->Initialize(device, deviceContext,
 		bulletFilename,
-		6*3, 6*3, 3);
+		6 * 3, 6 * 3, 3);
 	if (!result) return false;
 
 	m_PlayerParticles = new PlayerPS(150);
@@ -52,7 +51,7 @@ bool Player::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext
 
 	return true;
 }
-bool Player::Frame(bool enableInput, double time) {
+bool Player::Frame(bool enableInput, float time) {
 	bool result;
 	if (lastTime == -1) {
 		lastTime = time;
@@ -96,7 +95,7 @@ bool Player::Frame(bool enableInput, double time) {
 			bulletTime = lastTime;
 		}
 		//if 2 frames (@60hz) have passed
-		
+
 		switch (m_BulletType) {
 		case 0:
 			gap = 1.f;
@@ -112,8 +111,8 @@ bool Player::Frame(bool enableInput, double time) {
 			break;
 		}
 		if (time - bulletTime > 66) {
-			int bullets = floor((time-bulletTime) / 66);
-			double remainder = time - bulletTime - bullets * 66;
+			int bullets = floor((time - bulletTime) / 66);
+			float remainder = time - bulletTime - bullets * 66;
 			for (int intergar = 0; intergar < bullets; intergar++) {
 				//for every 2 frames (~33ms with error margin) passed move the bullet the amount it would have moved
 				m_Bullets->Create(m_x + m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
@@ -137,7 +136,7 @@ bool Player::Frame(bool enableInput, double time) {
 					m_Bullets->SetData(m_Bullets->GetActive() - 1, 2);
 				}
 			}
-			bulletTime = time-remainder;
+			bulletTime = time - remainder;
 		}
 
 		if (m_y < -(m_Texture->m_imageHeight / 2)) {
@@ -150,7 +149,7 @@ bool Player::Frame(bool enableInput, double time) {
 		if (m_x < -(m_Texture->m_spriteWidth / 2)) {
 			m_x = -(m_Texture->m_spriteWidth / 2);
 		}
-		else if (m_x > Options::WIDTH - (m_Texture->m_spriteWidth / 2)-75) {
+		else if (m_x > Options::WIDTH - (m_Texture->m_spriteWidth / 2) - 75) {
 			m_x = Options::WIDTH - (m_Texture->m_spriteWidth / 2) - 75;
 		}
 	}

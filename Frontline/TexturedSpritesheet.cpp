@@ -285,6 +285,9 @@ void TexturedSpritesheet::SetSprite(ID3D11DeviceContext* deviceContext, int s) {
 
 	// Calculate the screen coordinates of the bottom of the bitmap.
 	bottom = top - (float)m_imageHeight;
+
+	m_currentSprite = s;
+
 	switch (m_shaderType) {
 	case H_2D_COLOR_TEXTURE_SHADERTYPE:
 		// Create the vertex array.
@@ -320,8 +323,6 @@ void TexturedSpritesheet::SetSprite(ID3D11DeviceContext* deviceContext, int s) {
 		// Copy the data into the vertex buffer.
 		memcpy(coloredPtr, (void*)coloredtype, (sizeof(H_2D_COLOR_TEXTURE_RESOURCETYPE) * m_vertexCount));
 	}
-
-	m_currentSprite = s;
 
 	// Unlock the vertex buffer.
 	deviceContext->Unmap(m_vertexBuffer, 0);

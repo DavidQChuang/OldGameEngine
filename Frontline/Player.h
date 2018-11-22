@@ -10,7 +10,7 @@ class Player {
 public:
 	Player(Input*, int, int);
 
-	bool Frame(bool, double);
+	bool Frame(bool, float);
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, char*, int, int, int);
 
 	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX);
@@ -46,10 +46,9 @@ public:
 
 	PlayerPS* m_PlayerParticles;
 protected:
-	double lastTime;
-	double elapsedTime;
-	double bulletTime;
-	double lastEstTime;
+	float lastTime;
+	float elapsedTime;
+	float bulletTime;
 
 	bool* m_keys;
 	bool* m_lastKeys;

@@ -20,7 +20,7 @@ bool BulletSystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 		return false;
 	}
 	result = m_Texture->Initialize(device, deviceContext,
-		textureFilename, DirectX::XMFLOAT4(1.f,1.f,1.f,1.f),
+		textureFilename, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f),
 		imageWidth, imageHeight, images);
 	if (!result) {
 		return false;
@@ -45,8 +45,11 @@ bool BulletSystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Dire
 			bullet.x += bullet.velX * elapsed / 16;
 			bullet.y += bullet.velY * elapsed / 16;
 		}
-			
-		matrix = XMMatrixScaling(1.f,1.f,1.f) * XMMatrixRotationZ((XM_PI/2)-(atan(bullet.velY/bullet.velX))) * XMMatrixTranslation(bullet.x - 400 + m_Texture->m_spriteWidth / 2, -bullet.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
+		//(XM_PI/2)-(atan(bullet.velY/bullet.velX))
+		float x = bullet.velX / sqrt((bullet.velX * bullet.velX) + (bullet.velY * bullet.velY));
+		matrix = XMMatrixScaling(1.f, 1.f, 1.f);
+		if (x != 0) matrix *= XMMatrixRotationZ(acos(x)-XM_PIDIV2);
+		matrix *= XMMatrixTranslation(bullet.x - 400 + m_Texture->m_spriteWidth / 2, -bullet.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
 		m_Texture->SetSprite(direct3d->GetDeviceContext(), bullet.type);
 		m_Texture->Render(direct3d->GetDeviceContext());
 		shader->Render(direct3d->GetDeviceContext(), GetIndexCount(), matrix, viewMatrix, orthoMatrix, GetTextureResource());
@@ -90,7 +93,7 @@ void BulletSystem::Create(float x, float y, DirectX::XMFLOAT4 color, int type) {
 		m_Bullets[m_Active].velY = 0;
 		m_Bullets[m_Active].color = color;
 		m_Bullets[m_Active].type = type;
-		m_Bullets[m_Active].data = 0;
+		m_Bullets[m_Active].data = -1;
 		m_Active++;
 	}
 }
@@ -102,7 +105,7 @@ void BulletSystem::Create(float x, float y, float velX, float velY, DirectX::XMF
 		m_Bullets[m_Active].velY = velY;
 		m_Bullets[m_Active].color = color;
 		m_Bullets[m_Active].type = type;
-		m_Bullets[m_Active].data = 0;
+		m_Bullets[m_Active].data = -1;
 
 		m_Active++;
 	}

@@ -92,7 +92,7 @@ inline bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, H_VIEWMAT
 	XMMATRIX matrix =
 		XMMatrixScaling(object->m_scaleX, object->m_scaleY, 1.f) *
 		XMMatrixRotationZ(object->m_rot) *
-		XMMatrixTranslation(object->m_posX - 400 + object->m_imageWidth / 2, -object->m_posY + 300 - object->m_imageHeight / 2, 0.f);
+		XMMatrixTranslation(object->m_posX - 400 + object->m_spriteWidth / 2, -object->m_posY + 300 - object->m_imageHeight / 2, 0.f);
 	object->Render(sm_Direct3D->GetDeviceContext());
 	switch (shaderType) {
 	case H_2D_COLOR_SHADERTYPE:
@@ -131,7 +131,7 @@ inline bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, int sprit
 	XMMATRIX matrix =
 		XMMatrixScaling(object->m_scaleX, object->m_scaleY, 1.f) *
 		XMMatrixRotationZ(object->m_rot) *
-		XMMatrixTranslation(object->m_posX - 400 + object->m_imageWidth / 2, -object->m_posY + 300 - object->m_imageHeight / 2, 0.f);
+		XMMatrixTranslation(object->m_posX - 400 + object->m_spriteWidth / 2, -object->m_posY + 300 - object->m_imageHeight / 2, 0.f);
 	object->SetSprite(sm_Direct3D->GetDeviceContext(), spriteNumber);
 	object->Render(sm_Direct3D->GetDeviceContext());
 	switch (shaderType) {

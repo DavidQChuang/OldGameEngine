@@ -13,7 +13,8 @@ void PlayerBulletSystem::BulletMovement(Bullet& b) {
 	switch (b.type) {
 	case 0:
 		//480 pix/sec
-		b.velY = -10;
+		b.velY = -10; 
+		b.velX = sin(b.y/50)*2;
 		break;
 	case 1:
 		b.velY = -20;

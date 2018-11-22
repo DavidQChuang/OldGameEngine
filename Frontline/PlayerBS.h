@@ -6,6 +6,4 @@ public:
 	~PlayerBulletSystem();
 	PlayerBulletSystem(int);
 	void BulletMovement(Bullet&);
-protected:
-	int m_counter;
 };
