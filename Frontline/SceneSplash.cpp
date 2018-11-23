@@ -44,10 +44,10 @@ bool SceneSplash::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRI
 	float blendAmount = 1.0f;
 	if (m_active == false) {
 		ShowCursor(false);
-		sm_Timer->Start();
+		sm_Timer.Start();
 		m_active = true;
 	}
-	float time = sm_Timer->getTime();
+	float time = sm_Timer.getTime();
     blendAmount = (-0.11f*(time/1000))*((time / 1000) - 6.0f);
 	// Turn off the Z buffer to begin all 2D rendering.
 	sm_Direct3D->TurnZBufferOff();

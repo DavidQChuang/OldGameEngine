@@ -104,10 +104,10 @@ bool SceneMainMenu::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMAT
 	float blendAmount = 0.f;
 	if (m_active == false) {
 		ShowCursor(false);
-		sm_Timer->Start();
+		sm_Timer.Start();
 		m_active = true;
 	}
-	float time = sm_Timer->getTime();
+	float time = sm_Timer.getTime();
 	if (blendAmount < 1.0f) {
 		blendAmount = time / 500;
 	}

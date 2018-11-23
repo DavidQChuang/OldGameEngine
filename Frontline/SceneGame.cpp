@@ -116,10 +116,9 @@ bool SceneGame::Initialize() {
 		MessageBoxW(sm_hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 	}
 
-	sm_Timer->Start();
+	sm_Timer.Start();
 	sm_ShaderClass->m_Light->SetAmbientColor(0.2f, 0.2f, 0.2f, 1.0f);
 	sm_ShaderClass->m_Light->SetDiffuseColor(0.f, 0.f, 0.f, 1.0f);
-	m_lastTime = sm_Timer->getTime();
 
 	return true;
 }
@@ -213,20 +212,21 @@ void SceneGame::Shutdown() {
 }
 float rotation = 90;
 bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX orthoMatrix) {
+	if(m_lastTime == 0) m_lastTime = sm_Timer.getTime();
 	bool result;
 	switch (m_GameState) {
 	case 0:
-		rotation += (sm_Timer->getTime() - m_lastTime) / 4;
+		rotation += (sm_Timer.getTime() - m_lastTime) / 4;
 		if (rotation > 360)
 			rotation = 0;
 
-		m_Player->Frame(true, sm_Timer->getTime());
-		m_Player->m_Texture->SetSprite(sm_Direct3D->GetDeviceContext(), static_cast<int>(sm_Timer->getTime() / 90) % 6);
+		m_Player->Frame(true, sm_Timer.getTime());
+		m_Player->m_Texture->SetSprite(sm_Direct3D->GetDeviceContext(), static_cast<int>(sm_Timer.getTime() / 90) % 6);
 
 		m_Player->m_Bullets->SetState(true);
 
 		m_BadBois->SetState(true);
-		m_BadBois->Create(300, -100, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f), 0, sm_Timer->getTime());
+		m_BadBois->Create(300, -100, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f), 0, sm_Timer.getTime());
 
 		if (m_Input->OnKeyDown(VK_ESCAPE))
 			m_GameState = 1;
@@ -234,7 +234,7 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 	case 1:
 		m_Player->m_Bullets->SetState(false);
 		m_BadBois->SetState(false);
-		m_Player->Frame(false, sm_Timer->getTime());
+		m_Player->Frame(false, sm_Timer.getTime());
 
 		if (m_Input->OnKeyDown(VK_ESCAPE))
 			m_GameState = 0;
@@ -259,7 +259,7 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 			m_ParticleSystem->Create(0, 0, -8, -5);
 		}
 	}
-	m_ParticleSystem->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass);
+	//m_ParticleSystem->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass);
 
 	m_Player->m_Texture->SetPos(m_Player->m_x, m_Player->m_y);
 	result = RenderSpritesheet(m_Player->m_Texture, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
@@ -267,7 +267,7 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 	
 	m_Player->RenderBullets(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
 
-	m_BadBois->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader, m_Player->m_Bullets->GetTexture(), m_Player->m_Bullets->m_Bullets, m_Player->m_Bullets->m_Max, sm_Timer->getTime() - m_lastTime);
+	m_BadBois->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader, m_Player->m_Bullets->GetTexture(), m_Player->m_Bullets->m_Bullets, m_Player->m_Bullets->m_Max, sm_Timer.getTime() - m_lastTime);
 
 	RenderRect(m_HealthBarBackground, viewMatrix, orthoMatrix, H_2D_COLOR_SHADERTYPE);
 	RenderRect(m_MagicBarBackground, viewMatrix, orthoMatrix, H_2D_COLOR_SHADERTYPE);
@@ -279,15 +279,11 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 	RenderRect(m_MagicBar, viewMatrix, orthoMatrix, H_2D_COLOR_SHADERTYPE);
 
 	RenderRect(m_HUD, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
-
 	RenderRect(m_BulletKeys, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	RenderRect(m_AbilityContainers, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	RenderSpritesheet(m_BulletSelect, m_Player->m_BulletType, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
-
+	
 	m_Input->Update();
-	m_lastTime = sm_Timer->getTime();
-	if (sm_Timer->getTime() > 1000) {
-		RenderRect(m_BulletKeys, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
-	}
+	m_lastTime = sm_Timer.getTime();
 	return true;
 }

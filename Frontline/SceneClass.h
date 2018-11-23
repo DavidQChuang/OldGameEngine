@@ -32,7 +32,7 @@ public:
 	inline bool RenderSpritesheet(TexturedSpritesheet*, H_VIEWMATRIX, H_ORTHOMATRIX, int);
 	inline bool RenderSpritesheet(TexturedSpritesheet*, int, H_VIEWMATRIX, H_ORTHOMATRIX, int);
 
-	inline friend std::string DecatenateColors(H_COLORRGBA);
+	inline friend std::string DecatenateRGBA(H_COLORRGBA);
 
 	//inline bool RenderModel(ModelClass*, XMMATRIX, XMMATRIX, int);
 private:
@@ -41,9 +41,9 @@ protected:
 	D3DClass* sm_Direct3D;
 	CameraClass* sm_Camera;
 	ShaderClass* sm_ShaderClass;
-	Timer* sm_Timer;
+	Timer sm_Timer;
 };
-inline std::string DecatenateColors(H_COLORRGBA color) {
+inline std::string DecatenateRGBA(H_COLORRGBA color) {
 	return to_string(color.x * 255) + ", " + to_string(color.y * 255) + ", " + to_string(color.z * 255) + ", " + to_string(color.w * 255);
 }
 //

@@ -7,7 +7,7 @@ SceneClass::SceneClass(HWND hwnd, D3DClass* d3dclass, CameraClass* cameraclass, 
 	sm_Camera = cameraclass;
 	sm_ShaderClass = shaderclass;
 	m_active = false;
-	sm_Timer = new Timer();
+	//sm_Timer;
 }
 
 
@@ -24,7 +24,7 @@ SceneClass::~SceneClass() {
 TexturedRect* SceneClass::InitializeRect(TexturedRect* object, H_COLORRGBA color, H_DIMENSION width, H_DIMENSION height) {
 	object = new TexturedRect();
 	if (!object) {
-		std::string stringg = "Could not initialize object with boi color \n" + to_string(color.x * 255) + ", " + DecatenateColors(color);
+		std::string stringg = "Could not initialize object with boi color \n" + to_string(color.x * 255) + ", " + DecatenateRGBA(color);
 		MessageBoxA(sm_hwnd, stringg.c_str(), "Error", MB_OK);
 	}
 
@@ -32,7 +32,7 @@ TexturedRect* SceneClass::InitializeRect(TexturedRect* object, H_COLORRGBA color
 		color,
 		width, height))) {
 		std::string stringg = ", " + to_string(color.w * 255);
-		MessageBoxA(sm_hwnd, stringg.c_str(), "Error", MB_OK); "Could not initialize object with fuck  color \n" + DecatenateColors(color);
+		MessageBoxA(sm_hwnd, stringg.c_str(), "Error", MB_OK); "Could not initialize object with fuck  color \n" + DecatenateRGBA(color);
 		//MessageBoxA(sm_hwnd, lpcwstr, L"Error", MB_OK);
 	}
 	return object;
@@ -65,14 +65,14 @@ TexturedRect* SceneClass::InitializeRect(TexturedRect* object, char* filename, H
 TexturedRect* SceneClass::InitializeRect(TexturedRect* object, char* filename, H_COLORRGBA color, H_DIMENSION width, H_DIMENSION height) {
 	object = new TexturedRect();
 	if (!object) {
-		std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename) + std::string("\n and color \n") + DecatenateColors(color);
+		std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename) + std::string("\n and color \n") + DecatenateRGBA(color);
 		MessageBoxA(sm_hwnd, thing.c_str(), "Error", MB_OK);
 	}
 
 	if (!(object->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		filename, color,
 		width, height))) {
-		std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename) + std::string("\n and color \n") + DecatenateColors(color);;
+		std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename) + std::string("\n and color \n") + DecatenateRGBA(color);;
 		MessageBoxA(sm_hwnd, thing.c_str(), "Error", MB_OK);
 	}
 	return object;
@@ -86,17 +86,17 @@ TexturedRect* SceneClass::InitializeRect(TexturedRect* object, char* filename, H
 TexturedSpritesheet* SceneClass::InitializeSpritesheet(TexturedSpritesheet* object, char* filename, H_COLORRGBA color, H_DIMENSION width, H_DIMENSION height, int sprites) {
 	object = new TexturedSpritesheet();
 	if (!object) {
-		std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename) + std::string("\n and color \n") + DecatenateColors(color);;
+		std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename) + std::string("\n and color \n") + DecatenateRGBA(color);;
 		MessageBoxA(sm_hwnd, thing.c_str(), "Error", MB_OK);
 	}
 
 	if (!(object->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
 		filename, color,
 		width, height, sprites))) {
-		std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename) + std::string("\n and color \n") + DecatenateColors(color);;
+		std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename) + std::string("\n and color \n") + DecatenateRGBA(color);;
 		MessageBoxA(sm_hwnd, thing.c_str(), "Error", MB_OK);
 	}
-	std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename) + std::string("\n and color \n") + DecatenateColors(color);;
+	std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename) + std::string("\n and color \n") + DecatenateRGBA(color);;
 	MessageBoxA(sm_hwnd, thing.c_str(), "Error", MB_OK);
 	return object;
 }
