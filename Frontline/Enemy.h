@@ -17,14 +17,14 @@ public:
 	};
 	EnemySystem();
 	~EnemySystem();
-	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*, TexturedSpritesheet*, BulletSystem::Bullet*, int, float);
+	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*, TexturedSpritesheet*, BulletSystem::MetatypeDataBullet*, int, float);
 	void Create(H_POS, H_POS, H_COLORRGBA, int, float);
 
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, int, int, int);
 	void Shutdown();
 
 	void MoveEnemy(int, float);
-	bool CheckCollision(int, TexturedSpritesheet*, BulletSystem::Bullet*, int);
+	int CheckCollision(int, TexturedSpritesheet*, BulletSystem::MetatypeDataBullet*, int);
 	void Delete(int);
 
 	int GetActive();

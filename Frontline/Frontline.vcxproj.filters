@@ -155,9 +155,6 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Header Files\Engine\System</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Header Files\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="ImageClass.cpp">
       <Filter>Header Files\Engine</Filter>
     </ClCompile>
@@ -210,6 +207,9 @@
       <Filter>Header Files\Engine\World</Filter>
     </ClCompile>
     <ClCompile Include="SceneClass.cpp">
+      <Filter>Header Files\Engine\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
       <Filter>Header Files\Engine\World</Filter>
     </ClCompile>
   </ItemGroup>

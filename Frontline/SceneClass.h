@@ -4,7 +4,6 @@
 #include "ShaderClass.h"
 #include "Options.h"
 #include "Timer.h"
-#include "TexturedRect.h"
 #include "TexturedButton.h"
 #include "TexturedSpritesheet.h"
 #include "ModelClass.h"

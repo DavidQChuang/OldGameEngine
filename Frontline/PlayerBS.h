@@ -5,5 +5,6 @@ public:
 	PlayerBulletSystem();
 	~PlayerBulletSystem();
 	PlayerBulletSystem(int);
-	void BulletMovement(Bullet&);
+	void BulletMovement(MetatypeDataBullet&);
+	float BulletData(int);
 };

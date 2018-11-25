@@ -25,16 +25,16 @@ bool EnemySystem::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCo
 	}
 	return true;
 }
-bool EnemySystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader, TexturedSpritesheet* bullet, BulletSystem::Bullet* bullets, int max, float elapsed) {
+bool EnemySystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader, TexturedSpritesheet* bullet, BulletSystem::MetatypeDataBullet* bullets, int max, float elapsed) {
 	bool result;
 	DirectX::XMMATRIX matrix;
 	if (m_Active != 0) {
 		for (int i = 0; i < m_Active; i++) {
 			Enemy& enemy = m_Enemies[i];
 			//for(int b = )
-			//if(CheckCollision(i,))
+			enemy.health -= CheckCollision(i, bullet, bullets, max);
 			
-			if (enemy.y <= -200 || enemy.y >= 800 || enemy.x <= -200 || enemy.y >= 1000 || enemy.health <= 0 || CheckCollision(i,bullet,bullets,max)) {
+			if (enemy.y <= -200 || enemy.y >= 800 || enemy.x <= -200 || enemy.y >= 1000 || enemy.health <= 0) {
 				Delete(i);
 				continue;
 			}
@@ -61,16 +61,34 @@ bool EnemySystem::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, Direc
 void EnemySystem::SetRatePerFrame(float rate) {
 	m_delta = (1 /rate)*16;
 }
-bool EnemySystem::CheckCollision(int number, TexturedSpritesheet* bullet, BulletSystem::Bullet* bullets, int max) {
+int EnemySystem::CheckCollision(int number, TexturedSpritesheet* bullet, BulletSystem::MetatypeDataBullet* bullets, int max) {
 	for (int b = 0; b < max; b++) {
-		if (m_Enemies[number].x > bullets[b].x + bullet->m_spriteWidth &&
-			m_Enemies[number].y > bullets[b].y + bullet->m_imageHeight &&
-			m_Enemies[number].x + m_Texture->m_spriteWidth < bullets[b].x &&
-			m_Enemies[number].y + m_Texture->m_imageHeight < bullets[b].y) {
-			return true;
+		//  m_Enemies[number].x 
+		//  m_Enemies[number].y
+		//
+		//  bullets[b].x
+		//  bullets[b].y
+
+
+		// e._. (1(x),1(y) (2,1)
+		//  | |
+		//  ._o (1,2) (2,2)
+		//   b (2,2)
+		// 
+		// 1 > 2
+		// 1 > 2
+		if (m_Enemies[number].x < bullets[b].x + bullet->m_spriteWidth &&
+			m_Enemies[number].y < bullets[b].y + bullet->m_imageHeight &&
+			m_Enemies[number].x + m_Texture->m_spriteWidth > bullets[b].x &&
+			m_Enemies[number].y + m_Texture->m_imageHeight > bullets[b].y) {
+			if (bullets[b].data == 0) {
+				bullets[b].x = 69420;
+			}
+			bullets[b].data -= 1;
+			return 1;
 		}
 	}
-	return false;
+	return 0;
 }
 
 void EnemySystem::SetState(bool on) {
@@ -122,7 +140,7 @@ void EnemySystem::Create(H_POS x, H_POS y, H_COLORRGBA color, int type, float ti
 				m_Enemies[m_Active].type = type;
 				switch (type) {
 				case 0:
-					m_Enemies[m_Active].health = 10;
+					m_Enemies[m_Active].health = 25;
 					break;
 				}
 				MoveEnemy(m_Active, (time - m_lastSpawnTime) - intergar * 33);

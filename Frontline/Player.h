@@ -13,8 +13,8 @@ public:
 	bool Frame(bool, float);
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, char*, int, int, int);
 
-	bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX);
-	bool RenderBullets(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*);
+	inline bool Render(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX);
+	inline bool RenderBullets(D3DClass*, DirectX::XMMATRIX, DirectX::XMMATRIX, ColorTextureShader*);
 
 	void Shutdown();
 
@@ -30,17 +30,17 @@ public:
 	float m_x, m_y;
 	TexturedSpritesheet* m_Texture;
 
-	int GetSpriteNumber();
+	inline int GetSpriteNumber();
 	
-	int GetIndexCount();
-	int GetBulletIndexCount();
+	inline int GetIndexCount();
+	inline int GetBulletIndexCount();
 
-	ID3D11ShaderResourceView* GetBulletTextureResource();
-	TexturedSpritesheet* GetBulletTexture();
+	inline ID3D11ShaderResourceView* GetBulletTextureResource();
+	inline TexturedSpritesheet* GetBulletTexture();
 
-	ID3D11ShaderResourceView* GetTextureResource();
+	inline ID3D11ShaderResourceView* GetTextureResource();
 
-	DirectX::XMFLOAT2* GetBullets();
+	inline DirectX::XMFLOAT2 GetBulletCoords(int);
 
 	PlayerBulletSystem* m_Bullets;
 
@@ -56,5 +56,37 @@ protected:
 	int state;
 	float gap;
 	int bulletOffset;
+	int bulletSpawn;
 };
 
+
+int Player::GetSpriteNumber() {
+	return m_Texture->m_currentSprite;
+}
+
+bool Player::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix) {
+	m_Texture->Render(direct3d->GetDeviceContext());
+	return true;
+}
+bool Player::RenderBullets(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader) {
+	return m_Bullets->Render(direct3d, viewMatrix, orthoMatrix, shader, elapsedTime);
+}
+
+int Player::GetIndexCount() {
+	return m_Texture->m_indexCount;
+}
+int Player::GetBulletIndexCount() {
+	return m_Bullets->GetIndexCount();
+}
+ID3D11ShaderResourceView* Player::GetTextureResource() {
+	return m_Texture->m_Texture->GetTexture();
+}
+ID3D11ShaderResourceView* Player::GetBulletTextureResource() {
+	return m_Bullets->GetTextureResource();
+}
+TexturedSpritesheet* Player::GetBulletTexture() {
+	return m_Bullets->GetTexture();
+}
+DirectX::XMFLOAT2 Player::GetBulletCoords(int x) {
+	return m_Bullets->GetBulletCoords(x);
+}

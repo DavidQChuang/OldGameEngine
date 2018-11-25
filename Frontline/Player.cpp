@@ -13,6 +13,7 @@ Player::Player(Input* input, int xp, int yp) {
 	lastTime = -1;
 	elapsedTime = 0;
 	bulletTime = 0;
+	bulletSpawn = 33;
 
 	state = 0;
 	m_hp = 2;
@@ -98,42 +99,43 @@ bool Player::Frame(bool enableInput, float time) {
 
 		switch (m_BulletType) {
 		case 0:
-			gap = 1.f;
+			gap = m_Input->IsKeyDown(VK_SHIFT) ? 0.8f : 1.f;
 			bulletOffset = 55;
+			bulletSpawn = 33;
 			break;
 		case 1:
-			gap = 0.7f;
-			bulletOffset = 115;
+			gap = m_Input->IsKeyDown(VK_SHIFT) ? 0.f : 0.7f;
+			bulletOffset = 205;
+			bulletSpawn = 99;
 			break;
 		case 2:
-			gap = 1.25f;
+			gap = m_Input->IsKeyDown(VK_SHIFT) ? 0.8f : 1.25f;
 			bulletOffset = 85;
+			bulletSpawn = 66;
 			break;
 		}
-		if (time - bulletTime > 66) {
-			int bullets = floor((time - bulletTime) / 66);
-			float remainder = time - bulletTime - bullets * 66;
+		if (time - bulletTime > bulletSpawn) {
+			int bullets = floor((time - bulletTime) / bulletSpawn);
+			float remainder = time - bulletTime - bullets * bulletSpawn;
 			for (int intergar = 0; intergar < bullets; intergar++) {
 				//for every 2 frames (~33ms with error margin) passed move the bullet the amount it would have moved
 				m_Bullets->Create(m_x + m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
 					m_y + bulletOffset,
-					DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 0.8f), m_BulletType);
+					DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 1.f), m_BulletType);
 				m_Bullets->Create(m_x + m_Texture->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
 					m_y + bulletOffset,
-					DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 0.8f), m_BulletType);
-				m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, (time - bulletTime) - intergar * 33);
-				m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, (time - bulletTime) - intergar * 33);
+					DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 1.f), m_BulletType);
+				m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, (time - bulletTime) - intergar * bulletSpawn);
+				m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, (time - bulletTime) - intergar * bulletSpawn);
 				if (m_BulletType == 2) {
-					m_Bullets->Create(m_x + m_Bullets->GetTexture()->m_spriteWidth * (1 - gap - 2),
+					m_Bullets->Create(m_x + m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
 						m_y + bulletOffset,
-						DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 0.8f), m_BulletType);
-					m_Bullets->Create(m_x + m_Texture->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth * (1 - gap - 2),
+						DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 1.f), m_BulletType, m_Input->IsKeyDown(VK_SHIFT)? -2.5 : -5);
+					m_Bullets->Create(m_x + m_Texture->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
 						m_y + bulletOffset,
-						DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 0.8f), m_BulletType);
-					m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, (time - bulletTime) - intergar * 33);
-					m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, (time - bulletTime) - intergar * 33);
-					m_Bullets->SetData(m_Bullets->GetActive() - 2, 1);
-					m_Bullets->SetData(m_Bullets->GetActive() - 1, 2);
+						DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 1.f), m_BulletType, m_Input->IsKeyDown(VK_SHIFT) ? 2.5 : 5);
+					m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, (time - bulletTime) - intergar * bulletSpawn);
+					m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, (time - bulletTime) - intergar * bulletSpawn);
 				}
 			}
 			bulletTime = time - remainder;
@@ -157,36 +159,6 @@ bool Player::Frame(bool enableInput, float time) {
 	return true;
 }
 
-int Player::GetSpriteNumber() {
-	return m_Texture->m_currentSprite;
-}
-
-bool Player::Render(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix) {
-	m_Texture->Render(direct3d->GetDeviceContext());
-	return true;
-}
-bool Player::RenderBullets(D3DClass* direct3d, DirectX::XMMATRIX viewMatrix, DirectX::XMMATRIX orthoMatrix, ColorTextureShader* shader) {
-	return m_Bullets->Render(direct3d, viewMatrix, orthoMatrix, shader, elapsedTime);
-}
-
-int Player::GetIndexCount() {
-	return m_Texture->m_indexCount;
-}
-int Player::GetBulletIndexCount() {
-	return m_Bullets->GetIndexCount();
-}
-ID3D11ShaderResourceView* Player::GetTextureResource() {
-	return m_Texture->m_Texture->GetTexture();
-}
-ID3D11ShaderResourceView* Player::GetBulletTextureResource() {
-	return m_Bullets->GetTextureResource();
-}
-TexturedSpritesheet* Player::GetBulletTexture() {
-	return m_Bullets->GetTexture();
-}
-DirectX::XMFLOAT2* Player::GetBullets() {
-	return m_Bullets->GetBulletsCoords();
-}
 void Player::Shutdown() {
 	if (m_Texture) {
 		m_Texture->Shutdown();

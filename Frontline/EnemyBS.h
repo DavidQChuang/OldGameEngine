@@ -5,5 +5,5 @@ public:
 	EnemyBulletSystem();
 	~EnemyBulletSystem();
 	EnemyBulletSystem(int);
-	void BulletMovement(Bullet&);
+	void BulletMovement(MetatypeDataBullet&);
 };

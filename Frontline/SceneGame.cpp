@@ -212,7 +212,7 @@ void SceneGame::Shutdown() {
 }
 float rotation = 90;
 bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX orthoMatrix) {
-	if(m_lastTime == 0) m_lastTime = sm_Timer.getTime();
+	if (m_lastTime == 0) m_lastTime = sm_Timer.getTime();
 	bool result;
 	switch (m_GameState) {
 	case 0:
@@ -226,7 +226,9 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 		m_Player->m_Bullets->SetState(true);
 
 		m_BadBois->SetState(true);
-		m_BadBois->Create(300, -100, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f), 0, sm_Timer.getTime());
+		if (m_Player->m_Texture->m_currentSprite == 1) {
+			m_BadBois->Create(300, -100, DirectX::XMFLOAT4(1.f, 1.f, 1.f, 1.f), 0, sm_Timer.getTime());
+		}
 
 		if (m_Input->OnKeyDown(VK_ESCAPE))
 			m_GameState = 1;
@@ -261,14 +263,14 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 	}
 	//m_ParticleSystem->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass);
 
+	m_BadBois->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader, m_Player->m_Bullets->GetTexture(), m_Player->m_Bullets->m_Bullets, m_Player->m_Bullets->m_Max, sm_Timer.getTime() - m_lastTime);
+
 	m_Player->m_Texture->SetPos(m_Player->m_x, m_Player->m_y);
 	result = RenderSpritesheet(m_Player->m_Texture, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	if (!result) return false;
-	
+
 	m_Player->RenderBullets(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader);
-
-	m_BadBois->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader, m_Player->m_Bullets->GetTexture(), m_Player->m_Bullets->m_Bullets, m_Player->m_Bullets->m_Max, sm_Timer.getTime() - m_lastTime);
-
+	
 	RenderRect(m_HealthBarBackground, viewMatrix, orthoMatrix, H_2D_COLOR_SHADERTYPE);
 	RenderRect(m_MagicBarBackground, viewMatrix, orthoMatrix, H_2D_COLOR_SHADERTYPE);
 
@@ -281,6 +283,7 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 	RenderRect(m_HUD, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	RenderRect(m_BulletKeys, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	RenderRect(m_AbilityContainers, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
+
 	RenderSpritesheet(m_BulletSelect, m_Player->m_BulletType, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	
 	m_Input->Update();
