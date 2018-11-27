@@ -65,7 +65,7 @@ void System::Shutdown() {
 	return;
 }
 
-void Run(System system) {
+void System::Run() {
 	MSG msg;
 	bool done;
 
@@ -88,7 +88,7 @@ void Run(System system) {
 		}
 		else {
 			// Otherwise do the frame processing.
-			done = system.Frame() ? true : false;
+			done = Frame() ? false : true;
 		}
 
 	}

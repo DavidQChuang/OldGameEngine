@@ -1,15 +1,23 @@
 #include "System.h"
 #include <thread>
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline, int iCmdshow) {
-	System system;
+	System* system;
 	bool result;
 
+	system = new System();
+	if (!system) {
+		return false;
+	}
+
 	// Initialize and run the system object.
-	result = system.Initialize();
+	result = system->Initialize();
 	if (result) {
-		Run(system);
+		system->Run();
 	}
 	// Shutdown and release the system object.
-	system.Shutdown();
+	system->Shutdown();
+
+	delete system;
+	system = 0;
 	return false;
 }
