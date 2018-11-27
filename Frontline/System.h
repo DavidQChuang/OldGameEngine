@@ -15,7 +15,7 @@ public:
 
 	bool Initialize();
 	void Shutdown();
-	void Run();
+	friend void Run(System);
 
 	LRESULT CALLBACK MessageHandler(HWND, UINT, WPARAM, LPARAM);
 private:

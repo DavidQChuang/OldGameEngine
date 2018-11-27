@@ -65,9 +65,9 @@ void System::Shutdown() {
 	return;
 }
 
-void System::Run() {
+void Run(System system) {
 	MSG msg;
-	bool done, result;
+	bool done;
 
 
 	// Initialize the message structure.
@@ -88,10 +88,7 @@ void System::Run() {
 		}
 		else {
 			// Otherwise do the frame processing.
-			result = Frame();
-			if (!result) {
-				done = true;
-			}
+			done = system.Frame() ? true : false;
 		}
 
 	}

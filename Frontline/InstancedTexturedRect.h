@@ -3,6 +3,8 @@
 #include "TextureClass.h"
 #include "Engine.h"
 class InstancedTexturedRect {
+protected:
+
 public:
 	InstancedTexturedRect(int);
 	InstancedTexturedRect(const InstancedTexturedRect&);
@@ -29,7 +31,10 @@ public:
 	void CreateInstance(H_POS, H_POS);
 	// void ChangeColor(DirectX::XMFLOAT4);
 
-	int m_vertexCount, m_indexCount;
+	int m_vertexCount, m_indexCount, m_instanceCount;
+
+	int m_Max;
+
 	// Constant - size of original image.
 	H_DIMENSION m_imageWidth, m_imageHeight;
 	// Variable - properties of image to be rendered.
@@ -41,8 +46,6 @@ public:
 
 	TextureClass* m_Texture;
 
-	int m_Active;
-	int m_Max;
 protected:
 	bool InitializeBuffers(ID3D11Device*);
 
