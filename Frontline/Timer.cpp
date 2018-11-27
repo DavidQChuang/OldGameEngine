@@ -7,4 +7,5 @@ Timer::Timer() {
 
 void Timer::Start() {
 	QueryPerformanceCounter(&strt);
+	last = getTime();
 }

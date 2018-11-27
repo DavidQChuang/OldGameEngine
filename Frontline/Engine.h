@@ -14,6 +14,32 @@
 #define H_SCREENWIDTH 800
 #define H_SCREENHEIGHT 600
 
+#define K_A 65
+#define K_B 66
+#define K_C 67
+#define K_D 68
+#define K_E 69
+#define K_F 70
+#define K_G 71
+#define K_H 72
+#define K_I 73
+#define K_J 74
+#define K_K 75
+#define K_L 76
+#define K_M 77
+#define K_N 78
+#define K_O 79
+#define K_P 80
+#define K_Q 81
+#define K_R 82
+#define K_S 83
+#define K_T 84
+#define K_U 85
+#define K_V 86
+#define K_W 87
+#define K_X 88
+#define K_Y 89
+#define K_Z 90
 /////////////////
 // Typedefs
 //////////////////

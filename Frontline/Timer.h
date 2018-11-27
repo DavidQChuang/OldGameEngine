@@ -10,12 +10,14 @@ public:
 	LARGE_INTEGER freq;
 	LARGE_INTEGER curr;
 	LARGE_INTEGER strt;
+	float last;
 };
 
 float Timer::getTime() {
 	QueryPerformanceFrequency(&freq);
 	QueryPerformanceCounter(&curr);
-	return (curr.QuadPart - strt.QuadPart) * 1000.0f / freq.QuadPart;
+	last = (curr.QuadPart - strt.QuadPart) * 1000.0f / freq.QuadPart;
+	return last;
 }
 float Timer::getStart() {
 	return (strt.QuadPart * 1000.0f) / freq.QuadPart;

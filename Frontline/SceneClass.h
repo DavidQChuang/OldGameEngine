@@ -121,7 +121,7 @@ inline bool SceneClass::RenderSpritesheet(TexturedSpritesheet* object, H_VIEWMAT
 	}
 	return false;
 }
-
+ 
 //
 //  Renders a TexturedRect from the buffer using a shader and passing a translation matrix as the world matrix.
 //  @param object any t h o t?

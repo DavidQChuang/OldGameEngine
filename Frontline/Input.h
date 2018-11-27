@@ -1,5 +1,5 @@
-#ifndef _INPUTCLASS_H_
-#define _INPUTCLASS_H_
+#pragma once
+
 #include "stdafx.h"
 class Input {
 public:
@@ -14,10 +14,10 @@ public:
 	void KeyDown(unsigned int);
 	void KeyUp(unsigned int);
 
-	bool OnKeyDown(unsigned int);
-	bool OnKeyUp(unsigned int);
-	bool IsKeyDown(unsigned int);
-	bool IsLMouseDown();
+	inline bool OnKeyDown(unsigned int);
+	inline bool OnKeyUp(unsigned int);
+	inline bool IsKeyDown(unsigned int);
+	inline bool IsLMouseDown();
 
 	long m_mouseX, m_mouseY;
 
@@ -26,4 +26,14 @@ private:
 	int m_keys[256];
 };
 
-#endif
+bool Input::OnKeyDown(unsigned int key) {
+	return m_keys[key] == 2;}
+
+bool Input::OnKeyUp(unsigned int key) {
+	return m_keys[key] == 3;}
+
+bool Input::IsKeyDown(unsigned int key) {
+	return m_keys[key] == 1 || m_keys[key] == 2;}
+
+bool Input::IsLMouseDown() {
+	return GetKeyState(VK_LBUTTON) < 0;}
