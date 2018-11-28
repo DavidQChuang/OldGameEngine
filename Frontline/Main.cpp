@@ -1,5 +1,4 @@
 #include "System.h"
-#include <thread>
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pScmdline, int iCmdshow) {
 	System* system;
 	bool result;

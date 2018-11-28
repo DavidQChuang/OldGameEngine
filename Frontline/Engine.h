@@ -55,10 +55,57 @@ typedef DirectX::XMMATRIX H_VIEWMATRIX;
 typedef DirectX::XMMATRIX H_PROJECTIONMATRIX;
 typedef DirectX::XMMATRIX H_ORTHOMATRIX;
 
+typedef float milliseconds;
+
 typedef struct {
-	float last;
+	float start;
 	float curr;
+	float last;
 } H_TIME;
+
+struct H_TIMESTEP {
+	H_TIMESTEP(milliseconds step) {
+		step = step;
+	};
+	milliseconds step;
+	inline int steps(milliseconds time) {
+		// Takes amount of steps taken total and floors it.
+		return floor(time / step);
+	};
+	inline milliseconds remainder(milliseconds time) {
+		return time / step;
+	};
+};
+/*
+inline int steps(milliseconds step) {
+	// Takes amount of steps taken total and floors it.
+	return floor(time / step);
+};
+inline milliseconds remainder(milliseconds step) {
+	return time / step;
+};
+
+
+constexpr int operator "" steps(long double x) {
+	return floor(time / x);
+}
+*/
+constexpr milliseconds operator "" remainder(long double x) {
+	return x;
+}
+
+constexpr milliseconds operator "" milliseconds(long double x) {
+	return x;
+}
+
+constexpr milliseconds operator "" seconds(long double x) {
+	return x * 1000;
+}
+
+// 1/144 seconds = 1 frame
+constexpr milliseconds operator "" frames(long double x) {
+	return x * 1000 / 144;
+}
 
 /////////////////
 // Enums
@@ -92,22 +139,32 @@ enum H_3DSHADERTYPE {
 //  Shader name
 //  RESOURCETYPE/RESOURCEMOD: Resource Type / Resource Modifier
 //
+
+// For instances that inherit the parent's properties or vertices of a parent that never is inherited.
+struct H_2D_POSITION_RESOURCETYPE {
+	DirectX::XMFLOAT3 position;
+};
+
+//
 struct H_2D_COLOR_RESOURCETYPE {
 	DirectX::XMFLOAT3 position;
 	DirectX::XMFLOAT4 color;
 };
 
+//
 struct H_2D_TEXTURE_RESOURCETYPE {
 	DirectX::XMFLOAT3 position;
 	DirectX::XMFLOAT2 texture;
 };
 
+//
 struct H_2D_COLOR_TEXTURE_RESOURCETYPE {
 	DirectX::XMFLOAT3 position;
 	DirectX::XMFLOAT2 texture;
 	DirectX::XMFLOAT4 color;
 };
 
+//
 struct H_3D_LIGHT_RESOURCETYPE {
 };
 

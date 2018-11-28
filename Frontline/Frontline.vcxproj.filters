@@ -152,9 +152,6 @@
     <ClCompile Include="Options.cpp">
       <Filter>Header Files\Engine\System</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Header Files\Engine\System</Filter>
-    </ClCompile>
     <ClCompile Include="ImageClass.cpp">
       <Filter>Header Files\Engine</Filter>
     </ClCompile>

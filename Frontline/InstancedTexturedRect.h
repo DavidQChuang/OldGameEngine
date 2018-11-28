@@ -4,7 +4,13 @@
 #include "Engine.h"
 class InstancedTexturedRect {
 protected:
-
+	struct InheritedInstance {
+		DirectX::XMFLOAT3 position;
+	};
+	struct ColorInstance {
+		DirectX::XMFLOAT3 position;
+		DirectX::XMFLOAT3 color;
+	};
 public:
 	InstancedTexturedRect(int);
 	InstancedTexturedRect(const InstancedTexturedRect&);
@@ -33,7 +39,7 @@ public:
 
 	int m_vertexCount, m_indexCount, m_instanceCount;
 
-	int m_Max;
+	const int m_Max;
 
 	// Constant - size of original image.
 	H_DIMENSION m_imageWidth, m_imageHeight;
