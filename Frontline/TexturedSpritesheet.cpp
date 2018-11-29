@@ -263,9 +263,7 @@ bool TexturedSpritesheet::InitializeBuffers(ID3D11Device* device) {
 
 void TexturedSpritesheet::SetSprite(ID3D11DeviceContext* deviceContext, int s) {
 	float left, right, top, bottom;
-	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredtype = 0;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredPtr;
 	HRESULT result;
 
 
@@ -288,7 +286,42 @@ void TexturedSpritesheet::SetSprite(ID3D11DeviceContext* deviceContext, int s) {
 
 	m_currentSprite = s;
 
+	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredtype = 0;
+	H_2D_TEXTURE_RESOURCETYPE* texturetype = 0;
+	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredPtr;
+	H_2D_TEXTURE_RESOURCETYPE* texturePtr;
+
 	switch (m_shaderType) {
+	/*case H_2D_TEXTURE_SHADERTYPE:
+		// Create the vertex array.
+		texturetype = new H_2D_TEXTURE_RESOURCETYPE[m_vertexCount];
+		if (!texturetype) {
+			return;
+		}
+		// Load the vertex array with data.
+		texturetype[0].position = DirectX::XMFLOAT3(left, top, 0.0f); // Top left.
+		texturetype[0].texture = TextureCoords(0);
+
+		texturetype[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f); // Bottom right.
+		texturetype[1].texture = TextureCoords(1);
+
+		texturetype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f); // Bottom left.
+		texturetype[2].texture = TextureCoords(2);
+
+		texturetype[3].position = DirectX::XMFLOAT3(right, top, 0.0f); // Top right.
+		texturetype[3].texture = TextureCoords(3);
+
+		// Lock the vertex buffer so it can be written to.
+		result = deviceContext->Map(m_vertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+		if (FAILED(result)) {
+			return;
+		}
+		// Get a pointer to the data in the vertex buffer.
+		texturePtr = (H_2D_TEXTURE_RESOURCETYPE*)mappedResource.pData;
+
+		// Copy the data into the vertex buffer.
+		memcpy(texturePtr, (void*)texturetype, (sizeof(H_2D_TEXTURE_RESOURCETYPE) * m_vertexCount));
+		break;*/
 	case H_2D_COLOR_TEXTURE_SHADERTYPE:
 		// Create the vertex array.
 		coloredtype = new H_2D_COLOR_TEXTURE_RESOURCETYPE[m_vertexCount];
@@ -322,13 +355,18 @@ void TexturedSpritesheet::SetSprite(ID3D11DeviceContext* deviceContext, int s) {
 
 		// Copy the data into the vertex buffer.
 		memcpy(coloredPtr, (void*)coloredtype, (sizeof(H_2D_COLOR_TEXTURE_RESOURCETYPE) * m_vertexCount));
+		delete[] coloredtype;
+		coloredtype = 0;
+		break;
 	}
 
+	delete[] texturetype;
+	texturetype = 0;
+	delete[] coloredtype;
+	coloredtype = 0;
 	// Unlock the vertex buffer.
 	deviceContext->Unmap(m_vertexBuffer, 0);
 	// Release the vertex array as it is no longer needed.
-	delete[] coloredtype;
-	coloredtype = 0;
 
 	return;
 }
@@ -336,8 +374,8 @@ void TexturedSpritesheet::SetSprite(ID3D11DeviceContext* deviceContext, int s) {
 void TexturedSpritesheet::SetColor(ID3D11DeviceContext* deviceContext, H_COLORRGBA color) {
 	float left, right, top, bottom;
 	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredtype = 0;
+	H_2D_TEXTURE_RESOURCETYPE* texturetype = 0;
 	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredPtr;
 	HRESULT result;
 
 
@@ -357,28 +395,30 @@ void TexturedSpritesheet::SetColor(ID3D11DeviceContext* deviceContext, H_COLORRG
 
 	// Calculate the screen coordinates of the bottom of the bitmap.
 	bottom = top - (float)m_imageHeight;
-	switch (m_shaderType) {
-	case H_2D_COLOR_TEXTURE_SHADERTYPE:
+
+	m_Color = color;
+
+	if (m_shaderType == H_2D_COLOR_TEXTURE_SHADERTYPE) {
 		// Create the vertex array.
-		coloredtype = new H_2D_COLOR_TEXTURE_RESOURCETYPE[m_vertexCount];
+		H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredtype = new H_2D_COLOR_TEXTURE_RESOURCETYPE[m_vertexCount];
 		if (!coloredtype) {
 			return;
 		}
 		// Load the vertex array with data.
 		coloredtype[0].position = DirectX::XMFLOAT3(left, top, 0.0f); // Top left.
-		coloredtype[0].color = color;
+		coloredtype[0].color = m_Color;
 		coloredtype[0].texture = DirectX::XMFLOAT2(m_spriteSize * m_currentSprite, 0.0f);
 
 		coloredtype[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f); // Bottom right.
-		coloredtype[1].color = color;
+		coloredtype[1].color = m_Color;
 		coloredtype[1].texture = DirectX::XMFLOAT2(m_spriteSize * (m_currentSprite + 1), 1.0f);
 
 		coloredtype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f); // Bottom left.
-		coloredtype[2].color = color;
+		coloredtype[2].color = m_Color;
 		coloredtype[2].texture = DirectX::XMFLOAT2(m_spriteSize * m_currentSprite, 1.0f);
 
 		coloredtype[3].position = DirectX::XMFLOAT3(right, top, 0.0f); // Top right.
-		coloredtype[3].color = color;
+		coloredtype[3].color = m_Color;
 		coloredtype[3].texture = DirectX::XMFLOAT2(m_spriteSize * (m_currentSprite + 1), 0.0f);
 
 		// Lock the vertex buffer so it can be written to.
@@ -387,17 +427,16 @@ void TexturedSpritesheet::SetColor(ID3D11DeviceContext* deviceContext, H_COLORRG
 			return;
 		}
 		// Get a pointer to the data in the vertex buffer.
-		coloredPtr = (H_2D_COLOR_TEXTURE_RESOURCETYPE*)mappedResource.pData;
+		H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredPtr = (H_2D_COLOR_TEXTURE_RESOURCETYPE*)mappedResource.pData;
 
 		// Copy the data into the vertex buffer.
 		memcpy(coloredPtr, (void*)coloredtype, (sizeof(H_2D_COLOR_TEXTURE_RESOURCETYPE) * m_vertexCount));
-	}
 
-	m_Color = color;
+		// Release the pointer zzz
+		delete[] coloredtype;
+		coloredtype = 0;
+	}
 
 	// Unlock the vertex buffer.
 	deviceContext->Unmap(m_vertexBuffer, 0);
-	// Release the vertex array as it is no longer needed.
-	delete[] coloredtype;
-	coloredtype = 0;
 }

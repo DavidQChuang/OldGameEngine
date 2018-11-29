@@ -40,6 +40,7 @@
 #define K_X 88
 #define K_Y 89
 #define K_Z 90
+
 /////////////////
 // Typedefs
 //////////////////
@@ -56,7 +57,7 @@ typedef DirectX::XMMATRIX H_PROJECTIONMATRIX;
 typedef DirectX::XMMATRIX H_ORTHOMATRIX;
 
 typedef float milliseconds;
-
+typedef float steps;
 typedef struct {
 	float start;
 	float curr;
@@ -68,44 +69,17 @@ struct H_TIMESTEP {
 		step = step;
 	};
 	milliseconds step;
-	inline int steps(milliseconds time) {
+	inline steps timesteps(milliseconds time) {
 		// Takes amount of steps taken total and floors it.
 		return floor(time / step);
 	};
-	inline milliseconds remainder(milliseconds time) {
-		return time / step;
+	inline milliseconds remainingTime(milliseconds time) {
+		return time - (steps(time)*step);
 	};
+	inline steps remainingSteps(milliseconds time) {
+		return (time / step) - steps(time);
+	}
 };
-/*
-inline int steps(milliseconds step) {
-	// Takes amount of steps taken total and floors it.
-	return floor(time / step);
-};
-inline milliseconds remainder(milliseconds step) {
-	return time / step;
-};
-
-
-constexpr int operator "" steps(long double x) {
-	return floor(time / x);
-}
-*/
-constexpr milliseconds operator "" remainder(long double x) {
-	return x;
-}
-
-constexpr milliseconds operator "" milliseconds(long double x) {
-	return x;
-}
-
-constexpr milliseconds operator "" seconds(long double x) {
-	return x * 1000;
-}
-
-// 1/144 seconds = 1 frame
-constexpr milliseconds operator "" frames(long double x) {
-	return x * 1000 / 144;
-}
 
 /////////////////
 // Enums
@@ -173,3 +147,17 @@ struct H_3D_LIGHT_RESOURCETYPE {
 /////////////////
 
 inline float seconds(float m) { return m * 1000; }
+
+
+constexpr milliseconds operator "" _ms(long double x) {
+	return x;
+}
+
+constexpr milliseconds operator "" _s(long double x) {
+	return x * 1000;
+}
+
+// 1/60 seconds = 1 frame
+constexpr milliseconds operator "" _f(long double x) {
+	return x * 1000 / 60;
+}
