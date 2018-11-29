@@ -118,23 +118,22 @@ bool Player::Frame(bool enableInput, float time) {
 		case 0:
 			gap = m_Input->IsKeyDown(VK_SHIFT) ? 0.8f : 1.f;
 			bulletOffset = 55;
-			bulletSpawn = 33;
+			bulletSpawn = 2.0_f;
 			break;
 		case 1:
 			gap = m_Input->IsKeyDown(VK_SHIFT) ? 0.f : 0.7f;
 			bulletOffset = 205;
-			bulletSpawn = 99;
+			bulletSpawn = 6.0_f;
 			break;
 		case 2:
 			gap = m_Input->IsKeyDown(VK_SHIFT) ? 0.8f : 1.25f;
 			bulletOffset = 85;
-			bulletSpawn = 66;
+			bulletSpawn = 4.0_f;
 			break;
 		}
-		if (time - bulletTime > bulletSpawn) {
-			int bullets = floor((time - bulletTime) / bulletSpawn);
-			float remainder = time - bulletTime - bullets * bulletSpawn;
-			for (int bulletCount = 0; bulletCount < bullets; bulletCount++) {
+		H_TIMESTEP timestep(bulletSpawn);
+		if (time - bulletTime > timestep.step) {
+			for (int bulletCount = 0; bulletCount < timestep.timesteps(elapsedTime); bulletCount++) {
 				//for every 2 frames (~33ms with error margin) passed move the bullet the amount it would have moved
 				m_Bullets->Create(m_x + m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
 					m_y + bulletOffset,
@@ -142,8 +141,8 @@ bool Player::Frame(bool enableInput, float time) {
 				m_Bullets->Create(m_x + m_Texture->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
 					m_y + bulletOffset,
 					DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 1.f), m_BulletType);
-				m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, (time - bulletTime) - bulletCount * bulletSpawn);
-				m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, (time - bulletTime) - bulletCount * bulletSpawn);
+				m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, (time - bulletTime) - bulletCount * timestep.step);
+				m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, (time - bulletTime) - bulletCount * timestep.step);
 				if (m_BulletType == 2) {
 					m_Bullets->Create(m_x + m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
 						m_y + bulletOffset,
@@ -151,11 +150,11 @@ bool Player::Frame(bool enableInput, float time) {
 					m_Bullets->Create(m_x + m_Texture->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
 						m_y + bulletOffset,
 						DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 1.f), m_BulletType, m_Input->IsKeyDown(VK_SHIFT) ? 2.5 : 5);
-					m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, (time - bulletTime) - bulletCount * bulletSpawn);
-					m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, (time - bulletTime) - bulletCount * bulletSpawn);
+					m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, (time - bulletTime) - bulletCount * timestep.step);
+					m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, (time - bulletTime) - bulletCount * timestep.step);
 				}
 			}
-			bulletTime = time - remainder;
+			bulletTime = time - (timestep.step - timestep.remainingTime(elapsedTime));
 		}
 
 		if (m_y < -(m_Texture->m_imageHeight / 2)) {

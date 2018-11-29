@@ -56,7 +56,7 @@ protected:
 	int state;
 	float gap;
 	int bulletOffset;
-	int bulletSpawn;
+	milliseconds bulletSpawn;
 };
 
 

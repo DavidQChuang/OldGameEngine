@@ -9,7 +9,9 @@
 #include "ModelClass.h"
 #include "ParticleSystem.h"
 #include <cmath>
-#pragma warning(disable : 4244)
+//#pragma warning(disable : 4244)
+
+
 class SceneClass {
 public:
 	SceneClass(HWND hwnd, D3DClass*, CameraClass*, ShaderClass*);
