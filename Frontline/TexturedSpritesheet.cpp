@@ -298,18 +298,18 @@ void TexturedSpritesheet::SetSprite(ID3D11DeviceContext* deviceContext, int s) {
 		if (!texturetype) {
 			return;
 		}
+
 		// Load the vertex array with data.
 		texturetype[0].position = DirectX::XMFLOAT3(left, top, 0.0f); // Top left.
-		texturetype[0].texture = TextureCoords(0);
-
 		texturetype[1].position = DirectX::XMFLOAT3(right, bottom, 0.0f); // Bottom right.
-		texturetype[1].texture = TextureCoords(1);
-
 		texturetype[2].position = DirectX::XMFLOAT3(left, bottom, 0.0f); // Bottom left.
-		texturetype[2].texture = TextureCoords(2);
-
 		texturetype[3].position = DirectX::XMFLOAT3(right, top, 0.0f); // Top right.
+
+		texturetype[0].texture = TextureCoords(0);
+		texturetype[1].texture = TextureCoords(1);
+		texturetype[2].texture = TextureCoords(2);
 		texturetype[3].texture = TextureCoords(3);
+
 
 		// Lock the vertex buffer so it can be written to.
 		result = deviceContext->Map(m_vertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
