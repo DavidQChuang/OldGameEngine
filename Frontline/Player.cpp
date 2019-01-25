@@ -117,8 +117,8 @@ bool Player::Frame(bool enableInput, float time) {
 		switch (m_BulletType) {
 		case 0:
 			gap = m_Input->IsKeyDown(VK_SHIFT) ? 0.8f : 1.f;
-			bulletOffset = 55;
-			bulletSpawn = 2.0_f;
+			bulletOffset = -30;
+			bulletSpawn = 3.0_f;
 			break;
 		case 1:
 			gap = m_Input->IsKeyDown(VK_SHIFT) ? 0.f : 0.7f;
@@ -132,8 +132,10 @@ bool Player::Frame(bool enableInput, float time) {
 			break;
 		}
 		H_TIMESTEP timestep(bulletSpawn);
-		if (time - bulletTime > timestep.step) {
-			for (int bulletCount = 0; bulletCount < timestep.timesteps(elapsedTime); bulletCount++) {
+		// Projected time since last bullet was spawned
+		int timeSinceLastBullet = time - bulletTime;
+		if (timeSinceLastBullet > timestep.step) {
+			for (int bulletCount = 0; bulletCount < timestep.timesteps(timeSinceLastBullet); bulletCount++) {
 				//for every 2 frames (~33ms with error margin) passed move the bullet the amount it would have moved
 				m_Bullets->Create(m_x + m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
 					m_y + bulletOffset,
@@ -141,8 +143,8 @@ bool Player::Frame(bool enableInput, float time) {
 				m_Bullets->Create(m_x + m_Texture->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
 					m_y + bulletOffset,
 					DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 1.f), m_BulletType);
-				m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, (time - bulletTime) - bulletCount * timestep.step);
-				m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, (time - bulletTime) - bulletCount * timestep.step);
+				m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, timeSinceLastBullet - (bulletCount * timestep.step));
+				m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, timeSinceLastBullet - (bulletCount * timestep.step));
 				if (m_BulletType == 2) {
 					m_Bullets->Create(m_x + m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
 						m_y + bulletOffset,
@@ -150,11 +152,14 @@ bool Player::Frame(bool enableInput, float time) {
 					m_Bullets->Create(m_x + m_Texture->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
 						m_y + bulletOffset,
 						DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 1.f), m_BulletType, m_Input->IsKeyDown(VK_SHIFT) ? 2.5 : 5);
-					m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, (time - bulletTime) - bulletCount * timestep.step);
-					m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, (time - bulletTime) - bulletCount * timestep.step);
+					m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, timeSinceLastBullet - (bulletCount * timestep.step));
+					m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, timeSinceLastBullet - (bulletCount * timestep.step));
 				}
 			}
-			bulletTime = time - (timestep.step - timestep.remainingTime(elapsedTime));
+			// Calculates time bullet would have been spawned
+			// time - remainder (time - bulletTime - bullets * bulletSpawn;)
+			// timeSinceLastBullet - timestep.remainingSteps();
+			bulletTime = time - timestep.remainingTime(timeSinceLastBullet);
 		}
 
 		if (m_y < -(m_Texture->m_imageHeight / 2)) {

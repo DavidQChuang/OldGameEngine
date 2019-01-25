@@ -65,19 +65,22 @@ typedef struct {
 } H_TIME;
 
 struct H_TIMESTEP {
-	H_TIMESTEP(milliseconds step) {
-		step = step;
+	H_TIMESTEP(milliseconds steps) {
+		step = steps;
 	};
 	milliseconds step;
+	milliseconds delta;
+	// Amount of steps that could be taken within the input time.
 	inline steps timesteps(milliseconds time) {
-		// Takes amount of steps taken total and floors it.
-		return floor(time / step);
-	};
+		return time / step;
+	}; 
+	// Amount of time left in milliseconds if the largest integer amount of steps was taken within the input time.
 	inline milliseconds remainingTime(milliseconds time) {
-		return time - (steps(time)*step);
+		return time - (floor(timesteps(time))*step);
 	};
+	// Amount of time left in fraction of a steps if the largest integer amount of steps was taken within the input time.
 	inline steps remainingSteps(milliseconds time) {
-		return (time / step) - steps(time);
+		return (time / step) - floor(timesteps(time));
 	}
 };
 
