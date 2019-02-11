@@ -115,37 +115,10 @@ enum H_3DSHADERTYPE {
 // For use with children of EntitySystem
 struct Entity {
 	float x, y;
-};
-
-// Extends Entity, contains additional variables float velX, and float velY.
-struct VelocityEntity : Entity {
 	float velX, velY;
-};
-
-// Extends Entity, contains an additional array float data[4].
-struct DataEntity : Entity {
-	float data[4];
-};
-
-// Extends Entity, contains an additional variable XMFLOAT4 color.
-struct ColorEntity : Entity {
+	int type;
+	float data[3];
 	H_RGBA color;
-};
-
-// Extends VelocityEntity, contains additional variables XMFLOAT4 color, float velX, and float velY.
-struct ColorVelocityEntity : VelocityEntity {
-	H_RGBA color;
-};
-
-// Extends VelocityEntity, contains additional variables float velX and float velY, and additional array float data[4].
-struct DataVelocityEntity : VelocityEntity {
-	float data[4];
-};
-
-// Extends VelocityEntity, contains additional variables float velX, float velY, and XMFLOAT4 color, and additional array float data[4].
-struct ColorDataVelocityEntity : VelocityEntity {
-	H_RGBA color;
-	float data[4];
 };
 
 //------------------------------------------------------------------------------

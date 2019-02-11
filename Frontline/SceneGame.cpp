@@ -100,7 +100,7 @@ bool SceneGame::Initialize() {
 		MessageBoxW(sm_hwnd, L"Could not initialize the player sprite. 1", L"Error", MB_OK);
 		return false;
 	}
-	m_Player->m_Texture->SetPos(m_Player->m_x, m_Player->m_y);
+	m_Player->m_Texture->SetPos(m_Player->coords.x, m_Player->coords.y);
 
 	// Create the model object.
 	m_Model = new ModelClass;
@@ -265,7 +265,7 @@ bool SceneGame::Render(XMMATRIX viewMatrix, XMMATRIX projectionMatrix, XMMATRIX 
 
 	m_BadBois->Render(sm_Direct3D, viewMatrix, orthoMatrix, sm_ShaderClass->m_ColorTextureShader, m_Player->m_Bullets->GetTexture(), m_Player->m_Bullets->m_Bullets, m_Player->m_Bullets->m_Max, sm_Timer.getTime() - m_lastTime);
 
-	m_Player->m_Texture->SetPos(m_Player->m_x, m_Player->m_y);
+	m_Player->m_Texture->SetPos(m_Player->coords.x, m_Player->coords.y);
 	result = RenderSpritesheet(m_Player->m_Texture, viewMatrix, orthoMatrix, H_2D_TEXTURE_SHADERTYPE);
 	if (!result) return false;
 
