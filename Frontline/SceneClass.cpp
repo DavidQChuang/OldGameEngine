@@ -23,17 +23,12 @@ SceneClass::~SceneClass() {
 //
 TexturedRect* SceneClass::InitializeRect(TexturedRect* object, H_RGBA color, H_DIMENSION width, H_DIMENSION height) {
 	object = new TexturedRect();
-	if (!object) {
-		std::string stringg = "Could not initialize object with boi color \n" + to_string(color.x * 255) + ", " + DecatenateRGBA(color);
-		MessageBoxA(sm_hwnd, stringg.c_str(), "Error", MB_OK);
-	}
-
-	if (!(object->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
-		color,
-		width, height))) {
+	if (!object|| 
+		!(object->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
+			color,
+			width, height))) {
 		std::string stringg = ", " + to_string(color.w * 255);
-		MessageBoxA(sm_hwnd, stringg.c_str(), "Error", MB_OK); "Could not initialize object with fuck  color \n" + DecatenateRGBA(color);
-		//MessageBoxA(sm_hwnd, lpcwstr, L"Error", MB_OK);
+		MessageBoxA(sm_hwnd, stringg.c_str(), "Error", MB_OK); "Could not initialize object with color \n" + DecatenateRGBA(color);
 	}
 	return object;
 	//MessageBoxA(sm_hwnd, lpcwstr, L"Error", MB_OK);
@@ -44,14 +39,10 @@ TexturedRect* SceneClass::InitializeRect(TexturedRect* object, H_RGBA color, H_D
 //
 TexturedRect* SceneClass::InitializeRect(TexturedRect* object, char* filename, H_DIMENSION width, H_DIMENSION height) {
 	object = new TexturedRect();
-	if (!object) {
-		std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename);
-		//MessageBoxA(sm_hwnd, thing.c_str(), "Error", MB_OK);
-	}
-
-	if (!(object->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
-		filename,
-		width, height))) {
+	if (!object ||
+		!(object->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
+			filename,
+			width, height))) {
 		std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename);
 		MessageBoxA(sm_hwnd, thing.c_str(), "Error", MB_OK);
 	}
@@ -64,14 +55,10 @@ TexturedRect* SceneClass::InitializeRect(TexturedRect* object, char* filename, H
 //
 TexturedRect* SceneClass::InitializeRect(TexturedRect* object, char* filename, H_RGBA color, H_DIMENSION width, H_DIMENSION height) {
 	object = new TexturedRect();
-	if (!object) {
-		std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename) + std::string("\n and color \n") + DecatenateRGBA(color);
-		MessageBoxA(sm_hwnd, thing.c_str(), "Error", MB_OK);
-	}
-
-	if (!(object->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
-		filename, color,
-		width, height))) {
+	if (!object ||
+		!(object->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
+			filename, color,
+			width, height))) {
 		std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename) + std::string("\n and color \n") + DecatenateRGBA(color);;
 		MessageBoxA(sm_hwnd, thing.c_str(), "Error", MB_OK);
 	}
@@ -85,14 +72,10 @@ TexturedRect* SceneClass::InitializeRect(TexturedRect* object, char* filename, H
 //
 TexturedSpritesheet* SceneClass::InitializeSpritesheet(TexturedSpritesheet* object, char* filename, H_RGBA color, H_DIMENSION width, H_DIMENSION height, int sprites) {
 	object = new TexturedSpritesheet();
-	if (!object) {
-		std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename) + std::string("\n and color \n") + DecatenateRGBA(color);;
-		MessageBoxA(sm_hwnd, thing.c_str(), "Error", MB_OK);
-	}
-
-	if (!(object->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
-		filename, color,
-		width, height, sprites))) {
+	if (!object ||
+		!(object->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
+			filename, color,
+			width, height, sprites))) {
 		std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename) + std::string("\n and color \n") + DecatenateRGBA(color);;
 		MessageBoxA(sm_hwnd, thing.c_str(), "Error", MB_OK);
 	}
@@ -105,14 +88,10 @@ TexturedSpritesheet* SceneClass::InitializeSpritesheet(TexturedSpritesheet* obje
 //
 TexturedSpritesheet* SceneClass::InitializeSpritesheet(TexturedSpritesheet* object, char* filename, H_DIMENSION width, H_DIMENSION height, int sprites) {
 	object = new TexturedSpritesheet();
-	if (!object) {
-		std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename);
-		MessageBoxA(sm_hwnd, thing.c_str(), "Error", MB_OK);
-	}
-
-	if (!(object->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
-		filename,
-		width, height, sprites))) {
+	if (!object ||
+		!(object->Initialize(sm_Direct3D->GetDevice(), sm_Direct3D->GetDeviceContext(),
+			filename,
+			width, height, sprites))) {
 		std::string thing = std::string("Could not initialize object with texture file \n") + std::string(filename);
 		MessageBoxA(sm_hwnd, thing.c_str(), "Error", MB_OK);
 	}
