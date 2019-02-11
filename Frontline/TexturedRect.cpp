@@ -21,7 +21,7 @@ TexturedRect::~TexturedRect() {
 }
 
 bool TexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext,
-	H_COLORRGBA color,
+	H_RGBA color,
 	H_DIMENSION imageWidth, H_DIMENSION imageHeight) {
 	bool result;
 
@@ -73,7 +73,7 @@ bool TexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceC
 }
 
 bool TexturedRect::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext,
-	char* textureFilename, H_COLORRGBA color,
+	char* textureFilename, H_RGBA color,
 	H_DIMENSION imageWidth, H_DIMENSION imageHeight) {
 	bool result;
 
@@ -315,7 +315,7 @@ void TexturedRect::SetRot(H_ROT z) {
 	m_rot = z;
 }
 
-void TexturedRect::SetColor(ID3D11DeviceContext* deviceContext, H_COLORRGBA color) {
+void TexturedRect::SetColor(ID3D11DeviceContext* deviceContext, H_RGBA color) {
 	int left, right, top, bottom;
 	H_2D_COLOR_RESOURCETYPE* colortype = 0;
 	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredtype = 0;

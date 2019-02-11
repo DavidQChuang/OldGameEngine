@@ -9,6 +9,7 @@
 #include "ModelClass.h"
 #include "ParticleSystem.h"
 #include <cmath>
+#include "EntitySystem.h"
 //#pragma warning(disable : 4244)
 
 
@@ -22,18 +23,18 @@ public:
 	virtual bool Render(XMMATRIX, XMMATRIX, XMMATRIX) = 0;
 	bool m_active;
 
-	TexturedRect* InitializeRect(TexturedRect*, H_COLORRGBA, H_DIMENSION, H_DIMENSION);
+	TexturedRect* InitializeRect(TexturedRect*, H_RGBA, H_DIMENSION, H_DIMENSION);
 	TexturedRect* InitializeRect(TexturedRect*, char*, H_DIMENSION, H_DIMENSION);
-	TexturedRect* InitializeRect(TexturedRect*, char*, H_COLORRGBA, H_DIMENSION, H_DIMENSION);
+	TexturedRect* InitializeRect(TexturedRect*, char*, H_RGBA, H_DIMENSION, H_DIMENSION);
 	TexturedSpritesheet* InitializeSpritesheet(TexturedSpritesheet*, char*, H_DIMENSION, H_DIMENSION, int);
-	TexturedSpritesheet* InitializeSpritesheet(TexturedSpritesheet*, char*, H_COLORRGBA, H_DIMENSION, H_DIMENSION, int);
+	TexturedSpritesheet* InitializeSpritesheet(TexturedSpritesheet*, char*, H_RGBA, H_DIMENSION, H_DIMENSION, int);
 	
 	inline bool RenderRect(TexturedRect*, H_VIEWMATRIX, H_ORTHOMATRIX, int);
 
 	inline bool RenderSpritesheet(TexturedSpritesheet*, H_VIEWMATRIX, H_ORTHOMATRIX, int);
 	inline bool RenderSpritesheet(TexturedSpritesheet*, int, H_VIEWMATRIX, H_ORTHOMATRIX, int);
 
-	inline friend std::string DecatenateRGBA(H_COLORRGBA);
+	inline friend std::string DecatenateRGBA(H_RGBA);
 
 	//inline bool RenderModel(ModelClass*, XMMATRIX, XMMATRIX, int);
 private:
@@ -43,8 +44,9 @@ protected:
 	CameraClass* sm_Camera;
 	ShaderClass* sm_ShaderClass;
 	Timer sm_Timer;
+	Entity* m_BulletEntities;
 };
-inline std::string DecatenateRGBA(H_COLORRGBA color) {
+inline std::string DecatenateRGBA(H_RGBA color) {
 	return to_string(color.x * 255) + ", " + to_string(color.y * 255) + ", " + to_string(color.z * 255) + ", " + to_string(color.w * 255);
 }
 //

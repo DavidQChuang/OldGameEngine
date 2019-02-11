@@ -27,7 +27,7 @@ public:
 
 	Input* m_Input;
 
-	float m_x, m_y;
+	Entity coords;
 	TexturedSpritesheet* m_Texture;
 
 	inline int GetSpriteNumber();

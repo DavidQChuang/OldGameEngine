@@ -8,9 +8,9 @@ public:
 	TexturedRect(const TexturedRect&);
 	~TexturedRect();
 
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, H_COLORRGBA, H_DIMENSION, H_DIMENSION);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, H_RGBA, H_DIMENSION, H_DIMENSION);
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, H_DIMENSION, H_DIMENSION);
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, H_COLORRGBA, H_DIMENSION, H_DIMENSION);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, H_RGBA, H_DIMENSION, H_DIMENSION);
 
 	void Shutdown();
 
@@ -24,7 +24,7 @@ public:
 	void SetPos(H_POS, H_POS);
 	void SetSize(H_SCALE, H_SCALE);
 	void SetRot(H_ROT);
-	virtual void SetColor(ID3D11DeviceContext*, H_COLORRGBA);
+	virtual void SetColor(ID3D11DeviceContext*, H_RGBA);
 	// void ChangeColor(DirectX::XMFLOAT4);
 
 	int m_vertexCount, m_indexCount;
@@ -35,7 +35,7 @@ public:
 	H_POS m_posX, m_posY;
 	H_SCALE m_scaleX, m_scaleY;
 	H_ROT m_rot;
-	H_COLORRGBA m_Color;
+	H_RGBA m_Color;
 
 	TextureClass* m_Texture;
 protected:

@@ -1,8 +1,8 @@
 #include "Player.h"
 
 Player::Player(Input* input, int xp, int yp) {
-	m_x = xp;
-	m_y = yp;
+	coords.x = xp;
+	coords.y = yp;
 	m_speed = 5;
 	m_Input = input;
 	m_Bullets = 0;
@@ -70,41 +70,37 @@ bool Player::Frame(bool enableInput, float time) {
 				m_BulletType += 1;
 			}
 		}
-		if (m_Input->IsKeyDown(VK_SHIFT))
-			m_speed = 2;
-		else
-			m_speed = 4;
+
+		if (m_Input->IsKeyDown(VK_SHIFT)) m_speed = 2;
+		else m_speed = 4;
+
 		//W87 A65 S83 D68
-		if (m_Input->IsKeyDown(VK_RIGHT) || m_Input->IsKeyDown(K_D))
-			m_keys[0] = true;
-		else
-			m_keys[0] = false;
-		if (m_Input->IsKeyDown(VK_LEFT) || m_Input->IsKeyDown(K_A))
-			m_keys[1] = true;
-		else
-			m_keys[1] = false;
-		if (m_Input->IsKeyDown(VK_UP) || m_Input->IsKeyDown(K_W))
-			m_keys[2] = true;
-		else
-			m_keys[2] = false;
-		if (m_Input->IsKeyDown(VK_DOWN) || m_Input->IsKeyDown(K_S))
-			m_keys[3] = true;
-		else
-			m_keys[3] = false;
+		if (m_Input->IsKeyDown(VK_RIGHT) || m_Input->IsKeyDown(K_D)) m_keys[0] = true;
+		else m_keys[0] = false;
+
+		if (m_Input->IsKeyDown(VK_LEFT) || m_Input->IsKeyDown(K_A)) m_keys[1] = true;
+		else m_keys[1] = false;
+
+		if (m_Input->IsKeyDown(VK_UP) || m_Input->IsKeyDown(K_W)) m_keys[2] = true;
+		else m_keys[2] = false;
+
+		if (m_Input->IsKeyDown(VK_DOWN) || m_Input->IsKeyDown(K_S)) m_keys[3] = true;
+		else m_keys[3] = false;
+
 		for (int k = 0; k < 4; k++) {
 			if (m_keys[k] == true) {
 				switch (k) {
 				case 0:
-					m_x += m_speed * elapsedTime / 10;
+					coords.x += m_speed * elapsedTime / 10;
 					break;
 				case 1:
-					m_x -= m_speed * elapsedTime / 10;
+					coords.x -= m_speed * elapsedTime / 10;
 					break;
 				case 2:
-					m_y -= m_speed * elapsedTime / 10;
+					coords.y -= m_speed * elapsedTime / 10;
 					break;
 				case 3:
-					m_y += m_speed * elapsedTime / 10;
+					coords.y += m_speed * elapsedTime / 10;
 					break;
 				}
 			}
@@ -137,20 +133,20 @@ bool Player::Frame(bool enableInput, float time) {
 		if (timeSinceLastBullet > timestep.step) {
 			for (int bulletCount = 0; bulletCount < timestep.timesteps(timeSinceLastBullet); bulletCount++) {
 				//for every 2 frames (~33ms with error margin) passed move the bullet the amount it would have moved
-				m_Bullets->Create(m_x + m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
-					m_y + bulletOffset,
+				m_Bullets->Create(coords.x + m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
+					coords.y + bulletOffset,
 					DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 1.f), m_BulletType);
-				m_Bullets->Create(m_x + m_Texture->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
-					m_y + bulletOffset,
+				m_Bullets->Create(coords.x + m_Texture->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
+					coords.y + bulletOffset,
 					DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 1.f), m_BulletType);
 				m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, timeSinceLastBullet - (bulletCount * timestep.step));
 				m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, timeSinceLastBullet - (bulletCount * timestep.step));
 				if (m_BulletType == 2) {
-					m_Bullets->Create(m_x + m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
-						m_y + bulletOffset,
+					m_Bullets->Create(coords.x + m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
+						coords.y + bulletOffset,
 						DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 1.f), m_BulletType, m_Input->IsKeyDown(VK_SHIFT) ? -2.5 : -5);
-					m_Bullets->Create(m_x + m_Texture->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
-						m_y + bulletOffset,
+					m_Bullets->Create(coords.x + m_Texture->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth - m_Bullets->GetTexture()->m_spriteWidth * (1 - gap),
+						coords.y + bulletOffset,
 						DirectX::XMFLOAT4(0.7f, 0.7f, 0.7f, 1.f), m_BulletType, m_Input->IsKeyDown(VK_SHIFT) ? 2.5 : 5);
 					m_Bullets->MoveBullet(m_Bullets->GetActive() - 2, timeSinceLastBullet - (bulletCount * timestep.step));
 					m_Bullets->MoveBullet(m_Bullets->GetActive() - 1, timeSinceLastBullet - (bulletCount * timestep.step));
@@ -162,16 +158,16 @@ bool Player::Frame(bool enableInput, float time) {
 			bulletTime = time - timestep.remainingTime(timeSinceLastBullet);
 		}
 
-		if (m_y < -(m_Texture->m_imageHeight / 2)) {
-			m_y = -(m_Texture->m_imageHeight / 2);
-		} else if (m_y > Options::HEIGHT - (m_Texture->m_imageHeight / 2)) {
-			m_y = Options::HEIGHT - (m_Texture->m_imageHeight / 2);
+		if (coords.y < -(m_Texture->m_imageHeight / 2)) {
+			coords.y = -(m_Texture->m_imageHeight / 2);
+		} else if (coords.y > Options::HEIGHT - (m_Texture->m_imageHeight / 2)) {
+			coords.y = Options::HEIGHT - (m_Texture->m_imageHeight / 2);
 		}
 
-		if (m_x < -(m_Texture->m_spriteWidth / 2)) {
-			m_x = -(m_Texture->m_spriteWidth / 2);
-		} else if (m_x > Options::WIDTH - (m_Texture->m_spriteWidth / 2) - 75) {
-			m_x = Options::WIDTH - (m_Texture->m_spriteWidth / 2) - 75;
+		if (coords.x < -(m_Texture->m_spriteWidth / 2)) {
+			coords.x = -(m_Texture->m_spriteWidth / 2);
+		} else if (coords.x > Options::WIDTH - (m_Texture->m_spriteWidth / 2) - 75) {
+			coords.x = Options::WIDTH - (m_Texture->m_spriteWidth / 2) - 75;
 		}
 	}
 	lastTime = time;

@@ -49,7 +49,9 @@ typedef float H_SCALE;
 typedef float H_ROT;
 typedef int H_POS;
 typedef int H_DIMENSION;
-typedef DirectX::XMFLOAT4 H_COLORRGBA;
+typedef DirectX::XMFLOAT4 H_RGBA;
+typedef DirectX::XMFLOAT3 H_XYZ;
+typedef DirectX::XMFLOAT2 H_XY;
 
 typedef DirectX::XMMATRIX H_WORLDMATRIX;
 typedef DirectX::XMMATRIX H_VIEWMATRIX;
@@ -110,6 +112,42 @@ enum H_3DSHADERTYPE {
 // Structs
 //////////////////
 
+// For use with children of EntitySystem
+struct Entity {
+	float x, y;
+};
+
+// Extends Entity, contains additional variables float velX, and float velY.
+struct VelocityEntity : Entity {
+	float velX, velY;
+};
+
+// Extends Entity, contains an additional array float data[4].
+struct DataEntity : Entity {
+	float data[4];
+};
+
+// Extends Entity, contains an additional variable XMFLOAT4 color.
+struct ColorEntity : Entity {
+	H_RGBA color;
+};
+
+// Extends VelocityEntity, contains additional variables XMFLOAT4 color, float velX, and float velY.
+struct ColorVelocityEntity : VelocityEntity {
+	H_RGBA color;
+};
+
+// Extends VelocityEntity, contains additional variables float velX and float velY, and additional array float data[4].
+struct DataVelocityEntity : VelocityEntity {
+	float data[4];
+};
+
+// Extends VelocityEntity, contains additional variables float velX, float velY, and XMFLOAT4 color, and additional array float data[4].
+struct ColorDataVelocityEntity : VelocityEntity {
+	H_RGBA color;
+	float data[4];
+};
+
 //------------------------------------------------------------------------------
 //  Resource types
 //  2D/3D: Dimension
@@ -119,26 +157,26 @@ enum H_3DSHADERTYPE {
 
 // For instances that inherit the parent's properties or vertices of a parent that never is inherited.
 struct H_2D_POSITION_RESOURCETYPE {
-	DirectX::XMFLOAT3 position;
+	H_XYZ position;
 };
 
 //
 struct H_2D_COLOR_RESOURCETYPE {
-	DirectX::XMFLOAT3 position;
-	DirectX::XMFLOAT4 color;
+	H_XYZ position;
+	H_RGBA color;
 };
 
 //
 struct H_2D_TEXTURE_RESOURCETYPE {
-	DirectX::XMFLOAT3 position;
-	DirectX::XMFLOAT2 texture;
+	H_XYZ position;
+	H_XY texture;
 };
 
 //
 struct H_2D_COLOR_TEXTURE_RESOURCETYPE {
-	DirectX::XMFLOAT3 position;
-	DirectX::XMFLOAT2 texture;
-	DirectX::XMFLOAT4 color;
+	H_XYZ position;
+	H_XY texture;
+	H_RGBA color;
 };
 
 //

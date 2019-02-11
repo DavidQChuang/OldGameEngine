@@ -13,7 +13,7 @@ class InstanceSystem {
 	virtual struct ColorInstance {
 		float x;
 		float y;
-		H_COLORRGBA color;
+		H_RGBA color;
 	};
 public:
 	InstanceSystem();
@@ -22,7 +22,7 @@ public:
 	void Create(Instance);
 
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, H_DIMENSION, H_DIMENSION, int);
-	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, H_COLORRGBA, H_DIMENSION, H_DIMENSION, int);
+	bool Initialize(ID3D11Device*, ID3D11DeviceContext*, char*, H_RGBA, H_DIMENSION, H_DIMENSION, int);
 	void Shutdown();
 
 	void MoveEnemy(int, float);

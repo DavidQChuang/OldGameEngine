@@ -128,7 +128,7 @@ void EnemySystem::Shutdown() {
 		m_Texture = 0;
 	}
 }
-void EnemySystem::Create(H_POS x, H_POS y, H_COLORRGBA color, int type, float time) {
+void EnemySystem::Create(H_POS x, H_POS y, H_RGBA color, int type, float time) {
 	if (time - m_lastSpawnTime > m_delta) {
 		int enemies = (int)floor((time - m_lastSpawnTime) / m_delta);
 		double remainder = time - m_lastSpawnTime - enemies * m_delta;

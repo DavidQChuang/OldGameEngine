@@ -43,7 +43,7 @@ bool TexturedSpritesheet::Initialize(ID3D11Device* device, ID3D11DeviceContext* 
 	return true;
 }
 bool TexturedSpritesheet::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceContext,
-	char* textureFilename, H_COLORRGBA color,
+	char* textureFilename, H_RGBA color,
 	H_DIMENSION spriteWidth, H_DIMENSION imageHeight, int spriteAmount) {
 	bool result;
 
@@ -371,7 +371,7 @@ void TexturedSpritesheet::SetSprite(ID3D11DeviceContext* deviceContext, int s) {
 	return;
 }
 
-void TexturedSpritesheet::SetColor(ID3D11DeviceContext* deviceContext, H_COLORRGBA color) {
+void TexturedSpritesheet::SetColor(ID3D11DeviceContext* deviceContext, H_RGBA color) {
 	float left, right, top, bottom;
 	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredtype = 0;
 	H_2D_COLOR_TEXTURE_RESOURCETYPE* coloredPtr;
