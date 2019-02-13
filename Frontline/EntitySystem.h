@@ -20,12 +20,12 @@ public:
 	void CreateEntity(Entity);
 	void DeleteEntity(int);
 
-	virtual DirectX::XMFLOAT3 CreateData(Entity) = 0;
 
 	/////////////
 	// Inlines
 	/////////////
 	inline void SetActive(bool); // Sets if this EntitySystem is active or not.
+	inline void SetData(int, DirectX::XMFLOAT3);
 
 	inline int GetCount();
 
@@ -48,6 +48,8 @@ public:
 	Entity* m_Entities;
 protected:
 	TexturedSpritesheet* m_Texture;
+
+	virtual DirectX::XMFLOAT3 setdata(Entity) = 0;
 
 	virtual bool deletion(Entity&) = 0;
 	virtual void movement(Entity&) = 0;

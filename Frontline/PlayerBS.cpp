@@ -7,39 +7,40 @@ PlayerBulletSystem::PlayerBulletSystem() {
 }
 PlayerBulletSystem::~PlayerBulletSystem() {
 }
-const int firstThing = 2;
-const int secondThing = 8;
-const int thirdThing = 1;
+const int pierce1 = 2;
+const int pierce2 = 8;
+const int pierce3 = 1;
 void PlayerBulletSystem::movement(Entity& b) {
 	switch (b.type) {
 	case 0:
 		//480 pix/sec
-		b.color.w = 1.f * (b.data[0] / firstThing);
+		b.color.w = 1.f * (b.data.x / pierce1);
 		b.velY = -7;
 		b.velX = sin(b.y / 50) * 2;
 		break;
 	case 1:
-		b.color.w = 1.f * (b.data[0] / secondThing);
+		b.color.w = 1.f * (b.data.x / pierce2);
 		b.velY = -14;
 		break;
 	case 2:
-		b.color.w = 1.f * (b.data[0] / thirdThing);
+		b.color.w = 1.f * (b.data.x / pierce3);
 		b.velY = -10.5f;
-		b.velX = b.data[1];
+		b.velX = b.data.y;
 		break;
 	}
 }
 
-float PlayerBulletSystem::BulletData(int x) {
-	switch (m_Bullets[x].data[1]) {
+Entity PlayerBulletSystem::data(Entity& entity) {
+	switch (entity.type) {
 	case 0:
-		return firstThing;
+		entity.data.x = pierce1;
 		break;
 	case 1:
-		return secondThing;
+		entity.data.x = pierce2;
 		break;
 	case 2:
-		return thirdThing;
+		entity.data.x = pierce3;
 		break;
 	}
+	return entity;
 }

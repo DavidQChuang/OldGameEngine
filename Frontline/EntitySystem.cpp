@@ -54,9 +54,7 @@ void EntitySystem::Shutdown() {
 }
 void EntitySystem::CreateEntity(Entity entity) {
 	if (m_Count < m_Max) {
-		m_Entities[m_Count].data[0] = CreateData(entity).x;
-		m_Entities[m_Count].data[1] = CreateData(entity).y;
-		m_Entities[m_Count].data[2] = CreateData(entity).z;
+		m_Entities[m_Active].data = setdata(entity);
 		m_Count++;
 	}
 }

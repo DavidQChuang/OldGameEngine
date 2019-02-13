@@ -48,6 +48,6 @@ void BulletSystem::modification(D3DClass* direct3d, Entity& bullet, DirectX::XMM
 	if (x != 0) matrix *= XMMatrixRotationZ(acos(x) - XM_PIDIV2);
 	matrix *= XMMatrixTranslation(bullet.x - 400 + m_Texture->m_spriteWidth / 2, -bullet.y + 300 - m_Texture->m_imageHeight / 2, 0.f);
 	// In bullets data[0] is type.
-	m_Texture->SetSprite(direct3d->GetDeviceContext(), bullet.data[0]);
+	m_Texture->SetSprite(direct3d->GetDeviceContext(), bullet.type);
 	m_Texture->SetColor(direct3d->GetDeviceContext(), bullet.color);
 }

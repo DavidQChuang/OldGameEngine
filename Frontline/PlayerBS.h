@@ -5,5 +5,5 @@ public:
 	PlayerBulletSystem();
 	~PlayerBulletSystem();
 	void movement(Entity&);
-	float[3] CreateData(Entity);
+	DirectX::XMFLOAT3 setdata(Entity);
 };

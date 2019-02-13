@@ -15,5 +15,5 @@ public:
 	virtual void movement(Entity&) = 0;
 	void modification(D3DClass*, Entity&, DirectX::XMMATRIX&);
 
-	virtual float[3] CreateData(Entity&) = 0;
+	virtual DirectX::XMFLOAT3 setdata(Entity) = 0;
 };

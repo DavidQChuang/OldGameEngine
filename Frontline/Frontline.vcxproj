@@ -132,7 +132,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBS.cpp" />
     <ClCompile Include="EntitySystem.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GraphicsClass.cpp" />
     <ClCompile Include="InstancedTexturedRect.cpp">
@@ -183,7 +183,7 @@
     <ClInclude Include="EnemyBS.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="EntitySystem.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="GraphicsClass.h" />
     <ClInclude Include="Enemy.h" />

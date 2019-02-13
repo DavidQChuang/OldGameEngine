@@ -117,7 +117,7 @@ struct Entity {
 	float x, y;
 	float velX, velY;
 	int type;
-	float data[3];
+	DirectX::XMFLOAT3 data;
 	H_RGBA color;
 };
 
