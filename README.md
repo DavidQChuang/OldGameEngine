@@ -1,5 +1,5 @@
 # OldGameEngine
-Primarily 2D game engine with 3D capabilities. Old version, very unorganized and inconsistent. Currently being refactored into https://github.com/DavidQChuang/GameEngine.
+Primarily 2D game engine with 3D capabilities.
 
 Capable of:
 - Loading 2D images as textures
